@@ -18,7 +18,7 @@ public abstract class Piece {
         
     }
 
-    abstract String getChar();
+    public abstract String getChar();
 
     public String dessiner(){
         return getChar();
