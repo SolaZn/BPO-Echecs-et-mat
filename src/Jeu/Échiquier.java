@@ -9,7 +9,9 @@ public class Échiquier {
         Plateau = new Piece[8][8];
         for(int l = 0; l < Plateau.length; ++l){
             for(int c = 0; c < Plateau[0].length; ++c){
-                Plateau[l][c] = new Tour(l,c,"blanc");
+                // A completer je ne vois pas comment il faut declarer les pieces quand
+                // la case est vide mais aussi quand la case est composé dd'une piéce.
+                // C'est a dire comment sait on quelle piece declarer comment le jeu fait pour savoir ca
             }
         }
     }
