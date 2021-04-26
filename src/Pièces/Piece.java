@@ -1,6 +1,6 @@
 package Pièces;
 
-public abstract class Piece {
+public abstract class Piece implements Jeu.IPiece{
     private Coordonnee coord;
     private String couleur;
 
@@ -13,14 +13,18 @@ public abstract class Piece {
         return this.couleur;
     }
 
-    public abstract String getChar();
+    public abstract char getChar();
 
-    public String dessiner(){
+    public char dessiner(){
         return getChar();
     }
 
     public void deplacerA(Coordonnee coordArr){
         this.coord.setLigne(coordArr.getLigne());
         this.coord.setColonne(coordArr.getColonne());
+    }
+
+    public Coordonnee getCoord() {
+        return coord;
     }
 }

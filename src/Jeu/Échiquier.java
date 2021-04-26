@@ -14,14 +14,21 @@ public class Échiquier {
         }
     }
 
+    public char[][] getPlateau() {
+        return Plateau;
+    }
+
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("    a   b   c   d   e   f   g   h    \n");
         for(int l = 0; l < Plateau.length; ++l) {
             sb.append("   --- --- --- --- --- --- --- ---   \n");
-            sb.append(Integer.toString(l+1));
+            sb.append(Integer.toString(8-l));
             for (int c = 0; c < Plateau[0].length; ++c) {
-                sb.append("| ").append(Plateau[l][c]);
+                if(Character.toUpperCase(Plateau[l][c]) == 'R' || Character.toUpperCase(Plateau[l][c]) == 'T')
+                    sb.append(" | ").append(Plateau[l][c]);
+                else
+                    sb.append(" | ").append(" ");
             }
             sb.append(" | ").append(Integer.toString(8-l));
             sb.append("\n");

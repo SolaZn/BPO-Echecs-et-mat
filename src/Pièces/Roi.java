@@ -6,12 +6,12 @@ public class Roi extends Piece {
         super(ligneInit, colInit, colr);
     }
 
-    public String getChar() {
+    public char getChar() {
         if(super.getCouleur().equals("blanc")){
-            return "R";
+            return 'R';
         }
         else{
-            return "r";
+            return 'r';
         }
     }
 }

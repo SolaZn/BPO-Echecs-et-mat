@@ -6,12 +6,12 @@ public class Tour extends Piece {
         super(ligneInit, colInit, colr);
     }
 
-    public String getChar() {
+    public char getChar() {
         if(super.getCouleur().equals("blanc")){
-            return "T";
+            return 'T';
         }
         else{
-            return "t";
+            return 't';
         }
     }
 }
