@@ -1,6 +1,6 @@
 package Application;
 
-import Jeu.Joueur;
+import Joueurs.Joueur;
 import Jeu.Échiquier;
 import Pièces.Coordonnee;
 import java.util.Scanner;
