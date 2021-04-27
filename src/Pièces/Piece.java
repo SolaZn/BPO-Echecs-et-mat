@@ -9,6 +9,7 @@ public abstract class Piece implements Jeu.IPiece{
         this.couleur = colrInit;
     }
 
+
     public String getCouleur() {
         return this.couleur;
     }

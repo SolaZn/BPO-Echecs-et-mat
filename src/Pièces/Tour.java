@@ -14,4 +14,5 @@ public class Tour extends Piece {
             return 't';
         }
     }
+
 }

@@ -1,6 +1,8 @@
 package Joueurs;
 
 import Jeu.IPiece;
+import Pièces.Coordonnee;
+import Pièces.Piece;
 import Pièces.Roi;
 import Pièces.Tour;
 
@@ -8,6 +10,7 @@ import java.util.LinkedList;
 
 public class Joueur implements Jeu.IJoueur {
     private LinkedList<IPiece> listePieces;
+
 
     public Joueur(String couleur){
         listePieces = new LinkedList<>();
@@ -25,5 +28,28 @@ public class Joueur implements Jeu.IJoueur {
             Plateau[p.getCoord().getLigne()][p.getCoord().getColonne()] = p.dessiner();
     }
 
+    public boolean deplacerPiece(char[][] Plateau, Coordonnee coordInit, Coordonnee coordArr, char typePieceArr){
+        int idDepart = this.detientPiece(coordInit);
+        int idArrivee = this.detientPiece(coordArr);
+        if(idDepart != -1 && idArrivee == -1){
+            if(IPiece.isMangeable(typePieceArr)){
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private int detientPiece(Coordonnee coord) {
+        for(IPiece p : listePieces){
+            if(p.getCoord().equals(coord))
+                return listePieces.indexOf(p);
+            else
+                continue;
+        }
+        return -1;
+    }
+
+    private void listerCoupsPossibles(char[][] Plateau, Coordonnee coordInit){
+
+    }
 }

@@ -1,0 +1,22 @@
+
+v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ö²ƒ¼8¶ğŞş/
+M
+java:S1172@"0Remove this unused method parameter "Echiquier".(ìÖÃ8ŸÆÿ/
+m	java:S117H"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚšÕ²8ŸÆÿ/
+v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ö²ƒ¼8¶ğŞş/
+j	java:S100H"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚšÕ²8ŸÆÿ/
+v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ö²ƒ¼8¶ğŞş/
+^
+java:S1126C"AReplace this if-then-else statement by a single return statement.(ˆ»íÎ8È°‚€‘/
+v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ö²ƒ¼8¶ğŞş/
+v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ö²ƒ¼8¶ğŞş/
+o	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÛÎ‚ùÿÿÿÿ8îÀÒş/
+m	java:S117@"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ìÖÃ8ŸÆÿ/
+v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ö²ƒ¼8¶ğŞş/
+]	java:S125"<This block of commented-out lines of code should be removed.(ÛÎ‚ùÿÿÿÿ8è•åş/
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(íÄ£Íüÿÿÿÿ
+r	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÛÎ‚ùÿÿÿÿ8¦Úûù/
+m	java:S117H"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚšÕ²8ŸÆÿ/
+X	java:S125#"<This block of commented-out lines of code should be removed.(¼±ÍØ8°õ©‘/
+m	java:S117H"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚšÕ²8ŸÆÿ/
+v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ö²ƒ¼8¶ğŞş/

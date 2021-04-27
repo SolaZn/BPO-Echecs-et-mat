@@ -1,0 +1,4 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(íÄ£Íüÿÿÿÿ
+n	java:S116"RRename this field "Plateau" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„ê‘Ó8åĞ…ı/
+n	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(Ççşÿÿÿÿÿ8åĞ…ı/

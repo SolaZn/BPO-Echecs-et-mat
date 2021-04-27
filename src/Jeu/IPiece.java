@@ -3,11 +3,15 @@ package Jeu;
 import Pièces.Coordonnee;
 
 public interface IPiece {
-    public String getCouleur();
+    String getCouleur();
 
-    public char dessiner();
+    char dessiner();
 
-    public void deplacerA(Coordonnee coordArr);
+    void deplacerA(Coordonnee coordArr);
 
-    public Coordonnee getCoord();
+    Coordonnee getCoord();
+
+    static boolean isMangeable(char typePiece){
+        return Character.toUpperCase(typePiece) != 'R';
+    }
 }

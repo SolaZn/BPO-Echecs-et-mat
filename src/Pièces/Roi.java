@@ -14,4 +14,5 @@ public class Roi extends Piece {
             return 'r';
         }
     }
+
 }

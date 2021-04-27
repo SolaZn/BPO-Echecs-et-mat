@@ -1,5 +1,6 @@
 package Jeu;
 
+import Exceptions.CoordInexistanteException;
 import Pièces.Coordonnee;
 
 public class Échiquier {
@@ -22,18 +23,18 @@ public class Échiquier {
         return Plateau;
     }
 
-    public boolean coordExiste(Coordonnee coord){
+    public boolean coordExiste(Coordonnee coord) throws Exceptions.CoordInexistanteException{
         // verifier si les coordonnes sont dans l'echiquier
         if(coord.getLigne() >= 0 && coord.getLigne() < MTAILLE && coord.getColonne() >= 0 && coord.getColonne() < MTAILLE)
             return true;
-        return false;
+        throw new CoordInexistanteException();
     }
 
-    public boolean coordOccupé(Coordonnee coord){
-        return this.Plateau[coord.getLigne()][coord.getColonne()] != ' ';
+    public char coordOccupé(Coordonnee coord){
+        return this.Plateau[coord.getLigne()][coord.getColonne()];
     }
 
-    public void clear(){
+    public void rafraichir(){
         for(int l = 0; l < Plateau.length; ++l) {
             for (int c = 0; c < Plateau[0].length; ++c) {
                 this.Plateau[l][c] = ' ';

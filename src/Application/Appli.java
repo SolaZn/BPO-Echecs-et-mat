@@ -3,7 +3,6 @@ package Application;
 import Jeu.Jeu;
 import Joueurs.Joueur;
 import Jeu.Échiquier;
-import Pièces.Coordonnee;
 import java.util.Scanner;
 
 public class Appli {
