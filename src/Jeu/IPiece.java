@@ -7,7 +7,7 @@ public interface IPiece {
 
     char dessiner();
 
-    void deplacerA(Coordonnee coordArr);
+    boolean move(Coordonnee coordArr);
 
     Coordonnee getCoord();
 

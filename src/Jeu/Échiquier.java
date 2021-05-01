@@ -2,6 +2,7 @@ package Jeu;
 
 import Exceptions.CoordInexistanteException;
 import Pièces.Coordonnee;
+import Joueurs.Joueur;
 
 public class Échiquier {
     private char[][] Plateau;
@@ -34,12 +35,18 @@ public class Échiquier {
         return this.Plateau[coord.getLigne()][coord.getColonne()];
     }
 
-    public void rafraichir(){
+    public void effacer(){
         for(int l = 0; l < Plateau.length; ++l) {
             for (int c = 0; c < Plateau[0].length; ++c) {
                 this.Plateau[l][c] = ' ';
             }
         }
+    }
+
+    public void rafraichir(Joueur J1, Joueur J2){
+        this.effacer();
+        J1.dessinerPositions(this.getPlateau());
+        J2.dessinerPositions(this.getPlateau());
     }
 
     public String toString(){
@@ -49,7 +56,7 @@ public class Échiquier {
             sb.append("   --- --- --- --- --- --- --- ---   \n");
             sb.append(Integer.toString(MTAILLE-l));
             for (int c = 0; c < Plateau[0].length; ++c) {
-                if(!(Character.toUpperCase(Plateau[l][c]) == ' '))
+                if((Character.toUpperCase(Plateau[l][c]) != ' '))
                     sb.append(" | ").append(Plateau[l][c]);
                 else
                     sb.append(" | ").append(" ");

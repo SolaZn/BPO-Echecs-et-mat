@@ -9,18 +9,15 @@ public abstract class Piece implements Jeu.IPiece{
         this.couleur = colrInit;
     }
 
-
     public String getCouleur() {
         return this.couleur;
     }
-
-    public abstract char getChar();
 
     public char dessiner(){
         return getChar();
     }
 
-    public void deplacerA(Coordonnee coordArr){
+    void deplacerA(Coordonnee coordArr){
         this.coord.setLigne(coordArr.getLigne());
         this.coord.setColonne(coordArr.getColonne());
     }
@@ -28,4 +25,7 @@ public abstract class Piece implements Jeu.IPiece{
     public Coordonnee getCoord() {
         return coord;
     }
+
+    public abstract char getChar();
+    public abstract boolean move(Coordonnee coordArr);
 }

@@ -1,5 +1,7 @@
 package Pièces;
 
+import java.util.Objects;
+
 public class Coordonnee {
     private int ligne, colonne;
 
@@ -22,5 +24,13 @@ public class Coordonnee {
 
     public void setColonne(int colonne) {
         this.colonne = colonne;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Coordonnee that = (Coordonnee) o;
+        return ligne == that.ligne && colonne == that.colonne;
     }
 }

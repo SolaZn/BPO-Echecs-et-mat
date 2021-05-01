@@ -15,4 +15,9 @@ public class Tour extends Piece {
         }
     }
 
+    @Override
+    public boolean move(Coordonnee coordArr){
+        return false;
+    }
+
 }

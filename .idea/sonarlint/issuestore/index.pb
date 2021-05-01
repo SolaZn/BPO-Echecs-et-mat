@@ -21,3 +21,9 @@ G
 src/Jeu/Échiquier.java,6\d\6d443466a22af3e63ffb493f27a5007ad4f0806d
 @
 src/Jeu/Jeu.java,d\2\d2877179d4ff430d56d4ffbaa1970f68fc5c1991
+N
+src/Pièces/FabriquePiece.java,a\a\aaf73dd422bdead7298c617e89e6ef3b36b06b27
+^
+.src/Exceptions/PieceNonMangeableException.java,c\0\c0319bf21eed6c50dd4b4c6c06f661afc025a895
+]
+-src/Exceptions/CoordInexistanteException.java,8\8\88322b3de879f569351042eacc4f7c75ef873f0a

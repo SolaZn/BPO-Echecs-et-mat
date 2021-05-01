@@ -15,4 +15,19 @@ public class Roi extends Piece {
         }
     }
 
+    @Override
+    public boolean move(Coordonnee coordArr) {
+        Coordonnee coordPiece = super.getCoord();
+        if(!(coordPiece.equals(coordArr))){
+            if (coordArr.getColonne() == coordPiece.getColonne() + 1 || coordArr.getColonne() == coordPiece.getColonne() - 1
+                    || coordArr.getColonne() == coordPiece.getColonne()) {
+                if (coordArr.getLigne() == coordPiece.getLigne() - 1 || coordArr.getLigne() == coordPiece.getLigne() + 1
+                        || coordArr.getLigne() == coordPiece.getLigne()) {
+                    deplacerA(coordArr);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

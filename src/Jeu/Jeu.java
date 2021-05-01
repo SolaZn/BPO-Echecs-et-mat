@@ -9,38 +9,46 @@ import static Application.Appli.saisie;
 
 public class Jeu {
 
-    public static Coordonnee creationCoordCoup(char l, char c){
-        return new Coordonnee((Character.getNumericValue(Character.toLowerCase(l)) - 10), (Character.getNumericValue(c) - 1));
-        //Coordonnee coordInit = new Coordonnee((Character.getNumericValue(Character.toLowerCase(coup.charAt(0))) - 10), (Character.getNumericValue(coup.charAt(1)) - 1));
-        //Coordonnee coordArr = new Coordonnee((Character.getNumericValue(Character.toLowerCase(coup.charAt(2))) - 10), (Character.getNumericValue(coup.charAt(3)) - 1));
+    private Jeu(){
+        throw new UnsupportedOperationException("Cette classe n'est pas instanciable");
     }
 
-    public static boolean coupJoué(Échiquier Echiquier, String coup, Joueur joueur)
-            throws CoordInexistanteException, PieceNonMangeableException {
+    public static Coordonnee creationCoordCoup(char c, char l){
+        return new Coordonnee((8 - Character.getNumericValue(l)), (Character.getNumericValue(Character.toLowerCase(c)) - 10));
+    }
 
-        if (coup.length() != 4) {
-            throw new CoordInexistanteException();
-        }
-
-        /*
-        Pour qu'une coordonnée soit valide il suffit qu'elle soit presente dans l'echiquier c'est a dire
-        qu'elle soit (0>= l < 8, 0>= c < 8)
-         */
-        Coordonnee coordInit = creationCoordCoup(coup.charAt(0), coup.charAt(1));
-        Coordonnee coordArr = creationCoordCoup(coup.charAt(2), coup.charAt(3));
-        Appli.affichage(coordArr.toString());
+    private static boolean coupValide(Joueur J, Échiquier Echiquier, Coordonnee coordInit, Coordonnee coordArr)
+        throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException{
         if(Echiquier.coordExiste(coordInit) && Echiquier.coordExiste(coordArr)) {
             //Les coordonnées initiale et d'arrivé existe bien dans l'echiquier
             char typePieceArr = Echiquier.coordOccupé(coordArr);
             if (IPiece.isMangeable(typePieceArr)) {
                 //La pièce d'arrivée est mangeable
-                return joueur.deplacerPiece(Echiquier.getPlateau(), coordInit, coordArr, typePieceArr);
+                int idDepart = J.detientPiece(coordInit);
+                int idArrivee = J.detientPiece(coordArr);
+                if(idDepart != -1 && idArrivee == -1)
+                    return J.deplacerPiece(coordInit, coordArr);
                 //Le joueur a pu déplacer sa piece en toute securité
+                else
+                    throw new PieceNonDetenueException();
             }
             else
                 throw new PieceNonMangeableException();
         }
         return false;
+    }
+
+    public static boolean coupJoué(Échiquier Echiquier, String coup, Joueur J)
+            throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException {
+
+        if (coup.length() != 4) {
+            throw new CoordInexistanteException();
+        }
+
+        Coordonnee coordInit = creationCoordCoup(coup.charAt(0), coup.charAt(1));
+        Coordonnee coordArr = creationCoordCoup(coup.charAt(2), coup.charAt(3));
+
+        return coupValide(J, Echiquier, coordInit, coordArr);
     }
 
     /* 1. on crée le coup en terme de coordonnees de depart, d'arrivée => Fait
@@ -55,69 +63,49 @@ public class Jeu {
         <- coupJoue retourne le resultat et fait rejouer/arrête le jeu/continue le jeu selon les cas.
      */
 
+    private static void tourJoueur(Joueur J1, Joueur J2, Échiquier Echiquier) {
+        String saisieJoueur;
+        boolean etatCoup;
+        do {
+            saisieJoueur = saisie();
+            Appli.affichage(saisieJoueur); // renvoyer le coup vers le traitement
+
+            try {
+                etatCoup = coupJoué(Echiquier, saisieJoueur, J1);
+            }catch(CoordInexistanteException cd){
+                Appli.affichage("Coup illégal\nCoordonnees inexistantes");
+                etatCoup = false;
+                cd.printStackTrace(); // à enlever
+            }catch(PieceNonMangeableException pm){
+                Appli.affichage("Coup illégal\nPiece non mangeable");
+                etatCoup = false;
+                pm.printStackTrace(); // à enlever
+            }catch(PieceNonDetenueException pn){
+                Appli.affichage("Coup illégal\nPièce de départ non détenue\net/ou Pièce d'arrivée détenue");
+                etatCoup = false;
+                pn.printStackTrace();
+            }
+        }
+        while(!etatCoup);
+
+        Echiquier.rafraichir(J1,J2);
+        Appli.affichage(Echiquier.toString());
+    }
+
     public static void Partie(Joueur Blanc, Joueur Noir, Échiquier Echiquier){
         Appli.affichage(Echiquier.toString());
+
         Blanc.dessinerPositions(Echiquier.getPlateau());
-
-        Appli.affichage(Echiquier.toString());
         Noir.dessinerPositions(Echiquier.getPlateau());
-
         Appli.affichage(Echiquier.toString());
         Appli.affichage("C'est parti !");
 
         for(;;){
-            String saisieJoueur;
-            boolean etatCoup;
-
             Appli.affichage("C'est au Joueur BLANC de saisir un coup :");
-
-            do {
-                saisieJoueur = saisie();
-                Appli.affichage(saisieJoueur); // renvoyer le coup vers le traitement
-                try {
-                    etatCoup = coupJoué(Echiquier, saisieJoueur, Blanc);
-                }catch(CoordInexistanteException cd){
-                    Appli.affichage("Coup illégal\nCoordonnees inexistantes");
-                    etatCoup = false;
-                    cd.printStackTrace();
-                }
-                catch(PieceNonMangeableException pm){
-                    Appli.affichage("Coup illégal\nPiece non mangeable");
-                    etatCoup = false;
-                    pm.printStackTrace();
-                }
-            }
-            while(!etatCoup);
-            // Ne pas oublier de rafraichir le tableau pour que le nouveau tour contienne seulement les nouvelles
-            // positions de l'échiquier : Echiquier.rafraichir()
-            Echiquier.rafraichir();
-            Blanc.dessinerPositions(Echiquier.getPlateau());
-
-            Appli.affichage(Echiquier.toString());
+            tourJoueur(Blanc, Noir, Echiquier);
 
             Appli.affichage("C'est au Joueur NOIR de saisir un coup :");
-            do {
-                saisieJoueur = saisie();
-                Appli.affichage(saisieJoueur); // renvoyer le coup vers le traitement
-
-                try {
-                    etatCoup = coupJoué(Echiquier, saisieJoueur, Noir);
-                }catch(CoordInexistanteException cd){
-                    Appli.affichage("Coup illégal\nCoordonnees inexistantes");
-                    etatCoup = false;
-                    cd.printStackTrace();
-                }
-                catch(PieceNonMangeableException pm){
-                    Appli.affichage("Coup illégal\nPiece non mangeable");
-                    etatCoup = false;
-                    pm.printStackTrace();
-                }
-            }
-            while(!etatCoup);
-            Noir.dessinerPositions(Echiquier.getPlateau());
-
-            Appli.affichage(Echiquier.toString());
-
+            tourJoueur(Noir, Blanc, Echiquier);
         }
     }
 

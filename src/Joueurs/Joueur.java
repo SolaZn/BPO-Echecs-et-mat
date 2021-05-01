@@ -9,17 +9,16 @@ import Pièces.Tour;
 import java.util.LinkedList;
 
 public class Joueur implements Jeu.IJoueur {
-    private LinkedList<IPiece> listePieces;
-
+    private final LinkedList<IPiece> listePieces;
 
     public Joueur(String couleur){
         listePieces = new LinkedList<>();
-        if(couleur == "blanc"){
-            listePieces.add(new Roi(8-6, 8-6, couleur)); // 8 - x parce que l'échiquier a le 8 en haut
-            listePieces.add(new Tour(8-7,8-2, couleur));
+        if(couleur.equals("blanc")){
+            listePieces.add(new Roi(2, 4, couleur));
+            listePieces.add(new Tour(1,1, couleur));
         }
-        else if (couleur == "noir"){
-            listePieces.add(new Roi(8-8,8-5, couleur));
+        else if (couleur.equals("noir")){
+            listePieces.add(new Roi(0,4, couleur));
         }
     }
 
@@ -28,20 +27,15 @@ public class Joueur implements Jeu.IJoueur {
             Plateau[p.getCoord().getLigne()][p.getCoord().getColonne()] = p.dessiner();
     }
 
-    public boolean deplacerPiece(char[][] Plateau, Coordonnee coordInit, Coordonnee coordArr, char typePieceArr){
-        int idDepart = this.detientPiece(coordInit);
-        int idArrivee = this.detientPiece(coordArr);
-        if(idDepart != -1 && idArrivee == -1){
-            if(IPiece.isMangeable(typePieceArr)){
-                return true;
-            }
-        }
-        return false;
+    public boolean deplacerPiece(Coordonnee coordInit, Coordonnee coordArr){
+        // TODO: 01/05/2021 Vérifier le respect du polym sur isMangeable puis passer les coordonnées et le type d'arrivée à la pièce instanciée
+        int pieceJouee = this.detientPiece(coordInit);
+        return listePieces.get(pieceJouee).move(coordArr);
     }
 
-    private int detientPiece(Coordonnee coord) {
+    public int detientPiece(Coordonnee coord) {
         for(IPiece p : listePieces){
-            if(p.getCoord().equals(coord))
+            if(p.getCoord().equals(coord)) // TODO: 01/05/2021   //override equals dans Coordonnee pour permettre la comparaison
                 return listePieces.indexOf(p);
             else
                 continue;
