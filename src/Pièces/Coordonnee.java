@@ -1,7 +1,5 @@
 package Pièces;
 
-import java.util.Objects;
-
 public class Coordonnee {
     private int ligne, colonne;
 

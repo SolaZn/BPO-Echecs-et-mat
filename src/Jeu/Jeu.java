@@ -18,28 +18,32 @@ public class Jeu {
     }
 
     private static boolean coupValide(Joueur J, Échiquier Echiquier, Coordonnee coordInit, Coordonnee coordArr)
-        throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException{
+        throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException{
         if(Echiquier.coordExiste(coordInit) && Echiquier.coordExiste(coordArr)) {
             //Les coordonnées initiale et d'arrivé existe bien dans l'echiquier
-            char typePieceArr = Echiquier.coordOccupé(coordArr);
-            if (IPiece.isMangeable(typePieceArr)) {
-                //La pièce d'arrivée est mangeable
-                int idDepart = J.detientPiece(coordInit);
-                int idArrivee = J.detientPiece(coordArr);
-                if(idDepart != -1 && idArrivee == -1)
-                    return J.deplacerPiece(coordInit, coordArr);
-                //Le joueur a pu déplacer sa piece en toute securité
+            int idDepart = J.detientPiece(coordInit); //
+            if(idDepart != -1) {
+                char typePieceArr = Echiquier.coordOccupé(coordArr);
+                if (IPiece.isMangeable(typePieceArr)) {
+                    //La pièce d'arrivée est mangeable
+                    // TODO: 01/05/2021 Un check pour si et seulement si une pièce est sur le chemin, vérifier si le coup ne passe pas par le chemin sans manger/s'arrêter avant
+                    int idArrivee = J.detientPiece(coordArr);
+                    if (idArrivee == -1)
+                        return J.deplacerPiece(coordInit, coordArr);
+                    else
+                        throw new PieceNonDetenueException();
+                }
                 else
-                    throw new PieceNonDetenueException();
+                    throw new PieceNonMangeableException();
             }
             else
-                throw new PieceNonMangeableException();
+                throw new PieceNonDetenueException();
         }
         return false;
     }
 
     public static boolean coupJoué(Échiquier Echiquier, String coup, Joueur J)
-            throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException {
+            throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException {
 
         if (coup.length() != 4) {
             throw new CoordInexistanteException();
@@ -56,11 +60,11 @@ public class Jeu {
         3. on verifie si il y a une pièce au depart, si il y a une piece à la fin (avec Coord et Echiquier) => Fait
         4. on verifie si on peut manger la pièce tout court (pour le Roi) (avec Echiquier) => Fait
         -> on transmet l'ordre de déplacement au joueur pour qu'il verifie selon ses règles de déplacement (on transmet Coord, Echiquier...)
-            5. il regarde la liste des coups possibles pour son pion et le coup doit y être => TROP DUR pr l'instant -> voir juste deplacement possible
-            6. il verifie si il peut manger le pion d'arrivée le cas échéant
-            7. "il vérifie si la partie est finie par son coup"
-        <- il retourne vrai ou faux si le coup est fait ou pas
-        <- coupJoue retourne le resultat et fait rejouer/arrête le jeu/continue le jeu selon les cas.
+            5. il regarde la liste des coups possibles pour son pion et le coup doit y être => TROP DUR pr l'instant -> voir juste deplacement possible => FAIT
+            6. il verifie si il peut manger le pion d'arrivée le cas échéant => FAIT
+            7. "il vérifie si la partie est finie par son coup" => A VOIR
+        <- il retourne vrai ou faux si le coup est fait ou pas => FAIT
+        <- coupJoue retourne le resultat et fait rejouer/arrête le jeu/continue le jeu selon les cas. => A VOIR, séparer en deux
      */
 
     private static void tourJoueur(Joueur J1, Joueur J2, Échiquier Echiquier) {
@@ -73,39 +77,45 @@ public class Jeu {
             try {
                 etatCoup = coupJoué(Echiquier, saisieJoueur, J1);
             }catch(CoordInexistanteException cd){
-                Appli.affichage("Coup illégal\nCoordonnees inexistantes");
+                Appli.affichage("Coup illégal\nCoordonnées inexistantes");
                 etatCoup = false;
                 cd.printStackTrace(); // à enlever
             }catch(PieceNonMangeableException pm){
-                Appli.affichage("Coup illégal\nPiece non mangeable");
+                Appli.affichage("Coup illégal\nPièce non mangeable");
                 etatCoup = false;
                 pm.printStackTrace(); // à enlever
             }catch(PieceNonDetenueException pn){
                 Appli.affichage("Coup illégal\nPièce de départ non détenue\net/ou Pièce d'arrivée détenue");
                 etatCoup = false;
-                pn.printStackTrace();
+                pn.printStackTrace(); // à enlever
+            }catch(CoupHorsZoneDepException cz){
+                Appli.affichage("Coup illégal\nCoup hors de la zone de déplacement de la pièce\nou coup sans bouger");
+                etatCoup = false;
+                cz.printStackTrace(); // à enlever
             }
         }
         while(!etatCoup);
 
         Echiquier.rafraichir(J1,J2);
-        Appli.affichage(Echiquier.toString());
     }
 
     public static void Partie(Joueur Blanc, Joueur Noir, Échiquier Echiquier){
-        Appli.affichage(Echiquier.toString());
+        Appli.affichage(Echiquier.toString('a'));
 
         Blanc.dessinerPositions(Echiquier.getPlateau());
         Noir.dessinerPositions(Echiquier.getPlateau());
-        Appli.affichage(Echiquier.toString());
         Appli.affichage("C'est parti !");
 
         for(;;){
+            Appli.affichage(Echiquier.toString('a'));
             Appli.affichage("C'est au Joueur BLANC de saisir un coup :");
             tourJoueur(Blanc, Noir, Echiquier);
 
+            Appli.affichage(Echiquier.toString('b'));
             Appli.affichage("C'est au Joueur NOIR de saisir un coup :");
             tourJoueur(Noir, Blanc, Echiquier);
+
+            // vérifier les conditions de fin de partie avant la fin de chaque tour
         }
     }
 

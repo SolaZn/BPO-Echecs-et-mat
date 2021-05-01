@@ -6,7 +6,10 @@ import Joueurs.Joueur;
 
 public class Échiquier {
     private char[][] Plateau;
-    private final static int MTAILLE = 8;
+    private static final int MTAILLE = 8;
+    private static final String LIGNES = "   --- --- --- --- --- --- --- ---   \n";
+    private static final String CASESALPH = "    a   b   c   d   e   f   g   h    \n";
+    private static final String CASESREV = "    h   g   f   e   d   c   b   a    \n";
 
     public Échiquier(){
         Plateau = new char[MTAILLE][MTAILLE];
@@ -49,23 +52,51 @@ public class Échiquier {
         J2.dessinerPositions(this.getPlateau());
     }
 
-    public String toString(){
+    private String affBonSens(){
         StringBuilder sb = new StringBuilder();
-        sb.append("    a   b   c   d   e   f   g   h    \n");
-        for(int l = 0; l < Plateau.length; ++l) {
-            sb.append("   --- --- --- --- --- --- --- ---   \n");
-            sb.append(Integer.toString(MTAILLE-l));
+        sb.append(CASESALPH);
+        for (int l = 0; l < Plateau.length; ++l) {
+            sb.append(LIGNES);
+            sb.append((MTAILLE - l));
             for (int c = 0; c < Plateau[0].length; ++c) {
-                if((Character.toUpperCase(Plateau[l][c]) != ' '))
+                if ((Character.toUpperCase(Plateau[l][c]) != ' '))
                     sb.append(" | ").append(Plateau[l][c]);
                 else
                     sb.append(" | ").append(" ");
             }
-            sb.append(" | ").append(Integer.toString(MTAILLE-l));
+            sb.append(" | ").append((MTAILLE - l));
             sb.append("\n");
         }
-        sb.append("   --- --- --- --- --- --- --- ---   \n");
-        sb.append("    a   b   c   d   e   f   g   h    \n");
+        sb.append(LIGNES);
+        sb.append(CASESALPH);
         return sb.toString();
+    }
+
+    private String affReverse(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(CASESREV);
+        for (int l = Plateau.length - 1; l >= 0; --l) {
+            sb.append(LIGNES);
+            sb.append((MTAILLE - l));
+            for (int c = Plateau[0].length - 1; c >= 0; --c) {
+                if ((Character.toUpperCase(Plateau[l][c]) != ' '))
+                    sb.append(" | ").append(Plateau[l][c]);
+                else
+                    sb.append(" | ").append(" ");
+            }
+            sb.append(" | ").append((MTAILLE - l));
+            sb.append("\n");
+        }
+        sb.append(LIGNES);
+        sb.append(CASESREV);
+        return sb.toString();
+    }
+
+    public String toString(char modeAffichage) {
+        if (modeAffichage == 'a') {
+            return affBonSens();
+        }
+        else
+            return affReverse();
     }
 }

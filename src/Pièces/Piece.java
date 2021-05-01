@@ -4,7 +4,7 @@ public abstract class Piece implements Jeu.IPiece{
     private Coordonnee coord;
     private String couleur;
 
-    public Piece(int ligneInit, int colInit, String colrInit){
+    Piece(int ligneInit, int colInit, String colrInit){
         this.coord = new Coordonnee(ligneInit, colInit);
         this.couleur = colrInit;
     }
@@ -26,6 +26,5 @@ public abstract class Piece implements Jeu.IPiece{
         return coord;
     }
 
-    public abstract char getChar();
-    public abstract boolean move(Coordonnee coordArr);
+    public abstract char getChar();;
 }

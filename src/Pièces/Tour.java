@@ -1,5 +1,7 @@
 package Pièces;
 
+import Exceptions.CoupHorsZoneDepException;
+
 public class Tour extends Piece {
 
     public Tour(int ligneInit, int colInit, String colr){
@@ -16,7 +18,18 @@ public class Tour extends Piece {
     }
 
     @Override
-    public boolean move(Coordonnee coordArr){
+    public boolean move(Coordonnee coordArr) throws CoupHorsZoneDepException{
+        // TODO: 01/05/2021 Fonction à implémenter en prenant en compte  les "pièces sur le chemin" -> voir Jeu.jeu -> plus préférable d'implémenter le check AVANT à cet étape là
+        Coordonnee coordPiece = super.getCoord();
+        if(!(coordPiece.equals(coordArr))){
+            if ((coordArr.getColonne() == coordPiece.getColonne() && coordArr.getLigne() != coordPiece.getLigne()) ||
+                    (coordArr.getLigne() == coordPiece.getLigne() && coordArr.getColonne() != coordPiece.getColonne())) {
+                // si il se déplace horizontalement ou verticalement
+                    deplacerA(coordArr);
+                    return true;
+            }
+            throw new CoupHorsZoneDepException();
+        }
         return false;
     }
 
