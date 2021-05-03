@@ -1,14 +1,16 @@
 
-m	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿ßÖŒ8È­–¥‘/
-X	java:S125"<This block of commented-out lines of code should be removed.(åÄƒë8È­–¥‘/
-j	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿ßÖŒ8È­–¥‘/
-o
-java:S3776:"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(ÚšÕ²8¡È‚¨‘/
-j	java:S100:"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚšÕ²8È­–¥‘/
-m	java:S117:"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚšÕ²8È­–¥‘/
-W
-java:S1118
-":Add a private constructor to hide the implicit public one.(¼éË­8È­–¥‘/
-m	java:S117:"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚšÕ²8È­–¥‘/
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(íÄ£Íüÿÿÿÿ
-m	java:S117:"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚšÕ²8È­–¥‘/
+j	java:S100f"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚšÕ²8ÒÜ‡Ë’/
+m	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±§•…8ÒÜ‡Ë’/
+r	java:S117F"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©Éƒ÷úÿÿÿÿ8ÒÜ‡Ë’/
+r	java:S117F"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©Éƒ÷úÿÿÿÿ8ÒÜ‡Ë’/
+O
+java:S1135"2Complete the task associated to this TODO comment.(Äè§ô8Áº¢Î’/
+m	java:S117f"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚšÕ²8ÒÜ‡Ë’/
+m	java:S117f"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚšÕ²8ÒÜ‡Ë’/
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(íÄ£Íüÿÿÿÿ8ÒÜ‡Ë’/
+m	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±§•…8ÒÜ‡Ë’/
+m	java:S117f"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚšÕ²8ÒÜ‡Ë’/
+m	java:S117-"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³”¤¬8ÒÜ‡Ë’/
+r	java:S117F"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©Éƒ÷úÿÿÿÿ8ÒÜ‡Ë’/
+m	java:S117-"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³”¤¬8ÒÜ‡Ë’/
+j	java:S100-"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³”¤¬8ÒÜ‡Ë’/

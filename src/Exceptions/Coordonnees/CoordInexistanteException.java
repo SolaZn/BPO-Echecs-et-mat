@@ -1,4 +1,4 @@
-package Exceptions;
+package Exceptions.Coordonnees;
 
 public class CoordInexistanteException extends Exception {
     public CoordInexistanteException() {

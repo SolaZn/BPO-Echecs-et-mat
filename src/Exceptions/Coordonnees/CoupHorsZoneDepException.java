@@ -1,4 +1,4 @@
-package Exceptions;
+package Exceptions.Coordonnees;
 
 public class CoupHorsZoneDepException extends Exception{
     public CoupHorsZoneDepException() {

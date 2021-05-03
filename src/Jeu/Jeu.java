@@ -1,43 +1,36 @@
 package Jeu;
 
 import Application.Appli;
-import Exceptions.*;
+import Exceptions.Coordonnees.*;
+import Exceptions.Pieces.*;
 import Joueurs.Joueur;
 import Pièces.Coordonnee;
 
 import static Application.Appli.saisie;
 
 public class Jeu {
-
     enum etatTour{NORMAL, NULLE, ABANDON, YES, NO}
 
     private Jeu(){
-        throw new UnsupportedOperationException("Cette classe n'est pas instanciable");
+        throw new UnsupportedOperationException("Cette classe n'est pas instantiable");
     }
 
     public static Coordonnee creationCoordCoup(char c, char l) throws FormatCoupIncorrectException {
-        if((Character.getNumericValue(Character.toLowerCase(c)) - 10) >= 0 && ((Character.getNumericValue(Character.toLowerCase(c)) - 10) <= 7)){
-            if(Character.isLetter(c) && Character.isDigit(l)){
-                return new Coordonnee((8 - Character.getNumericValue(l)), (Character.getNumericValue(Character.toLowerCase(c)) - 10));
-            } else {
-                throw new FormatCoupIncorrectException();
-            }
-        }
-        else {
+        if(Character.isLetter(c) && Character.isDigit(l))
+            return new Coordonnee((8 - Character.getNumericValue(l)), (Character.getNumericValue(Character.toLowerCase(c)) - 10));
+        else
             throw new FormatCoupIncorrectException();
-        }
     }
 
     private static boolean coupValide(Joueur J, Échiquier Echiquier, Coordonnee coordInit, Coordonnee coordArr)
-        throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException{
+        throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException {
         if(Echiquier.coordExiste(coordInit) && Echiquier.coordExiste(coordArr)) {
-            //Les coordonnées initiale et d'arrivé existe bien dans l'echiquier
+            //Les coordonnées initiale et d'arrivé existe bien dans l'échiquier
             int idDepart = J.detientPiece(coordInit); //
             if(idDepart != -1) {
                 char typePieceArr = Echiquier.coordOccupé(coordArr);
                 if (IPiece.isMangeable(typePieceArr)) {
-                    //La pièce d'arrivée est mangeable
-                    // TODO: 01/05/2021 Un check pour si et seulement si une pièce est sur le chemin, vérifier si le coup ne passe pas par le chemin sans manger/s'arrêter avant
+                    // TODO: 01/05/2021 (UPDATE 02/05) => SEULE LA TOUR REGARDE LE RESULTAT DE CE CHECK, LES AUTRES NON - Un check pour si et seulement si une pièce est sur le chemin, vérifier si le coup ne passe pas par le chemin sans manger/s'arrêter avant
                     int idArrivee = J.detientPiece(coordArr);
                     if (idArrivee == -1)
                         return J.deplacerPiece(coordInit, coordArr);
@@ -77,12 +70,24 @@ public class Jeu {
         <- il retourne vrai ou faux si le coup est fait ou pas => FAIT
         <- coupJoue retourne le resultat et fait rejouer/arrête le jeu/continue le jeu selon les cas. => A VOIR, séparer en deux
      */
+    private static etatTour partieNulle(Joueur J1){
+        // TODO: 03/05/2021 Retourne NULLE pour remettre le jeu dans le bon sens dans 2 tours (donc un tour dans le vent) (mais à voir pour faire mieux) + NO inutile si fait comme ça
+            Appli.affichage("Le joueur " + J1.toString() + " propose un match nul, accepter : YES or NO");
+            String saisieJoueur = saisie();
+            if(saisieJoueur.toUpperCase().compareTo("YES") == 0){
+                return etatTour.YES;
+            }
+            else{
+                return etatTour.NULLE;
+            }
+    }
 
     private static etatTour tourJoueur(Joueur J1, Joueur J2, Échiquier Echiquier, etatTour mode) {
         if(mode == etatTour.NORMAL){
-            Appli.affichage("C'est au Joueur BLANC de saisir un coup :");
+            Appli.affichage("C'est au Joueur " + J1.toString() + " de saisir un coup :");
             String saisieJoueur;
             boolean etatCoup;
+
             do {
                 saisieJoueur = saisie();
                 Appli.affichage(saisieJoueur); // renvoyer le coup vers le traitement
@@ -90,7 +95,7 @@ public class Jeu {
                     return etatTour.ABANDON;
                 }
                 else if(saisieJoueur.toUpperCase().compareTo("NULLE") == 0){
-                    return etatTour.NULLE;
+                    return partieNulle(J1);
                 }
 
                 try {
@@ -112,7 +117,7 @@ public class Jeu {
                     etatCoup = false;
                     cz.printStackTrace(); // à enlever
                 }catch(FormatCoupIncorrectException fci){
-                    Appli.affichage("Coup illégal\nLe format du coup n'est pas correct");
+                    Appli.affichage("Coup illégal\nLe format du coup est incorrect");
                     etatCoup = false;
                 }
             }
@@ -120,16 +125,6 @@ public class Jeu {
 
             Echiquier.rafraichir(J1,J2);
             return etatTour.NORMAL;
-        }
-        else if(mode == etatTour.NULLE){
-            Appli.affichage("Le joueur adverse propose un match nul, accepter : YES or NO");
-            String saisieJoueur = saisie();
-            if(saisieJoueur.toUpperCase().compareTo("YES") == 0){
-                return etatTour.YES;
-            }
-            else{
-                return etatTour.NORMAL;
-            }
         }
         return etatTour.NORMAL;
     }
@@ -144,20 +139,13 @@ public class Jeu {
         for(;;){
             Appli.affichage(Echiquier.toString('a'));
             etatTour = tourJoueur(Blanc, Noir, Echiquier, etatTour);
-            if(etatTour == etatTour.ABANDON){
-                break;
-            }
-            else if(etatTour == etatTour.YES){
+            if(etatTour == Jeu.etatTour.ABANDON || etatTour == Jeu.etatTour.YES){
                 break;
             }
 
             Appli.affichage(Echiquier.toString('b'));
-            Appli.affichage("C'est au Joueur NOIR de saisir un coup :");
             etatTour = tourJoueur(Noir, Blanc, Echiquier, etatTour);
-            if(etatTour == etatTour.ABANDON){
-                break;
-            }
-            else if(etatTour == etatTour.YES){
+            if(etatTour == Jeu.etatTour.ABANDON || etatTour == Jeu.etatTour.YES){
                 break;
             }
             // vérifier les conditions de fin de partie avant la fin de chaque tour

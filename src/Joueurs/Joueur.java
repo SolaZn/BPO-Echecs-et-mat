@@ -1,24 +1,25 @@
 package Joueurs;
 
-import Exceptions.*;
+import Exceptions.Coordonnees.*;
 import Jeu.IPiece;
 import Pièces.Coordonnee;
-import Pièces.Roi;
-import Pièces.Tour;
 
 import java.util.LinkedList;
+import java.util.Locale;
 
 public class Joueur implements Jeu.IJoueur {
     private final LinkedList<IPiece> listePieces;
+    private final String nomJoueur  ;
 
-    public Joueur(String couleur){
+    public Joueur(String couleur, String nomJoueur){
         listePieces = new LinkedList<>();
+        this.nomJoueur = nomJoueur;
         if(couleur.equals("blanc")){
-            listePieces.add(new Roi(2, 4, couleur));
-            listePieces.add(new Tour(1,1, couleur));
+            listePieces.add(IPiece.getPiece('r', new Coordonnee(2,4), couleur));
+            listePieces.add(IPiece.getPiece('t', new Coordonnee(1,1), couleur));
         }
         else if (couleur.equals("noir")){
-            listePieces.add(new Roi(0,4, couleur));
+            listePieces.add(IPiece.getPiece('r', new Coordonnee(0,4), couleur));
         }
     }
 
@@ -28,7 +29,6 @@ public class Joueur implements Jeu.IJoueur {
     }
 
     public boolean deplacerPiece(Coordonnee coordInit, Coordonnee coordArr) throws CoupHorsZoneDepException {
-        // TODO: 01/05/2021 Vérifier le respect du polym sur isMangeable puis passer les coordonnées et le type d'arrivée à la pièce instanciée
         int pieceJouee = this.detientPiece(coordInit);
         return listePieces.get(pieceJouee).move(coordArr);
     }
@@ -37,13 +37,17 @@ public class Joueur implements Jeu.IJoueur {
         for(IPiece p : listePieces){
             if(p.getCoord().equals(coord))
                 return listePieces.indexOf(p);
-            else
-                continue;
         }
         return -1;
     }
 
-    private void listerCoupsPossibles(char[][] Plateau, Coordonnee coordInit){
-        // Implémentation à préparer
+    @Override
+    public String toString() {
+        return nomJoueur.toUpperCase(Locale.ROOT);
     }
+
+    private void listerCoupsPossibles(char[][] Plateau, Coordonnee coordInit){
+        // Implémentation à préparer pour l'IA
+    }
+
 }

@@ -1,9 +1,17 @@
 package Jeu;
 
-import Exceptions.CoupHorsZoneDepException; // TODO: 01/05/2021 Idée : organiser Exceptions en sous packages selon la scope de chaque Exception (exception pièces dans Exceptions.Piece)
-import Pièces.Coordonnee;
+import Exceptions.Coordonnees.*;
+import Pièces.*;
 
 public interface IPiece {
+    static IPiece getPiece(char typePiece, Coordonnee coord, String couleur){
+        return Piece.getPiece(typePiece, coord, couleur);
+    }
+
+    static boolean isMangeable(char typePiece){
+        return Piece.isMangeable(typePiece);
+    }
+
     String getCouleur();
 
     char dessiner();
@@ -12,7 +20,5 @@ public interface IPiece {
 
     Coordonnee getCoord();
 
-    static boolean isMangeable(char typePiece){
-        return Character.toUpperCase(typePiece) != 'R';
-    }
+
 }

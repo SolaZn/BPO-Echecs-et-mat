@@ -27,3 +27,7 @@ N
 .src/Exceptions/PieceNonMangeableException.java,c\0\c0319bf21eed6c50dd4b4c6c06f661afc025a895
 ]
 -src/Exceptions/CoordInexistanteException.java,8\8\88322b3de879f569351042eacc4f7c75ef873f0a
+\
+,src/Exceptions/PieceNonDetenueException.java,8\7\878d803d6289592809a51fcf37f53877b15a99ed
+\
+,src/Exceptions/CoupHorsZoneDepException.java,e\0\e09415c7610818bcdfa85226893a514182ff5c45

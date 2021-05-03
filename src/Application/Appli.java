@@ -19,8 +19,8 @@ public class Appli {
     }
 
     public static void main(String[] args) {
-        Joueur Blanc = new Joueur("blanc");
-        Joueur Noir = new Joueur("noir");
+        Joueur Blanc = new Joueur("blanc", "blanc");
+        Joueur Noir = new Joueur("noir", "noir");
         Échiquier Echiquier = new Échiquier();
 
         Jeu.Partie(Blanc, Noir, Echiquier);

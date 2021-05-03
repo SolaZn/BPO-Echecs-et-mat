@@ -1,4 +1,4 @@
-package Exceptions;
+package Exceptions.Pieces;
 
 public class PieceNonDetenueException extends Exception {
     public PieceNonDetenueException() {
