@@ -3,7 +3,9 @@ package Joueurs;
 import Exceptions.Coordonnees.*;
 import Jeu.IPiece;
 import Pièces.Coordonnee;
+import Pièces.etatPiece;
 
+import java.rmi.UnexpectedException;
 import java.util.LinkedList;
 import java.util.Locale;
 
@@ -30,7 +32,7 @@ public class Joueur implements Jeu.IJoueur {
 
     public boolean deplacerPiece(Coordonnee coordInit, Coordonnee coordArr) throws CoupHorsZoneDepException {
         int pieceJouee = this.detientPiece(coordInit);
-        return listePieces.get(pieceJouee).move(coordArr);
+        return listePieces.get(pieceJouee).move(coordArr, etatPiece.Jeu);
     }
 
     public int detientPiece(Coordonnee coord) {
@@ -39,6 +41,21 @@ public class Joueur implements Jeu.IJoueur {
                 return listePieces.indexOf(p);
         }
         return -1;
+    }
+
+    public boolean essaiCoupHostile(Coordonnee coordRoi){
+        boolean roiEnEchec;
+        for(IPiece p : listePieces) {
+                try {
+                    roiEnEchec = p.move(coordRoi, etatPiece.Essai);
+                } catch (CoupHorsZoneDepException chz) {
+                    roiEnEchec = false;
+                }
+                if(roiEnEchec){
+                    return true;
+                }
+        }
+        return false;
     }
 
     @Override
@@ -50,4 +67,12 @@ public class Joueur implements Jeu.IJoueur {
         // Implémentation à préparer pour l'IA
     }
 
+    public Coordonnee positionRoi() {
+        for(IPiece p : listePieces) {
+            if (Character.toUpperCase(p.dessiner()) == 'R') {
+                return p.getCoord();
+            }
+        }
+        throw new UnsupportedOperationException("Tous les joueurs ont un roi...");
+    }
 }

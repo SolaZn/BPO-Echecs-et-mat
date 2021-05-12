@@ -18,22 +18,25 @@ public class Roi extends Piece {
     }
 
     @Override
-    public boolean move(Coordonnee coordArr) throws CoupHorsZoneDepException {
+    public boolean move(Coordonnee coordArr, etatPiece etat) throws CoupHorsZoneDepException {
         Coordonnee coordPiece = super.getCoord();
-        if(!(coordPiece.equals(coordArr))){
-            if (coordArr.getColonne() == coordPiece.getColonne() + 1
-                    || coordArr.getColonne() == coordPiece.getColonne() - 1
-                    || coordArr.getColonne() == coordPiece.getColonne()) { // si il se déplace d'une seule case en colonne
-                if (coordArr.getLigne() == coordPiece.getLigne() - 1
-                        || coordArr.getLigne() == coordPiece.getLigne() + 1
-                        || coordArr.getLigne() == coordPiece.getLigne()) { // si il se déplace d'une seule case en ligne
-                    deplacerA(coordArr);
-                    return true;
+            if (!(coordPiece.equals(coordArr))) {
+                if (coordArr.getColonne() == coordPiece.getColonne() + 1
+                        || coordArr.getColonne() == coordPiece.getColonne() - 1
+                        || coordArr.getColonne() == coordPiece.getColonne()) { // si il se déplace d'une seule case en colonne
+                    if (coordArr.getLigne() == coordPiece.getLigne() - 1
+                            || coordArr.getLigne() == coordPiece.getLigne() + 1
+                            || coordArr.getLigne() == coordPiece.getLigne()) { // si il se déplace d'une seule case en ligne
+                        if(etat == etatPiece.Jeu) {
+                            deplacerA(coordArr);
+                        }
+                        return true;
+                    }
+                    throw new CoupHorsZoneDepException();
                 }
                 throw new CoupHorsZoneDepException();
             }
-            throw new CoupHorsZoneDepException();
-        }
-        return false;
+            return false;
     }
 }
+

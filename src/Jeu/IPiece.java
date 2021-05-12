@@ -16,7 +16,7 @@ public interface IPiece {
 
     char dessiner();
 
-    boolean move(Coordonnee coordArr) throws CoupHorsZoneDepException;
+    boolean move(Coordonnee coordArr, etatPiece etat) throws CoupHorsZoneDepException;
 
     Coordonnee getCoord();
 

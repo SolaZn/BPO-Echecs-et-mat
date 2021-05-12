@@ -82,6 +82,38 @@ public class Jeu {
             }
     }
 
+    private static boolean situationEchec(Joueur J1, Joueur J2, Échiquier Echiquier){
+        Coordonnee positionRoiAdverse = J2.positionRoi();
+        int positionsPossibles = 9;
+        int nbSituationsEchec = 0;
+        for(int variationCol = - 1; variationCol < 2; variationCol++){
+           for(int variationLigne = - 1; variationLigne < 2; variationLigne++) {
+               try {
+                   Coordonnee posPossRoiAdv = new Coordonnee(positionRoiAdverse.getLigne() + variationLigne,
+                           positionRoiAdverse.getColonne() + variationCol);
+                   if(Echiquier.coordExiste(posPossRoiAdv)) {
+                       if(J1.essaiCoupHostile(posPossRoiAdv)){
+                           nbSituationsEchec++;
+                       }
+                   }
+               } catch (CoordInexistanteException ci) {
+                   positionsPossibles -= 1;
+               }
+           }
+        }
+
+        if(nbSituationsEchec == positionsPossibles){ // si toutes les échappatoires du roi sont épuisées
+            Echiquier.rafraichir(J1,J2);
+            Appli.affichage("Echec et mat. \nVictoire joueur " + J1.toString());
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean situationPat(Joueur J1, Joueur J2, Échiquier Echiquier){
+        return true;
+    }
+
     private static etatTour tourJoueur(Joueur J1, Joueur J2, Échiquier Echiquier, etatTour mode) {
         if(mode == etatTour.NORMAL){
             Appli.affichage("C'est au Joueur " + J1.toString() + " de saisir un coup :");
@@ -142,10 +174,18 @@ public class Jeu {
             if(etatTour == Jeu.etatTour.ABANDON || etatTour == Jeu.etatTour.YES){
                 break;
             }
+            if(situationEchec(Blanc, Noir, Echiquier) || situationPat(Blanc, Noir, Echiquier)){
+                Appli.affichage(Echiquier.toString('b'));
+                break;
+            }
 
             Appli.affichage(Echiquier.toString('b'));
             etatTour = tourJoueur(Noir, Blanc, Echiquier, etatTour);
             if(etatTour == Jeu.etatTour.ABANDON || etatTour == Jeu.etatTour.YES){
+                break;
+            }
+            if(situationEchec(Noir, Blanc, Echiquier) || situationPat(Noir, Blanc, Echiquier)){
+                Appli.affichage(Echiquier.toString('a'));
                 break;
             }
             // vérifier les conditions de fin de partie avant la fin de chaque tour

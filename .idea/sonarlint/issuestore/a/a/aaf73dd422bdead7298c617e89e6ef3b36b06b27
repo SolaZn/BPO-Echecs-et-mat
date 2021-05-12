@@ -1,7 +1,0 @@
-
-T
-java:S1135"2Complete the task associated to this TODO comment.(­ñ•‘ÿÿÿÿÿ8¨Ú…Ï’/
-j	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡ç…Â8ÿ½¸Ï’/
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ó·À…þÿÿÿÿ
-i
-java:S1223"LRename this method to prevent any misunderstanding or make it a constructor.(¡ç…Â8ÿ½¸Ï’/

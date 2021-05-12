@@ -10,7 +10,7 @@ public class DefinirPiece {
         else if(Character.toLowerCase(typePiece) == 't'){
             return new Tour(coord.getLigne(), coord.getColonne(), couleur);
         }
-        throw new UnsupportedOperationException("Cette pièce n'a pas été implémentée" + typePiece + "n'existe pas");
+        throw new UnsupportedOperationException("Cette pièce n'a pas été implémentée;\n" + typePiece + " n'existe pas");
     }
 
     public static boolean isMangeable(char typePiece) {
