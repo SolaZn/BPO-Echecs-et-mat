@@ -44,15 +44,13 @@ public class Joueur implements Jeu.IJoueur {
     }
 
     public boolean essaiCoupHostile(Coordonnee coordRoi){
-        boolean roiEnEchec;
         for(IPiece p : listePieces) {
                 try {
-                    roiEnEchec = p.move(coordRoi, etatPiece.Essai);
-                } catch (CoupHorsZoneDepException chz) {
-                    roiEnEchec = false;
-                }
-                if(roiEnEchec){
-                    return true;
+                    if(p.move(coordRoi, etatPiece.Essai)){
+                        return true;
+                    }
+                } catch (CoupHorsZoneDepException chz){
+                    continue;
                 }
         }
         return false;

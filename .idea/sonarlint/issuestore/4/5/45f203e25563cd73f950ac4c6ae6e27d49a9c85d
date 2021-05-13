@@ -1,8 +1,10 @@
 
-H
-java:S11721"&Remove these unused method parameters.(ÏÅ¹Øüÿÿÿÿ8ª¯¦‘/
-r	java:S1171"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÏÅ¹Øüÿÿÿÿ8ª¯¦‘/
-r	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğÆ’µıÿÿÿÿ8©Ô´ı/
-[
-java:S11441"9Remove this unused private "listerCoupsPossibles" method.(ÏÅ¹Øüÿÿÿÿ8ª¯¦‘/
+r	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğÆ’µıÿÿÿÿ8©Ô´ı/
 t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÛàõÖşÿÿÿÿ
+r	java:S117B"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÏÅ¹Øüÿÿÿÿ8ª¯¦‘/
+[
+java:S1128"9Remove this unused import 'java.rmi.UnexpectedException'.(·ƒ¡ÿÿÿÿÿ8×‘¢‘–/
+[
+java:S1144B"9Remove this unused private "listerCoupsPossibles" method.(ÏÅ¹Øüÿÿÿÿ8ª¯¦‘/
+H
+java:S1172B"&Remove these unused method parameters.(ÏÅ¹Øüÿÿÿÿ8ª¯¦‘/

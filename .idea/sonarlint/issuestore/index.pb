@@ -33,3 +33,5 @@ c
 3src/Exceptions/Pieces/PieceNonDetenueException.java,1\7\1773b76eeecb3fc4ea3f2831b23b69ddf6f9473f
 M
 src/Pièces/DefinirPiece.java,c\6\c640ce19439086010a23baf583125d02d9d6be46
+J
+src/Pièces/etatPiece.java,5\5\558dcedadaa7998087b076eaa2cffa190c7d2fa4

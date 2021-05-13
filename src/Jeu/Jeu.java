@@ -22,32 +22,43 @@ public class Jeu {
             throw new FormatCoupIncorrectException();
     }
 
-    private static boolean coupValide(Joueur J, Échiquier Echiquier, Coordonnee coordInit, Coordonnee coordArr)
-        throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException {
+    private static boolean coupValide(Joueur J, Joueur J2, Échiquier Echiquier, Coordonnee coordInit, Coordonnee coordArr)
+        throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException,
+            RoiEnSituationEchecException {
         if(Echiquier.coordExiste(coordInit) && Echiquier.coordExiste(coordArr)) {
             //Les coordonnées initiale et d'arrivé existe bien dans l'échiquier
             int idDepart = J.detientPiece(coordInit); //
             if(idDepart != -1) {
                 char typePieceArr = Echiquier.coordOccupé(coordArr);
                 if (IPiece.isMangeable(typePieceArr)) {
-                    // TODO: 01/05/2021 (UPDATE 02/05) => SEULE LA TOUR REGARDE LE RESULTAT DE CE CHECK, LES AUTRES NON - Un check pour si et seulement si une pièce est sur le chemin, vérifier si le coup ne passe pas par le chemin sans manger/s'arrêter avant
-                    int idArrivee = J.detientPiece(coordArr);
-                    if (idArrivee == -1)
-                        return J.deplacerPiece(coordInit, coordArr);
-                    else
-                        throw new PieceNonDetenueException();
+                    // if(Le Roi n'est pas échec sur cette position && et c'est le roi qui joue)
+                        // TODO: 01/05/2021 (UPDATE 02/05) => SEULE LA TOUR REGARDE LE RESULTAT DE CE CHECK, LES AUTRES NON - Un check pour si et seulement si une pièce est sur le chemin, vérifier si le coup ne passe pas par le chemin sans manger/s'arrêter avant
+                        int idArrivee = J.detientPiece(coordArr);
+                        if (idArrivee == -1) {
+                            if (J.positionRoi().equals(coordInit)) {
+                                if (!J2.essaiCoupHostile(coordArr)) {
+                                    return J.deplacerPiece(coordInit, coordArr);
+                                }
+                                else
+                                    throw new RoiEnSituationEchecException();
+                            }
+                            return J.deplacerPiece(coordInit, coordArr);
+                        }
+                        else
+                            throw new PieceNonDetenueException();
+                    }
                 }
                 else
                     throw new PieceNonMangeableException();
             }
             else
                 throw new PieceNonDetenueException();
-        }
         return false;
     }
 
-    public static boolean coupJoué(Échiquier Echiquier, String coup, Joueur J)
-            throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException, FormatCoupIncorrectException {
+    public static boolean coupJoué(Échiquier Echiquier, String coup, Joueur J, Joueur J2)
+            throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException,
+            FormatCoupIncorrectException, RoiEnSituationEchecException {
 
         if (coup.length() != 4) {
             throw new CoordInexistanteException();
@@ -56,7 +67,7 @@ public class Jeu {
         Coordonnee coordInit = creationCoordCoup(coup.charAt(0), coup.charAt(1));
         Coordonnee coordArr = creationCoordCoup(coup.charAt(2), coup.charAt(3));
 
-        return coupValide(J, Echiquier, coordInit, coordArr);
+        return coupValide(J, J2, Echiquier, coordInit, coordArr);
     }
 
     /* 1. on crée le coup en terme de coordonnees de depart, d'arrivée => Fait
@@ -82,8 +93,7 @@ public class Jeu {
             }
     }
 
-    private static boolean situationEchec(Joueur J1, Joueur J2, Échiquier Echiquier){
-        Coordonnee positionRoiAdverse = J2.positionRoi();
+    private static boolean situationEchec(Joueur J1, Joueur J2, Coordonnee positionRoiAdverse, Échiquier Echiquier){
         int positionsPossibles = 9;
         int nbSituationsEchec = 0;
         for(int variationCol = - 1; variationCol < 2; variationCol++){
@@ -93,6 +103,12 @@ public class Jeu {
                            positionRoiAdverse.getColonne() + variationCol);
                    if(Echiquier.coordExiste(posPossRoiAdv)) {
                        if(J1.essaiCoupHostile(posPossRoiAdv)){
+                           /*if(variationCol == 0 && variationLigne == 0){
+                               ->
+                               J2.essaiCoupHostile(posPieceQuiPeutMangerLeRoi);
+                           }
+                           else (contreEchec > nbpionsmettantenechec)*/
+
                            nbSituationsEchec++;
                        }
                    }
@@ -111,7 +127,9 @@ public class Jeu {
     }
 
     private static boolean situationPat(Joueur J1, Joueur J2, Échiquier Echiquier){
-        return true;
+        // -> après un tour, si le joueur qui va jouer va forcément se mettre en échec, alors il y a pat
+
+        return false;
     }
 
     private static etatTour tourJoueur(Joueur J1, Joueur J2, Échiquier Echiquier, etatTour mode) {
@@ -131,7 +149,7 @@ public class Jeu {
                 }
 
                 try {
-                    etatCoup = coupJoué(Echiquier, saisieJoueur, J1);
+                    etatCoup = coupJoué(Echiquier, saisieJoueur, J1, J2);
                 }catch(CoordInexistanteException cd){
                     Appli.affichage("Coup illégal\nCoordonnées inexistantes");
                     etatCoup = false;
@@ -151,6 +169,10 @@ public class Jeu {
                 }catch(FormatCoupIncorrectException fci){
                     Appli.affichage("Coup illégal\nLe format du coup est incorrect");
                     etatCoup = false;
+                }catch(RoiEnSituationEchecException rse) {
+                    Appli.affichage("Le Roi " + J1.toString() + " se met en \nsituation d'échec par ce coup");
+                    etatCoup = false;
+                    rse.printStackTrace();
                 }
             }
             while(!etatCoup);
@@ -174,7 +196,7 @@ public class Jeu {
             if(etatTour == Jeu.etatTour.ABANDON || etatTour == Jeu.etatTour.YES){
                 break;
             }
-            if(situationEchec(Blanc, Noir, Echiquier) || situationPat(Blanc, Noir, Echiquier)){
+            if(situationEchec(Blanc, Noir, Noir.positionRoi(), Echiquier) || situationPat(Blanc, Noir, Echiquier)){
                 Appli.affichage(Echiquier.toString('b'));
                 break;
             }
@@ -184,7 +206,7 @@ public class Jeu {
             if(etatTour == Jeu.etatTour.ABANDON || etatTour == Jeu.etatTour.YES){
                 break;
             }
-            if(situationEchec(Noir, Blanc, Echiquier) || situationPat(Noir, Blanc, Echiquier)){
+            if(situationEchec(Noir, Blanc, Blanc.positionRoi(), Echiquier) || situationPat(Noir, Blanc, Echiquier)){
                 Appli.affichage(Echiquier.toString('a'));
                 break;
             }
