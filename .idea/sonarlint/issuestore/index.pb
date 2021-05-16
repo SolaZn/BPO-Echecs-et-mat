@@ -35,3 +35,5 @@ M
 src/Pièces/DefinirPiece.java,c\6\c640ce19439086010a23baf583125d02d9d6be46
 J
 src/Pièces/etatPiece.java,5\5\558dcedadaa7998087b076eaa2cffa190c7d2fa4
+g
+7src/Exceptions/Pieces/RoiEnSituationEchecException.java,b\8\b8f6ed2651bb69fff47aaa790ef52114991221b0

@@ -1,11 +1,11 @@
 package Joueurs;
 
+import Application.Appli;
 import Exceptions.Coordonnees.*;
 import Jeu.IPiece;
 import Pièces.Coordonnee;
 import Pièces.etatPiece;
 
-import java.rmi.UnexpectedException;
 import java.util.LinkedList;
 import java.util.Locale;
 
@@ -22,6 +22,7 @@ public class Joueur implements Jeu.IJoueur {
         }
         else if (couleur.equals("noir")){
             listePieces.add(IPiece.getPiece('r', new Coordonnee(0,4), couleur));
+            // listePieces.add(IPiece.getPiece('t', new Coordonnee(3,2), couleur));
         }
     }
 
@@ -41,6 +42,10 @@ public class Joueur implements Jeu.IJoueur {
                 return listePieces.indexOf(p);
         }
         return -1;
+    }
+
+    public int nombrePieces(){
+        return this.listePieces.size();
     }
 
     public boolean essaiCoupHostile(Coordonnee coordRoi){
@@ -72,5 +77,11 @@ public class Joueur implements Jeu.IJoueur {
             }
         }
         throw new UnsupportedOperationException("Tous les joueurs ont un roi...");
+    }
+
+    public void perdrePiece(Coordonnee coordArr) {
+        if(listePieces.removeIf(p -> p.getCoord().equals(coordArr))){
+            Appli.affichage("Une pièce du joueur " + this.toString() + " a été mangée");
+        }
     }
 }

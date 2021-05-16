@@ -28,31 +28,38 @@ public class Jeu {
         if(Echiquier.coordExiste(coordInit) && Echiquier.coordExiste(coordArr)) {
             //Les coordonnées initiale et d'arrivé existe bien dans l'échiquier
             int idDepart = J.detientPiece(coordInit); //
-            if(idDepart != -1) {
+            if (idDepart != -1) {
                 char typePieceArr = Echiquier.coordOccupé(coordArr);
                 if (IPiece.isMangeable(typePieceArr)) {
                     // if(Le Roi n'est pas échec sur cette position && et c'est le roi qui joue)
-                        // TODO: 01/05/2021 (UPDATE 02/05) => SEULE LA TOUR REGARDE LE RESULTAT DE CE CHECK, LES AUTRES NON - Un check pour si et seulement si une pièce est sur le chemin, vérifier si le coup ne passe pas par le chemin sans manger/s'arrêter avant
-                        int idArrivee = J.detientPiece(coordArr);
-                        if (idArrivee == -1) {
-                            if (J.positionRoi().equals(coordInit)) {
-                                if (!J2.essaiCoupHostile(coordArr)) {
-                                    return J.deplacerPiece(coordInit, coordArr);
+                    // TODO: 01/05/2021 (UPDATE 02/05) => SEULE LA TOUR REGARDE LE RESULTAT DE CE CHECK, LES AUTRES NON - Un check pour si et seulement si une pièce est sur le chemin, vérifier si le coup ne passe pas par le chemin sans manger/s'arrêter avant
+                    int idArrivee = J.detientPiece(coordArr);
+                    if (idArrivee == -1) {
+                        if (J.positionRoi().equals(coordInit)) {
+                            if (!J2.essaiCoupHostile(coordArr)) {
+                                if (J.deplacerPiece(coordInit, coordArr)) {
+                                    J2.perdrePiece(coordArr);
+                                    return true;
                                 }
-                                else
-                                    throw new RoiEnSituationEchecException();
-                            }
-                            return J.deplacerPiece(coordInit, coordArr);
+                            } else
+                                throw new RoiEnSituationEchecException();
+                        } else {
+                            if (!J2.essaiCoupHostile(J.positionRoi())){
+                                if (J.deplacerPiece(coordInit, coordArr)) {
+                                    J2.perdrePiece(coordArr);
+                                    return true;
+                                }
+                            } else
+                                throw new RoiEnSituationEchecException();
                         }
-                        else
-                            throw new PieceNonDetenueException();
-                    }
-                }
-                else
+                    } else
+                        throw new PieceNonDetenueException();
+                } else
                     throw new PieceNonMangeableException();
-            }
-            else
+            } else
                 throw new PieceNonDetenueException();
+        } else
+            throw new CoordInexistanteException();
         return false;
     }
 
@@ -81,6 +88,7 @@ public class Jeu {
         <- il retourne vrai ou faux si le coup est fait ou pas => FAIT
         <- coupJoue retourne le resultat et fait rejouer/arrête le jeu/continue le jeu selon les cas. => A VOIR, séparer en deux
      */
+
     private static etatTour partieNulle(Joueur J1){
         // TODO: 03/05/2021 Retourne NULLE pour remettre le jeu dans le bon sens dans 2 tours (donc un tour dans le vent) (mais à voir pour faire mieux) + NO inutile si fait comme ça
             Appli.affichage("Le joueur " + J1.toString() + " propose un match nul, accepter : YES or NO");
@@ -93,7 +101,7 @@ public class Jeu {
             }
     }
 
-    private static boolean situationEchec(Joueur J1, Joueur J2, Coordonnee positionRoiAdverse, Échiquier Echiquier){
+    private static boolean situationEchecMat(Joueur J1, Joueur J2, Coordonnee positionRoiAdverse, Échiquier Echiquier){
         int positionsPossibles = 9;
         int nbSituationsEchec = 0;
         for(int variationCol = - 1; variationCol < 2; variationCol++){
@@ -128,7 +136,10 @@ public class Jeu {
 
     private static boolean situationPat(Joueur J1, Joueur J2, Échiquier Echiquier){
         // -> après un tour, si le joueur qui va jouer va forcément se mettre en échec, alors il y a pat
-
+        if(J1.nombrePieces() == 1 && J2.nombrePieces() == 1){
+            Appli.affichage("Match nul. \nAucun joueur ne peut gagner dans cette situation");
+            return true;
+        }
         return false;
     }
 
@@ -170,7 +181,7 @@ public class Jeu {
                     Appli.affichage("Coup illégal\nLe format du coup est incorrect");
                     etatCoup = false;
                 }catch(RoiEnSituationEchecException rse) {
-                    Appli.affichage("Le Roi " + J1.toString() + " se met en \nsituation d'échec par ce coup");
+                    Appli.affichage("Le Roi " + J1.toString() + " serait\nen situation d'échec");
                     etatCoup = false;
                     rse.printStackTrace();
                 }
@@ -196,7 +207,7 @@ public class Jeu {
             if(etatTour == Jeu.etatTour.ABANDON || etatTour == Jeu.etatTour.YES){
                 break;
             }
-            if(situationEchec(Blanc, Noir, Noir.positionRoi(), Echiquier) || situationPat(Blanc, Noir, Echiquier)){
+            if(situationEchecMat(Blanc, Noir, Noir.positionRoi(), Echiquier) || situationPat(Blanc, Noir, Echiquier)){
                 Appli.affichage(Echiquier.toString('b'));
                 break;
             }
@@ -206,7 +217,7 @@ public class Jeu {
             if(etatTour == Jeu.etatTour.ABANDON || etatTour == Jeu.etatTour.YES){
                 break;
             }
-            if(situationEchec(Noir, Blanc, Blanc.positionRoi(), Echiquier) || situationPat(Noir, Blanc, Echiquier)){
+            if(situationEchecMat(Noir, Blanc, Blanc.positionRoi(), Echiquier) || situationPat(Noir, Blanc, Echiquier)){
                 Appli.affichage(Echiquier.toString('a'));
                 break;
             }
