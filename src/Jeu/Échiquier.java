@@ -1,8 +1,8 @@
 package Jeu;
 
 import Exceptions.Coordonnees.*;
+import Jeu.Interfaces.IJoueur;
 import Pièces.Coordonnee;
-import Joueurs.Joueur;
 
 public class Échiquier {
     private char[][] Plateau;
@@ -10,6 +10,7 @@ public class Échiquier {
     private static final String LIGNES = "   --- --- --- --- --- --- --- ---   \n";
     private static final String CASESALPH = "    a   b   c   d   e   f   g   h    \n";
     private static final String CASESREV = "    h   g   f   e   d   c   b   a    \n";
+    public int nbAffichage = 0;
 
     public Échiquier(){
         Plateau = new char[MTAILLE][MTAILLE];
@@ -24,7 +25,7 @@ public class Échiquier {
         return Plateau;
     }
 
-    public boolean coordExiste(Coordonnee coord) throws CoordInexistanteException {
+    public static boolean coordExiste(Coordonnee coord) throws CoordInexistanteException {
         // verifier si les coordonnes sont dans l'echiquier
         if(coord.getLigne() >= 0 && coord.getLigne() < MTAILLE && coord.getColonne() >= 0 && coord.getColonne() < MTAILLE)
             return true;
@@ -43,7 +44,7 @@ public class Échiquier {
         }
     }
 
-    public void rafraichir(Joueur J1, Joueur J2){
+    public void rafraichir(IJoueur J1, IJoueur J2){
         this.effacer();
         J1.dessinerPositions(this.getPlateau());
         J2.dessinerPositions(this.getPlateau());
@@ -90,6 +91,7 @@ public class Échiquier {
     }
 
     public String toString(char modeAffichage) {
+        nbAffichage++;
         if (modeAffichage == 'a') {
             return affBonSens();
         }

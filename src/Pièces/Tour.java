@@ -1,8 +1,11 @@
 package Pièces;
 
 import Exceptions.Coordonnees.*;
+import Jeu.Échiquier;
+import java.util.LinkedList;
 
 public class Tour extends Piece {
+    private static final int MTAILLE = 8;
 
     public Tour(int ligneInit, int colInit, String colr){
         super(ligneInit, colInit, colr);
@@ -33,6 +36,36 @@ public class Tour extends Piece {
             throw new CoupHorsZoneDepException();
         }
         return false;
+    }
+
+    public LinkedList<Coordonnee> getCoupPossible(){
+        Coordonnee coordPiece = this.getCoord();
+        LinkedList<Coordonnee> listeCoups = new LinkedList<>();
+
+
+        for(int variationCol = - MTAILLE; variationCol < MTAILLE; variationCol++){
+            try {
+                Coordonnee posPossRoiAdv = new Coordonnee(coordPiece.getLigne(),
+                        coordPiece.getColonne() + variationCol);
+                if(Échiquier.coordExiste(posPossRoiAdv))
+                    listeCoups.add(posPossRoiAdv);
+            } catch (CoordInexistanteException ci) {
+                continue;
+            }
+        }
+
+        for(int variationLigne = - MTAILLE; variationLigne < MTAILLE; variationLigne++){
+            try {
+                Coordonnee posPossRoiAdv = new Coordonnee(coordPiece.getLigne() + variationLigne,
+                        coordPiece.getColonne());
+                if(Échiquier.coordExiste(posPossRoiAdv) && !(coordPiece.equals(posPossRoiAdv)))
+                    listeCoups.add(posPossRoiAdv);
+            } catch (CoordInexistanteException ci) {
+                continue;
+            }
+        }
+
+        return listeCoups;
     }
 
 }

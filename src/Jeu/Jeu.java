@@ -3,12 +3,14 @@ package Jeu;
 import Application.Appli;
 import Exceptions.Coordonnees.*;
 import Exceptions.Pieces.*;
-import Joueurs.Joueur;
+import Jeu.Interfaces.IJoueur;
+import Jeu.Interfaces.IPiece;
 import Pièces.Coordonnee;
 
 import static Application.Appli.saisie;
 
 public class Jeu {
+    private static int nombreCoupsNonHostile = 0;
     enum etatTour{NORMAL, NULLE, ABANDON, YES, NO}
 
     private Jeu(){
@@ -18,11 +20,17 @@ public class Jeu {
     public static Coordonnee creationCoordCoup(char c, char l) throws FormatCoupIncorrectException {
         if(Character.isLetter(c) && Character.isDigit(l))
             return new Coordonnee((8 - Character.getNumericValue(l)), (Character.getNumericValue(Character.toLowerCase(c)) - 10));
+        if(Character.isDigit(c) && Character.isDigit(l))
+            return new Coordonnee(Character.getNumericValue(l), Character.getNumericValue(c));
         else
             throw new FormatCoupIncorrectException();
     }
 
-    private static boolean coupValide(Joueur J, Joueur J2, Échiquier Echiquier, Coordonnee coordInit, Coordonnee coordArr)
+    public static void setNbCoupsNonHostile(){
+        nombreCoupsNonHostile = 0;
+    }
+
+    private static boolean coupValide(IJoueur J, IJoueur J2, Échiquier Echiquier, Coordonnee coordInit, Coordonnee coordArr)
         throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException,
             RoiEnSituationEchecException {
         if(Echiquier.coordExiste(coordInit) && Echiquier.coordExiste(coordArr)) {
@@ -63,12 +71,12 @@ public class Jeu {
         return false;
     }
 
-    public static boolean coupJoué(Échiquier Echiquier, String coup, Joueur J, Joueur J2)
+    public static boolean coupJoué(Échiquier Echiquier, String coup, IJoueur J, IJoueur J2)
             throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException,
             FormatCoupIncorrectException, RoiEnSituationEchecException {
 
         if (coup.length() != 4) {
-            throw new CoordInexistanteException();
+            throw new FormatCoupIncorrectException();
         }
 
         Coordonnee coordInit = creationCoordCoup(coup.charAt(0), coup.charAt(1));
@@ -89,7 +97,7 @@ public class Jeu {
         <- coupJoue retourne le resultat et fait rejouer/arrête le jeu/continue le jeu selon les cas. => A VOIR, séparer en deux
      */
 
-    private static etatTour partieNulle(Joueur J1){
+    private static etatTour partieNulle(IJoueur J1){
         // TODO: 03/05/2021 Retourne NULLE pour remettre le jeu dans le bon sens dans 2 tours (donc un tour dans le vent) (mais à voir pour faire mieux) + NO inutile si fait comme ça
             Appli.affichage("Le joueur " + J1.toString() + " propose un match nul, accepter : YES or NO");
             String saisieJoueur = saisie();
@@ -101,7 +109,7 @@ public class Jeu {
             }
     }
 
-    private static boolean situationEchecMat(Joueur J1, Joueur J2, Coordonnee positionRoiAdverse, Échiquier Echiquier){
+    private static boolean situationEchecMat(IJoueur J1, IJoueur J2, Coordonnee positionRoiAdverse, Échiquier Echiquier){
         int positionsPossibles = 9;
         int nbSituationsEchec = 0;
         for(int variationCol = - 1; variationCol < 2; variationCol++){
@@ -134,23 +142,28 @@ public class Jeu {
         return false;
     }
 
-    private static boolean situationPat(Joueur J1, Joueur J2, Échiquier Echiquier){
+    private static boolean situationPat(IJoueur J1, IJoueur J2, Échiquier Echiquier){
         // -> après un tour, si le joueur qui va jouer va forcément se mettre en échec, alors il y a pat
         if(J1.nombrePieces() == 1 && J2.nombrePieces() == 1){
             Appli.affichage("Match nul. \nAucun joueur ne peut gagner dans cette situation");
+            Appli.affichage(Echiquier.nbAffichage - 2 + " coups joués");
+            return true;
+        }
+        if(nombreCoupsNonHostile >= 50){
+            Appli.affichage("Match nul. \n"+ nombreCoupsNonHostile + " coups sans prise ont été joués");
             return true;
         }
         return false;
     }
 
-    private static etatTour tourJoueur(Joueur J1, Joueur J2, Échiquier Echiquier, etatTour mode) {
+    private static etatTour tourJoueur(IJoueur J1, IJoueur J2, Échiquier Echiquier, etatTour mode) {
         if(mode == etatTour.NORMAL){
             Appli.affichage("C'est au Joueur " + J1.toString() + " de saisir un coup :");
             String saisieJoueur;
             boolean etatCoup;
 
             do {
-                saisieJoueur = saisie();
+                saisieJoueur = J1.joueCoup(Echiquier,J2);
                 Appli.affichage(saisieJoueur); // renvoyer le coup vers le traitement
                 if(saisieJoueur.toUpperCase().compareTo("ABANDON") == 0){
                     return etatTour.ABANDON;
@@ -164,26 +177,26 @@ public class Jeu {
                 }catch(CoordInexistanteException cd){
                     Appli.affichage("Coup illégal\nCoordonnées inexistantes");
                     etatCoup = false;
-                    cd.printStackTrace(); // à enlever
+                    // cd.printStackTrace(); // à enlever
                 }catch(PieceNonMangeableException pm){
                     Appli.affichage("Coup illégal\nPièce non mangeable");
                     etatCoup = false;
-                    pm.printStackTrace(); // à enlever
+                    // pm.printStackTrace(); // à enlever
                 }catch(PieceNonDetenueException pn){
                     Appli.affichage("Coup illégal\nPièce de départ non détenue\net/ou Pièce d'arrivée détenue");
                     etatCoup = false;
-                    pn.printStackTrace(); // à enlever
+                    // pn.printStackTrace(); // à enlever
                 }catch(CoupHorsZoneDepException cz){
                     Appli.affichage("Coup illégal\nCoup hors de la zone de déplacement de la pièce\nou coup sans bouger");
                     etatCoup = false;
-                    cz.printStackTrace(); // à enlever
+                    // cz.printStackTrace(); // à enlever
                 }catch(FormatCoupIncorrectException fci){
                     Appli.affichage("Coup illégal\nLe format du coup est incorrect");
                     etatCoup = false;
                 }catch(RoiEnSituationEchecException rse) {
                     Appli.affichage("Le Roi " + J1.toString() + " serait\nen situation d'échec");
                     etatCoup = false;
-                    rse.printStackTrace();
+                    // rse.printStackTrace();
                 }
             }
             while(!etatCoup);
@@ -194,7 +207,7 @@ public class Jeu {
         return etatTour.NORMAL;
     }
 
-    public static void Partie(Joueur Blanc, Joueur Noir, Échiquier Echiquier){
+    public static void Partie(IJoueur Blanc, IJoueur Noir, Échiquier Echiquier){
         Appli.affichage(Echiquier.toString('a'));
 
         Blanc.dessinerPositions(Echiquier.getPlateau());
@@ -204,6 +217,7 @@ public class Jeu {
         for(;;){
             Appli.affichage(Echiquier.toString('a'));
             etatTour = tourJoueur(Blanc, Noir, Echiquier, etatTour);
+            ++nombreCoupsNonHostile;
             if(etatTour == Jeu.etatTour.ABANDON || etatTour == Jeu.etatTour.YES){
                 break;
             }
@@ -214,6 +228,7 @@ public class Jeu {
 
             Appli.affichage(Echiquier.toString('b'));
             etatTour = tourJoueur(Noir, Blanc, Echiquier, etatTour);
+            ++nombreCoupsNonHostile;
             if(etatTour == Jeu.etatTour.ABANDON || etatTour == Jeu.etatTour.YES){
                 break;
             }

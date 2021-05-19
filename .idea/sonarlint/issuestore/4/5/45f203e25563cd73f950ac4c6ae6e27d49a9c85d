@@ -1,12 +1,11 @@
 
+r	java:S117E"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÏÅ¹Øüÿÿÿÿ8ª¯¦‘/
 8
-java:S36265"Remove this redundant jump.(ÉŠ©ƒ8 ½¨»–/
-[
-java:S1128"9Remove this unused import 'java.rmi.UnexpectedException'.(·ƒ¡ÿÿÿÿÿ8×‘¢‘–/
-r	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğÆ’µıÿÿÿÿ8©Ô´ı/
-r	java:S117@"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÏÅ¹Øüÿÿÿÿ8ª¯¦‘/
-[
-java:S1144@"9Remove this unused private "listerCoupsPossibles" method.(ÏÅ¹Øüÿÿÿÿ8ª¯¦‘/
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÛàõÖşÿÿÿÿ
+java:S3626:"Remove this redundant jump.(ÉŠ©ƒ8 ½¨»–/
+r	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğÆ’µıÿÿÿÿ8©Ô´ı/
 H
-java:S1172@"&Remove these unused method parameters.(ÏÅ¹Øüÿÿÿÿ8ª¯¦‘/
+java:S1172E"&Remove these unused method parameters.(ÏÅ¹Øüÿÿÿÿ8ª¯¦‘/
+[
+java:S1144E"9Remove this unused private "listerCoupsPossibles" method.(ÏÅ¹Øüÿÿÿÿ8ª¯¦‘/
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÛàõÖşÿÿÿÿ
+]	java:S125"<This block of commented-out lines of code should be removed.(¿¯’öıÿÿÿÿ8ú’»—/

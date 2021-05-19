@@ -2,16 +2,20 @@ package Joueurs;
 
 import Application.Appli;
 import Exceptions.Coordonnees.*;
-import Jeu.IPiece;
+import Jeu.Interfaces.*;
+import Jeu.Échiquier;
 import Pièces.Coordonnee;
 import Pièces.etatPiece;
 
 import java.util.LinkedList;
 import java.util.Locale;
 
-public class Joueur implements Jeu.IJoueur {
-    private final LinkedList<IPiece> listePieces;
-    private final String nomJoueur  ;
+import static Application.Appli.saisie;
+
+public class Joueur implements IJoueur {
+    private int nbCoupsNonHostile = 0;
+    private final String nomJoueur;
+    protected final LinkedList<IPiece> listePieces;
 
     public Joueur(String couleur, String nomJoueur){
         listePieces = new LinkedList<>();
@@ -21,9 +25,14 @@ public class Joueur implements Jeu.IJoueur {
             listePieces.add(IPiece.getPiece('t', new Coordonnee(1,1), couleur));
         }
         else if (couleur.equals("noir")){
-            listePieces.add(IPiece.getPiece('r', new Coordonnee(0,4), couleur));
+             listePieces.add(IPiece.getPiece('r', new Coordonnee(0,4), couleur));
             // listePieces.add(IPiece.getPiece('t', new Coordonnee(3,2), couleur));
         }
+    }
+
+    @Override
+    public String joueCoup(Échiquier Echiquier, IJoueur J2) {
+        return saisie();
     }
 
     public void dessinerPositions(char[][] Plateau){
@@ -82,6 +91,7 @@ public class Joueur implements Jeu.IJoueur {
     public void perdrePiece(Coordonnee coordArr) {
         if(listePieces.removeIf(p -> p.getCoord().equals(coordArr))){
             Appli.affichage("Une pièce du joueur " + this.toString() + " a été mangée");
+            Jeu.Jeu.setNbCoupsNonHostile();
         }
     }
 }

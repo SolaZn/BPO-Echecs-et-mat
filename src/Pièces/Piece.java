@@ -1,8 +1,8 @@
 package Pièces;
 
-import Jeu.IPiece;
+import Jeu.Interfaces.IPiece;
 
-public abstract class Piece implements Jeu.IPiece{
+public abstract class Piece implements IPiece {
     private Coordonnee coord;
     private String couleur;
 

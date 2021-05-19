@@ -1,6 +1,6 @@
 package Pièces;
 
-import Jeu.IPiece;
+import Jeu.Interfaces.IPiece;
 
 public class DefinirPiece {
     public static IPiece fabriquerPiece(char typePiece, Coordonnee coord, String couleur) {
