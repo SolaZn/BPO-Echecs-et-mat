@@ -33,13 +33,12 @@ public class Jeu {
     private static boolean coupValide(IJoueur J, IJoueur J2, Échiquier Echiquier, Coordonnee coordInit, Coordonnee coordArr)
         throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException,
             RoiEnSituationEchecException {
-        if(Echiquier.coordExiste(coordInit) && Echiquier.coordExiste(coordArr)) {
+        if(Échiquier.coordExiste(coordInit) && Échiquier.coordExiste(coordArr)) {
             //Les coordonnées initiale et d'arrivé existe bien dans l'échiquier
             int idDepart = J.detientPiece(coordInit); //
             if (idDepart != -1) {
                 char typePieceArr = Echiquier.coordOccupé(coordArr);
                 if (IPiece.isMangeable(typePieceArr)) {
-                    // if(Le Roi n'est pas échec sur cette position && et c'est le roi qui joue)
                     // TODO: 01/05/2021 (UPDATE 02/05) => SEULE LA TOUR REGARDE LE RESULTAT DE CE CHECK, LES AUTRES NON - Un check pour si et seulement si une pièce est sur le chemin, vérifier si le coup ne passe pas par le chemin sans manger/s'arrêter avant
                     int idArrivee = J.detientPiece(coordArr);
                     if (idArrivee == -1) {
@@ -117,7 +116,7 @@ public class Jeu {
                try {
                    Coordonnee posPossRoiAdv = new Coordonnee(positionRoiAdverse.getLigne() + variationLigne,
                            positionRoiAdverse.getColonne() + variationCol);
-                   if(Echiquier.coordExiste(posPossRoiAdv)) {
+                   if(Échiquier.coordExiste(posPossRoiAdv)) {
                        if(J1.essaiCoupHostile(posPossRoiAdv)){
                            /*if(variationCol == 0 && variationLigne == 0){
                                ->
@@ -146,7 +145,7 @@ public class Jeu {
         // -> après un tour, si le joueur qui va jouer va forcément se mettre en échec, alors il y a pat
         if(J1.nombrePieces() == 1 && J2.nombrePieces() == 1){
             Appli.affichage("Match nul. \nAucun joueur ne peut gagner dans cette situation");
-            Appli.affichage(Echiquier.nbAffichage - 2 + " coups joués");
+            Appli.affichage(Echiquier.getNbAffichage() - 2 + " coups joués");
             return true;
         }
         if(nombreCoupsNonHostile >= 50){

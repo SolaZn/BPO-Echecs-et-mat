@@ -5,13 +5,17 @@ import Jeu.Interfaces.IPiece;
 import Jeu.Échiquier;
 import java.util.LinkedList;
 
-public class Tour extends Piece {
+class Tour extends Piece {
     private static final int MTAILLE = 8;
 
     public Tour(int ligneInit, int colInit, String colr){
         super(ligneInit, colInit, colr);
     }
 
+    /**
+     * @see Piece#getChar()
+     */
+    @Override
     public char getChar() {
         if(super.getCouleur().equals("blanc")){
             return 'T';
@@ -21,6 +25,9 @@ public class Tour extends Piece {
         }
     }
 
+    /**
+     * @see IPiece#move(Coordonnee, etatPiece)
+     */
     @Override
     public boolean move(Coordonnee coordArr, etatPiece etat) throws CoupHorsZoneDepException{
         // TODO: 01/05/2021 Fonction à implémenter en prenant en compte les "pièces sur le chemin" (voir ajout d'une fonction) (voir todo Jeu.jeu si possible faire là)
@@ -39,7 +46,10 @@ public class Tour extends Piece {
         return false;
     }
 
-    public LinkedList<Coordonnee> getCoupPossible(){
+    /**
+     * @see IPiece#getCoupsPossibles()
+     */
+    public LinkedList<Coordonnee> getCoupsPossibles(){
         Coordonnee coordPiece = this.getCoord();
         LinkedList<Coordonnee> listeCoups = new LinkedList<>();
 
@@ -69,6 +79,9 @@ public class Tour extends Piece {
         return listeCoups;
     }
 
+    /**
+     * @see IPiece#barreRoute(Coordonnee, Coordonnee)
+     */
     public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr){
         boolean barre = false;
         if (coordDepart.getLigne() != coordArr.getLigne()){

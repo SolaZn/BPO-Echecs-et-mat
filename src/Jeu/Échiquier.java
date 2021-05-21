@@ -10,7 +10,7 @@ public class Échiquier {
     private static final String LIGNES = "   --- --- --- --- --- --- --- ---   \n";
     private static final String CASESALPH = "    a   b   c   d   e   f   g   h    \n";
     private static final String CASESREV = "    h   g   f   e   d   c   b   a    \n";
-    public int nbAffichage = 0;
+    private int nbAffichage = 0;
 
     public Échiquier(){
         Plateau = new char[MTAILLE][MTAILLE];
@@ -97,5 +97,9 @@ public class Échiquier {
         }
         else
             return affReverse();
+    }
+
+    public int getNbAffichage() {
+        return nbAffichage;
     }
 }

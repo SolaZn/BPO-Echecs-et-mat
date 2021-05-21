@@ -11,30 +11,55 @@ public abstract class Piece implements IPiece {
         this.couleur = colrInit;
     }
 
+
+    /**
+     * @see IPiece#getPiece(char, Coordonnee, String)
+     */
     public static IPiece getPiece(char typePiece, Coordonnee coord, String couleur){
         return DefinirPiece.fabriquerPiece(typePiece, coord, couleur);
     }
 
+    /**
+     * @see IPiece#isMangeable(char)
+     */
     public static boolean isMangeable(char typePiece){
         return DefinirPiece.isMangeable(typePiece);
     }
 
+    /**
+     * @see IPiece#getCouleur()
+     */
     public String getCouleur() {
         return this.couleur;
     }
 
+    /**
+     * @see IPiece#dessiner()
+     */
     public char dessiner(){
         return getChar();
     }
 
-    void deplacerA(Coordonnee coordArr){
-        this.coord.setLigne(coordArr.getLigne());
-        this.coord.setColonne(coordArr.getColonne());
-    }
+    /**
+     * (abstraite -- chaque implémentation diffère)
+     * Retourne le caratère correspondant au dessin de la pièce
+     * @return le caractère
+     */
+    public abstract char getChar();
 
+    /**
+     * @see IPiece#getCoord()
+     */
     public Coordonnee getCoord() {
         return coord;
     }
 
-    public abstract char getChar();;
+    /**
+     * Mets à jour les coordonnées de la pièce
+     * @param coordArr la coordonnée d'arrivée obtenue lors du coup précédent
+     */
+    void deplacerA(Coordonnee coordArr){
+        this.coord.setLigne(coordArr.getLigne());
+        this.coord.setColonne(coordArr.getColonne());
+    }
 }

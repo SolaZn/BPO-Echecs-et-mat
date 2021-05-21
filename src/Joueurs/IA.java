@@ -1,7 +1,7 @@
 package Joueurs;
 
 import Jeu.Interfaces.IJoueur;
-import Jeu.Jeu;
+import Jeu.Interfaces.IPiece;
 
 import Jeu.Échiquier;
 import Pièces.*;
@@ -9,16 +9,36 @@ import Pièces.*;
 import java.util.LinkedList;
 import java.util.Random;
 
+/**
+ * Cette classe représente une IA dans le programme de finales d'échecs.
+ * Cette IA a un nom et a à sa disposition la liste de ses pièces;
+ * Pièces qu'elle manipulera au cours de sa partie.
+ *
+ * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
+ */
 public class IA extends Joueur implements IJoueur{
 
+    /**
+     * Construit une IA comme sous-type d'un joueur
+     * @param couleur la couleur des pièces de l'IA
+     * @param nomJoueur le nom de l'IA
+     */
     public IA(String couleur, String nomJoueur) {
         super(couleur, nomJoueur);
     }
 
+    /**
+     * Cette implémentation génère, à l'aide d'un algorithme, un coup qui est
+     * renvoyé sous forme de chaîne de caractères, dans le même format qu'un joueur
+     * humain
+     * @see IJoueur#joueCoup(Échiquier, IJoueur)
+     */
+    @Override
     public String joueCoup(Échiquier Echiquier, IJoueur J2){
         Random rdm = new Random();
-        int idx = rdm.nextInt(this.listePieces.size());
-        LinkedList<Coordonnee> listeCoups = listePieces.get(idx).getCoupPossible();
+        LinkedList<IPiece> listePieces= super.getListePieces();
+        int idx = rdm.nextInt(listePieces.size());
+        LinkedList<Coordonnee> listeCoups = listePieces.get(idx).getCoupsPossibles();
 
         StringBuilder coordonneeJouee = new StringBuilder();
         Coordonnee coordDeDepart = listePieces.get(idx).getCoord();
@@ -26,7 +46,8 @@ public class IA extends Joueur implements IJoueur{
         for(;;) {
             Random r = new Random();
             if(listeCoups.isEmpty())
-                throw new RuntimeException("C'est la merde");
+                throw new RuntimeException("Ceci n'est pas censé se produire");
+
             int idy = r.nextInt(listeCoups.size());
             Coordonnee coordAJouer = listeCoups.get(idy);
 

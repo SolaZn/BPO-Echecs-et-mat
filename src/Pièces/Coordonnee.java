@@ -1,7 +1,8 @@
 package Pièces;
 
 public class Coordonnee {
-    private int ligne, colonne;
+    private int ligne;
+    private int colonne;
 
     public Coordonnee(int ligne, int colonne){
         this.ligne = ligne;

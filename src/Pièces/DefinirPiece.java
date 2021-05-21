@@ -2,7 +2,7 @@ package Pièces;
 
 import Jeu.Interfaces.IPiece;
 
-public class DefinirPiece {
+class DefinirPiece {
     public static IPiece fabriquerPiece(char typePiece, Coordonnee coord, String couleur) {
         if(Character.toLowerCase(typePiece) == 'r'){
             return new Roi(coord.getLigne(), coord.getColonne(), couleur);

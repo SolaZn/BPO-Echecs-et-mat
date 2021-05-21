@@ -1,16 +1,21 @@
 package Pièces;
 
 import Exceptions.Coordonnees.*;
+import Jeu.Interfaces.IPiece;
 import Jeu.Échiquier;
 
 import java.util.LinkedList;
 
-public class Roi extends Piece {
+class Roi extends Piece {
 
     public Roi(int ligneInit, int colInit, String colr){
         super(ligneInit, colInit, colr);
     }
 
+    /**
+     * @see Piece#getChar()
+     */
+    @Override
     public char getChar() {
         if(super.getCouleur().equals("blanc")){
             return 'R';
@@ -20,8 +25,9 @@ public class Roi extends Piece {
         }
     }
 
-
-
+    /**
+     * @see IPiece#move(Coordonnee, etatPiece)
+     */
     @Override
     public boolean move(Coordonnee coordArr, etatPiece etat) throws CoupHorsZoneDepException {
         Coordonnee coordPiece = super.getCoord();
@@ -44,12 +50,10 @@ public class Roi extends Piece {
             return false;
     }
 
-    @Override
-    public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr) {
-        return false;
-    }
-
-    public LinkedList<Coordonnee> getCoupPossible(){
+    /**
+     * @see IPiece#getCoupsPossibles()
+     */
+    public LinkedList<Coordonnee> getCoupsPossibles(){
         Coordonnee coordPiece = this.getCoord();
         LinkedList<Coordonnee> listeCoups = new LinkedList<>();
 
@@ -67,6 +71,14 @@ public class Roi extends Piece {
         }
 
         return listeCoups;
+    }
+
+    /**
+     * @see IPiece#barreRoute(Coordonnee, Coordonnee)
+     */
+    @Override
+    public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr) {
+        return false;
     }
 }
 
