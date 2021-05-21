@@ -20,6 +20,8 @@ public class Roi extends Piece {
         }
     }
 
+
+
     @Override
     public boolean move(Coordonnee coordArr, etatPiece etat) throws CoupHorsZoneDepException {
         Coordonnee coordPiece = super.getCoord();
@@ -40,6 +42,11 @@ public class Roi extends Piece {
                 throw new CoupHorsZoneDepException();
             }
             return false;
+    }
+
+    @Override
+    public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr) {
+        return false;
     }
 
     public LinkedList<Coordonnee> getCoupPossible(){

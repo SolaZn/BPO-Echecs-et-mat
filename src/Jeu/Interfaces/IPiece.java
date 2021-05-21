@@ -24,5 +24,6 @@ public interface IPiece {
 
     Coordonnee getCoord();
 
+    boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr);
 
 }

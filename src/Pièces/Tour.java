@@ -1,6 +1,7 @@
 package Pièces;
 
 import Exceptions.Coordonnees.*;
+import Jeu.Interfaces.IPiece;
 import Jeu.Échiquier;
 import java.util.LinkedList;
 
@@ -66,6 +67,51 @@ public class Tour extends Piece {
         }
 
         return listeCoups;
+    }
+
+    public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr){
+        boolean barre = false;
+        if (coordDepart.getLigne() != coordArr.getLigne()){
+            int pos = coordArr.getLigne() - coordDepart.getLigne();
+            if(pos < 0){
+                pos = Math.abs(pos);
+                for(int i = 1; i < pos; ++i) {
+                    Coordonnee coord = new Coordonnee(coordDepart.getLigne() - i, coordDepart.getColonne());
+                    if (this.getCoord().equals(coord)){
+                        return true;
+                    }
+                }
+            }
+            else{
+                for(int i = 1; i < pos; ++i) {
+                    Coordonnee coord = new Coordonnee(coordDepart.getLigne() + i, coordDepart.getColonne());
+                    if (this.getCoord().equals(coord)){
+                        return true;
+                    }
+                }
+            }
+        }
+        else{
+            int pos = coordArr.getColonne() - coordDepart.getColonne();
+            if(pos < 0){
+                pos = Math.abs(pos);
+                for(int i = 1; i < pos; ++i) {
+                    Coordonnee coord = new Coordonnee(coordDepart.getLigne(), coordDepart.getColonne() - i);
+                    if (this.getCoord().equals(coord)){
+                        return true;
+                    }
+                }
+            }
+            else{
+                for(int i = 1; i < pos; ++i) {
+                    Coordonnee coord = new Coordonnee(coordDepart.getLigne(), coordDepart.getColonne() + 1);
+                    if (this.getCoord().equals(coord)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }

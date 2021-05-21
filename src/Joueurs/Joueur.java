@@ -94,4 +94,11 @@ public class Joueur implements IJoueur {
             Jeu.Jeu.setNbCoupsNonHostile();
         }
     }
+
+    public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArrivé){
+        for (IPiece piece: this.listePieces) {
+            piece.barreRoute(coordDepart, coordArrivé);
+        }
+        return true;
+    }
 }
