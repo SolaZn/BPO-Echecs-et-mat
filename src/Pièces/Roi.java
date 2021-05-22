@@ -8,6 +8,12 @@ import java.util.LinkedList;
 
 class Roi extends Piece {
 
+    /**
+     * Renvoie le roi initialisé a une ligne, une colonne et une couleur données
+     * @param ligneInit la ligne a laquelle va être initialisé le Roi
+     * @param colInit la colonne a laquelle va être initialisé le Roi
+     * @param colr la couleur a laquelle va être initialisé le Roi
+     */
     public Roi(int ligneInit, int colInit, String colr){
         super(ligneInit, colInit, colr);
     }
@@ -77,7 +83,7 @@ class Roi extends Piece {
      * @see IPiece#barreRoute(Coordonnee, Coordonnee)
      */
     @Override
-    public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr) {
+    public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr, Échiquier echiquier) {
         return false;
     }
 }

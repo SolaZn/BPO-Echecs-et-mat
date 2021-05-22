@@ -6,6 +6,12 @@ public abstract class Piece implements IPiece {
     private Coordonnee coord;
     private String couleur;
 
+    /**
+     * Renvoie la pièce initialisé a une ligne, une colonne et une couleur données
+     * @param ligneInit la ligne a laquelle va être initialisé la pièce
+     * @param colInit la colonne a laquelle va être initialisé la pièce
+     * @param colrInit la couleur a laquelle va être initialisé la pièce
+     */
     Piece(int ligneInit, int colInit, String colrInit){
         this.coord = new Coordonnee(ligneInit, colInit);
         this.couleur = colrInit;

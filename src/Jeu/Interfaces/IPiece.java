@@ -1,6 +1,7 @@
 package Jeu.Interfaces;
 
 import Exceptions.Coordonnees.*;
+import Jeu.Échiquier;
 import Pièces.*;
 
 import java.util.LinkedList;
@@ -72,6 +73,6 @@ public interface IPiece {
      * @param coordArr
      * @return
      */
-    boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr);
+    boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr, Échiquier echiquier);
 
 }

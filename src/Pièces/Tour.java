@@ -8,6 +8,12 @@ import java.util.LinkedList;
 class Tour extends Piece {
     private static final int MTAILLE = 8;
 
+    /**
+     * Renvoie la tour initialisé a une ligne, une colonne et une couleur données
+     * @param ligneInit la ligne a laquelle va être initialisé la Tour
+     * @param colInit la colonne a laquelle va être initialisé la Tour
+     * @param colr la couleur a laquelle va être initialisé la Tour
+     */
     public Tour(int ligneInit, int colInit, String colr){
         super(ligneInit, colInit, colr);
     }
@@ -82,7 +88,7 @@ class Tour extends Piece {
     /**
      * @see IPiece#barreRoute(Coordonnee, Coordonnee)
      */
-    public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr){
+    public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr, Échiquier echiquier){
         boolean barre = false;
         if (coordDepart.getLigne() != coordArr.getLigne()){
             int pos = coordArr.getLigne() - coordDepart.getLigne();
@@ -90,7 +96,7 @@ class Tour extends Piece {
                 pos = Math.abs(pos);
                 for(int i = 1; i < pos; ++i) {
                     Coordonnee coord = new Coordonnee(coordDepart.getLigne() - i, coordDepart.getColonne());
-                    if (this.getCoord().equals(coord)){
+                    if (echiquier.coordOccupé(coord) != ' '){
                         return true;
                     }
                 }
@@ -98,7 +104,7 @@ class Tour extends Piece {
             else{
                 for(int i = 1; i < pos; ++i) {
                     Coordonnee coord = new Coordonnee(coordDepart.getLigne() + i, coordDepart.getColonne());
-                    if (this.getCoord().equals(coord)){
+                    if (echiquier.coordOccupé(coord) != ' '){
                         return true;
                     }
                 }
@@ -110,15 +116,15 @@ class Tour extends Piece {
                 pos = Math.abs(pos);
                 for(int i = 1; i < pos; ++i) {
                     Coordonnee coord = new Coordonnee(coordDepart.getLigne(), coordDepart.getColonne() - i);
-                    if (this.getCoord().equals(coord)){
+                    if (echiquier.coordOccupé(coord) != ' '){
                         return true;
                     }
                 }
             }
             else{
                 for(int i = 1; i < pos; ++i) {
-                    Coordonnee coord = new Coordonnee(coordDepart.getLigne(), coordDepart.getColonne() + 1);
-                    if (this.getCoord().equals(coord)){
+                    Coordonnee coord = new Coordonnee(coordDepart.getLigne(), coordDepart.getColonne() + i);
+                    if (echiquier.coordOccupé(coord) != ' '){
                         return true;
                     }
                 }

@@ -12,6 +12,9 @@ public class Échiquier {
     private static final String CASESREV = "    h   g   f   e   d   c   b   a    \n";
     private int nbAffichage = 0;
 
+    /**
+     * Renvoie le plateau de jeu initialisé avec des cases vide
+     */
     public Échiquier(){
         Plateau = new char[MTAILLE][MTAILLE];
         for(int l = 0; l < Plateau.length; ++l){
@@ -21,10 +24,19 @@ public class Échiquier {
         }
     }
 
+    /**
+     * @return le plateau de jeu
+     */
     public char[][] getPlateau() {
         return Plateau;
     }
 
+    /**
+     * Retourne vrai si la coordonnée existe dans le plateau sinon faux
+     * @param coord la coordonnée
+     * @return vrai si la coordonnée existe dans le plateau sinon faux
+     * @throws CoordInexistanteException
+     */
     public static boolean coordExiste(Coordonnee coord) throws CoordInexistanteException {
         // verifier si les coordonnes sont dans l'echiquier
         if(coord.getLigne() >= 0 && coord.getLigne() < MTAILLE && coord.getColonne() >= 0 && coord.getColonne() < MTAILLE)
@@ -32,10 +44,18 @@ public class Échiquier {
         throw new CoordInexistanteException();
     }
 
+    /**
+     * Retoourne le type de la pièce qui occupe la coordonnée
+     * @param coord la coordonnée
+     * @return le type de la pièce qui occupe la coordonnée
+     */
     public char coordOccupé(Coordonnee coord){
         return this.Plateau[coord.getLigne()][coord.getColonne()];
     }
 
+    /**
+     * Vide la tableau
+     */
     public void effacer(){
         for(int l = 0; l < Plateau.length; ++l) {
             for (int c = 0; c < Plateau[0].length; ++c) {
@@ -44,12 +64,21 @@ public class Échiquier {
         }
     }
 
+    /**
+     * Place les pièces des deux joueurs à leur nouvelle position
+     * @param J1 le premier joueur
+     * @param J2 le second joueur
+     */
     public void rafraichir(IJoueur J1, IJoueur J2){
         this.effacer();
         J1.dessinerPositions(this.getPlateau());
         J2.dessinerPositions(this.getPlateau());
     }
 
+    /**
+     * Retourne la manière d'afficher le plateau dans le bon sens
+     * @return la manière d'afficher le plateau dans le bon sens
+     */
     private String affBonSens(){
         StringBuilder sb = new StringBuilder();
         sb.append(CASESALPH);
@@ -70,6 +99,10 @@ public class Échiquier {
         return sb.toString();
     }
 
+    /**
+     * Retourne la manière d'afficher le plateau dans le sens inverse
+     * @return la manière d'afficher le plateau dans le sens inverse
+     */
     private String affReverse(){
         StringBuilder sb = new StringBuilder();
         sb.append(CASESREV);
@@ -90,6 +123,11 @@ public class Échiquier {
         return sb.toString();
     }
 
+    /**
+     * Retourne la manière d'afficher le plateau de jeu selon le mode d'affichage
+     * @param modeAffichage le mode d'affichage
+     * @return la manière d'afficher le plateau de jeu selon le mode d'affichage
+     */
     public String toString(char modeAffichage) {
         nbAffichage++;
         if (modeAffichage == 'a') {
@@ -99,7 +137,8 @@ public class Échiquier {
             return affReverse();
     }
 
+
     public int getNbAffichage() {
-        return nbAffichage;
+        return this.nbAffichage;
     }
 }

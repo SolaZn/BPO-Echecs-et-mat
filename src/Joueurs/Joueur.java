@@ -37,7 +37,7 @@ public class Joueur implements IJoueur {
         }
         else if (couleur.equals("noir")){
              listePieces.add(IPiece.getPiece('r', new Coordonnee(0,4), couleur));
-            // listePieces.add(IPiece.getPiece('t', new Coordonnee(3,2), couleur));
+             listePieces.add(IPiece.getPiece('t', new Coordonnee(3,2), couleur));
         }
     }
 
@@ -129,11 +129,16 @@ public class Joueur implements IJoueur {
     }
 
     /**
-     * @see IJoueur#barreRoute(Coordonnee, Coordonnee)
+     * @see IJoueur#barreRoute(Coordonnee, Coordonnee, Échiquier)
      */
-    public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArrivé){
+    public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArrivé, Échiquier echiquier){
         for (IPiece piece: this.listePieces) {
-            piece.barreRoute(coordDepart, coordArrivé);
+            if(piece.getCoord().equals(coordDepart)) {
+                if(piece.barreRoute(coordDepart, coordArrivé, echiquier))
+                    return true;
+                else
+                    return false;
+            }
         }
         return true;
     }
@@ -146,6 +151,10 @@ public class Joueur implements IJoueur {
         return listePieces;
     }
 
+    /**
+     * Retourne la manière d'afficher un joueur
+     * @return la manière d'afficher un joueur
+     */
     @Override
     public String toString() {
         return nomJoueur.toUpperCase(Locale.ROOT);

@@ -8,10 +8,17 @@ import java.util.Scanner;
 
 public class Appli {
 
+    /**
+     * Affiche la sortie voulu sur la console
+     * @param output la sortie voulu
+     */
     public static void affichage(String output){
         System.out.println(output);
     }
 
+    /**
+     * @return la saisie de l'utilisateur
+     */
     public static String saisie(){
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
@@ -47,6 +54,9 @@ public class Appli {
         Jeu.Partie(Blanc, Noir, Echiquier);
     }
 
+    /**
+     * @return le mode de jeu choisi par l'utilisateur
+     */
     private static String getModeJeu() {
         System.out.println("Veuillez choisir un mode de jeu :");
         System.out.println("Tapez 1 pour une partie entre Humains");

@@ -70,5 +70,5 @@ public interface IJoueur {
      * @param coordArrivée
      * @return
      */
-    boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArrivée);
+    boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArrivée, Échiquier echiquier);
 }

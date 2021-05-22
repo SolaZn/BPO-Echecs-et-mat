@@ -13,10 +13,20 @@ public class Jeu {
     private static int nombreCoupsNonHostile = 0;
     enum etatTour{NORMAL, NULLE, ABANDON, YES, NO}
 
+    /**
+     * Empeche le developpeur d'instancier la classe jeu
+     */
     private Jeu(){
         throw new UnsupportedOperationException("Cette classe n'est pas instantiable");
     }
 
+    /**
+     * Retourne une coordonnée initialisé a une ligne et une colonne donnée
+     * @param c la colonne
+     * @param l la ligne
+     * @return la coordonnée
+     * @throws FormatCoupIncorrectException
+     */
     public static Coordonnee creationCoordCoup(char c, char l) throws FormatCoupIncorrectException {
         if(Character.isLetter(c) && Character.isDigit(l))
             return new Coordonnee((8 - Character.getNumericValue(l)), (Character.getNumericValue(Character.toLowerCase(c)) - 10));
@@ -26,13 +36,30 @@ public class Jeu {
             throw new FormatCoupIncorrectException();
     }
 
+    /**
+     * Réinitialise le nombre de coups non hostile à 0
+     */
     public static void setNbCoupsNonHostile(){
         nombreCoupsNonHostile = 0;
     }
 
+    /**
+     * Retourne vrai si le coup d'un joueur respecte les règles du jeu et reste dans les limites du plateau sinon faux
+     * @param J le joueur qui joue le coup
+     * @param J2 le joueur adverse
+     * @param Echiquier le plateau de jeu
+     * @param coordInit la coordonnée de départ du coup
+     * @param coordArr la coordonnée d'arrivée du coup
+     * @return vrai si le coup d'un joueur respecte les règles du jeu et reste dans les limites du plateau sinon faux
+     * @throws CoordInexistanteException
+     * @throws PieceNonMangeableException
+     * @throws PieceNonDetenueException
+     * @throws CoupHorsZoneDepException
+     * @throws RoiEnSituationEchecException
+     */
     private static boolean coupValide(IJoueur J, IJoueur J2, Échiquier Echiquier, Coordonnee coordInit, Coordonnee coordArr)
-        throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException,
-            RoiEnSituationEchecException {
+            throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException,
+            RoiEnSituationEchecException, RouteBarréeException {
         if(Échiquier.coordExiste(coordInit) && Échiquier.coordExiste(coordArr)) {
             //Les coordonnées initiale et d'arrivé existe bien dans l'échiquier
             int idDepart = J.detientPiece(coordInit); //
@@ -42,23 +69,26 @@ public class Jeu {
                     // TODO: 01/05/2021 (UPDATE 02/05) => SEULE LA TOUR REGARDE LE RESULTAT DE CE CHECK, LES AUTRES NON - Un check pour si et seulement si une pièce est sur le chemin, vérifier si le coup ne passe pas par le chemin sans manger/s'arrêter avant
                     int idArrivee = J.detientPiece(coordArr);
                     if (idArrivee == -1) {
-                        if (J.positionRoi().equals(coordInit)) {
-                            if (!J2.essaiCoupHostile(coordArr)) {
-                                if (J.deplacerPiece(coordInit, coordArr)) {
-                                    J2.perdrePiece(coordArr);
-                                    return true;
-                                }
-                            } else
-                                throw new RoiEnSituationEchecException();
-                        } else {
-                            if (!J2.essaiCoupHostile(J.positionRoi())){
-                                if (J.deplacerPiece(coordInit, coordArr)) {
-                                    J2.perdrePiece(coordArr);
-                                    return true;
-                                }
-                            } else
-                                throw new RoiEnSituationEchecException();
-                        }
+                        if(!J.barreRoute(coordInit, coordArr, Echiquier)) {
+                            if (J.positionRoi().equals(coordInit)) {
+                                if (!J2.essaiCoupHostile(coordArr)) {
+                                    if (J.deplacerPiece(coordInit, coordArr)) {
+                                        J2.perdrePiece(coordArr);
+                                        return true;
+                                    }
+                                } else
+                                    throw new RoiEnSituationEchecException();
+                            } else {
+                                if (!J2.essaiCoupHostile(J.positionRoi())) {
+                                    if (J.deplacerPiece(coordInit, coordArr)) {
+                                        J2.perdrePiece(coordArr);
+                                        return true;
+                                    }
+                                } else
+                                    throw new RoiEnSituationEchecException();
+                            }
+                        } else
+                            throw new RouteBarréeException();
                     } else
                         throw new PieceNonDetenueException();
                 } else
@@ -70,9 +100,24 @@ public class Jeu {
         return false;
     }
 
+    /**
+     * Retourne vrai si le coup d'un joueur respecte les règles du jeu et reste dans les limites du plateau sinon faux
+     * et rend le coup exploitable par l'algorithme (String to Coordonnée)
+     * @param Echiquier Le plateau de jeu
+     * @param coup le coup joué
+     * @param J le joueur qui joue le coup
+     * @param J2 le joueur adverse
+     * @return vrai si le coup d'un joueur respecte les règles du jeu et reste dans les limites du plateau sinon faux
+     * @throws CoordInexistanteException
+     * @throws PieceNonMangeableException
+     * @throws PieceNonDetenueException
+     * @throws CoupHorsZoneDepException
+     * @throws FormatCoupIncorrectException
+     * @throws RoiEnSituationEchecException
+     */
     public static boolean coupJoué(Échiquier Echiquier, String coup, IJoueur J, IJoueur J2)
             throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException,
-            FormatCoupIncorrectException, RoiEnSituationEchecException {
+            FormatCoupIncorrectException, RoiEnSituationEchecException, RouteBarréeException {
 
         if (coup.length() != 4) {
             throw new FormatCoupIncorrectException();
@@ -96,6 +141,11 @@ public class Jeu {
         <- coupJoue retourne le resultat et fait rejouer/arrête le jeu/continue le jeu selon les cas. => A VOIR, séparer en deux
      */
 
+    /**
+     * Lance une partie en mode Nulle, propose au joueur adverse si il souhaite rester sur un match nul
+     * @param J1 le joueur adverse
+     * @return la réponse du joueur adverse
+     */
     private static etatTour partieNulle(IJoueur J1){
         // TODO: 03/05/2021 Retourne NULLE pour remettre le jeu dans le bon sens dans 2 tours (donc un tour dans le vent) (mais à voir pour faire mieux) + NO inutile si fait comme ça
             Appli.affichage("Le joueur " + J1.toString() + " propose un match nul, accepter : YES or NO");
@@ -108,6 +158,14 @@ public class Jeu {
             }
     }
 
+    /**
+     * Retourne vrai si le joueur met le joueur adverse en situation d'echec et mat sinon faux
+     * @param J1 le joueur
+     * @param J2 le joueur adverse
+     * @param positionRoiAdverse la pasition du roi adverse
+     * @param Echiquier le plateau de jeu
+     * @return vrai si le joueur met le joueur adverse en situation d'echec et mat sinon faux
+     */
     private static boolean situationEchecMat(IJoueur J1, IJoueur J2, Coordonnee positionRoiAdverse, Échiquier Echiquier){
         int positionsPossibles = 9;
         int nbSituationsEchec = 0;
@@ -141,6 +199,13 @@ public class Jeu {
         return false;
     }
 
+    /**
+     * Retourne vrai si il y a situation de pat entre les deux joueurs sinon faux
+     * @param J1 le premier joueur
+     * @param J2 le second joueur
+     * @param Echiquier le plateau de jeu
+     * @return vrai si il y a situation de pat entre les deux joueurs sinon faux
+     */
     private static boolean situationPat(IJoueur J1, IJoueur J2, Échiquier Echiquier){
         // -> après un tour, si le joueur qui va jouer va forcément se mettre en échec, alors il y a pat
         if(J1.nombrePieces() == 1 && J2.nombrePieces() == 1){
@@ -155,6 +220,14 @@ public class Jeu {
         return false;
     }
 
+    /**
+     * Réalise le tour du joueur dans le mode voulu
+     * @param J1 le joueur jouant
+     * @param J2 le joueur adverse
+     * @param Echiquier le plateau
+     * @param mode le mode dans lequel lancer le tour
+     * @return l'etat voulu pour le prochain tour
+     */
     private static etatTour tourJoueur(IJoueur J1, IJoueur J2, Échiquier Echiquier, etatTour mode) {
         if(mode == etatTour.NORMAL){
             Appli.affichage("C'est au Joueur " + J1.toString() + " de saisir un coup :");
@@ -196,6 +269,9 @@ public class Jeu {
                     Appli.affichage("Le Roi " + J1.toString() + " serait\nen situation d'échec");
                     etatCoup = false;
                     // rse.printStackTrace();
+                }catch (RouteBarréeException rb){
+                    Appli.affichage("Coup invalide\nUne pièce adverse/alliée se trouve entre la coordonnée de départ et la coordonnée d'arrivée");
+                    etatCoup = false;
                 }
             }
             while(!etatCoup);
@@ -206,6 +282,12 @@ public class Jeu {
         return etatTour.NORMAL;
     }
 
+    /**
+     * Réalise la partie entre les deux joueurs
+     * @param Blanc le premier joueur
+     * @param Noir le seconde joueur
+     * @param Echiquier le plateau de jeu
+     */
     public static void Partie(IJoueur Blanc, IJoueur Noir, Échiquier Echiquier){
         Appli.affichage(Echiquier.toString('a'));
 
