@@ -86,7 +86,7 @@ class Tour extends Piece {
     }
 
     /**
-     * @see IPiece#barreRoute(Coordonnee, Coordonnee)
+     * @see IPiece#barreRoute(Coordonnee, Coordonnee, Échiquier) )
      */
     public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr, Échiquier echiquier){
         boolean barre = false;

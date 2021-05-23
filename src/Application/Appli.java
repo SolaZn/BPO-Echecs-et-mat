@@ -9,8 +9,8 @@ import java.util.Scanner;
 public class Appli {
 
     /**
-     * Affiche la sortie voulu sur la console
-     * @param output la sortie voulu
+     * Affiche la sortie voulue sur la console
+     * @param output la sortie voulue
      */
     public static void affichage(String output){
         System.out.println(output);
