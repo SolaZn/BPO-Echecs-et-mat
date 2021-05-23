@@ -86,9 +86,9 @@ class Tour extends Piece {
     }
 
     /**
-     * @see IPiece#barreRoute(Coordonnee, Coordonnee, Échiquier) )
+     * @see IPiece#routeBarree(Coordonnee, Coordonnee, Échiquier) )
      */
-    public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr, Échiquier echiquier){
+    public boolean routeBarree(Coordonnee coordDepart, Coordonnee coordArr, Échiquier echiquier){
         boolean barre = false;
         if (coordDepart.getLigne() != coordArr.getLigne()){
             int pos = coordArr.getLigne() - coordDepart.getLigne();

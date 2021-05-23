@@ -1,8 +1,7 @@
 package Application;
 
+import Jeu.Interfaces.IJoueur;
 import Jeu.Jeu;
-import Joueurs.IA;
-import Joueurs.Joueur;
 import Jeu.Échiquier;
 import java.util.Scanner;
 
@@ -17,6 +16,7 @@ public class Appli {
     }
 
     /**
+     * Demande à l'utilisateur de saisir une chaîne de caractères
      * @return la saisie de l'utilisateur
      */
     public static String saisie(){
@@ -29,47 +29,28 @@ public class Appli {
 
 
     public static void main(String[] args) {
-        String modeJeu = getModeJeu();
+        String modeJeu = Jeu.getModeJeu();
 
-        Joueur Blanc = null;
-        Joueur Noir = null;
+        IJoueur Blanc = null;
+        IJoueur Noir = null;
         switch (modeJeu) {
             case "1":
-                Blanc = new Joueur("blanc", "blanc");
-                Noir = new Joueur("noir", "noir");
+                Blanc = IJoueur.getJoueur('h',"blanc","blanc");
+                Noir = IJoueur.getJoueur('h',"noir","noir");
                 break;
             case "2":
-                Blanc = new IA("blanc", "blanc");
-                Noir = new IA("noir", "noir");
+                Blanc = IJoueur.getJoueur('i',"blanc","blanc");
+                Noir = IJoueur.getJoueur('i',"noir","noir");
                 break;
             case "3":
-                Blanc = new Joueur("blanc", "blanc");
-                Noir = new IA("noir", "noir");
+                Blanc = IJoueur.getJoueur('h',"blanc","blanc");
+                Noir = IJoueur.getJoueur('i',"noir","noir");
                 break;
             default:
-                getModeJeu();
+                Jeu.getModeJeu();
         }
 
         Échiquier Echiquier = new Échiquier();
         Jeu.Partie(Blanc, Noir, Echiquier);
     }
-
-    /**
-     * @return le mode de jeu choisi par l'utilisateur
-     */
-    private static String getModeJeu() {
-        System.out.println("Veuillez choisir un mode de jeu :");
-        System.out.println("Tapez 1 pour une partie entre Humains");
-        System.out.println("Tapez 2 pour une partie entre IA");
-        System.out.println("Tapez 3 pour une partie mixte Humains/IA");
-        String modeJeu;
-
-        do{
-            modeJeu = saisie();
-
-        }while(!(modeJeu.equals("1") || modeJeu.equals("2") || modeJeu.equals("3")));
-
-        return modeJeu;
-    }
-
 }

@@ -10,8 +10,6 @@ import Pièces.etatPiece;
 import java.util.LinkedList;
 import java.util.Locale;
 
-import static Application.Appli.saisie;
-
 /**
  * Cette classe représente un joueur dans le programme de finales d'échecs.
  * Ce joueur a un nom et a à sa disposition la liste de ses pièces;
@@ -19,12 +17,12 @@ import static Application.Appli.saisie;
  *
  * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
  */
-public class Joueur implements IJoueur {
+public abstract class Joueur implements IJoueur {
     private final String nomJoueur;
     private final LinkedList<IPiece> listePieces;
 
     /**
-     * Construit un joueur humain comme sous-type d'un joueur
+     * Construit un joueur
      * @param couleur la couleur des pièces du joueur
      * @param nomJoueur le nom du joueur
      */
@@ -41,12 +39,8 @@ public class Joueur implements IJoueur {
         }
     }
 
-    /**
-     * @see IJoueur#joueCoup(Échiquier, IJoueur)
-     */
-    @Override
-    public String joueCoup(Échiquier Echiquier, IJoueur J2) {
-        return saisie();
+    public static IJoueur getJoueur(char typeJoueur, String couleur, String nomJoueur){
+        return DefinirJoueur.fabriquerJoueur(typeJoueur, couleur, nomJoueur);
     }
 
     /**
@@ -134,10 +128,7 @@ public class Joueur implements IJoueur {
     public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArrivé, Échiquier echiquier){
         for (IPiece piece: this.listePieces) {
             if(piece.getCoord().equals(coordDepart)) {
-                if(piece.barreRoute(coordDepart, coordArrivé, echiquier))
-                    return true;
-                else
-                    return false;
+                return piece.routeBarree(coordDepart, coordArrivé, echiquier);
             }
         }
         return true;

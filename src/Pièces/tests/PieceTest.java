@@ -11,14 +11,6 @@ public class PieceTest {
     }
 
     @Test
-    public void isMangeable() {
-    }
-
-    @Test
-    public void getCouleur() {
-    }
-
-    @Test
     public void dessiner() {
     }
 

@@ -1,20 +1,38 @@
 package Pièces.tests;
 
+import Exceptions.Coordonnees.CoupHorsZoneDepException;
+import Exceptions.Coordonnees.FormatCoupIncorrectException;
+import Jeu.Interfaces.IPiece;
+import Jeu.Échiquier;
+import Pièces.Coordonnee;
+import Pièces.etatPiece;
+import org.junit.Assert;
 import org.junit.Test;
 
+import static Jeu.Jeu.creationCoordCoup;
 import static org.junit.Assert.*;
 
 public class RoiTest {
 
     @Test
-    public void move() {
+    public void move() throws FormatCoupIncorrectException, CoupHorsZoneDepException {
+        Échiquier echiquier = new Échiquier();
+        Coordonnee coord = null;
+
+        IPiece roi = IPiece.getPiece('r', creationCoordCoup('b','7'),"blanc");
+        coord = Jeu.Jeu.creationCoordCoup('b','7');
+        Assert.assertTrue(roi.getCoord().equals(coord));
+        coord = Jeu.Jeu.creationCoordCoup('c','7');
+        roi.move(coord, etatPiece.Jeu);
+        Assert.assertTrue(roi.getCoord().equals(coord));
     }
 
     @Test
-    public void getCoupsPossibles() {
+    public void getCoupsPossibles() throws FormatCoupIncorrectException {
+        Échiquier echiquier = new Échiquier();
+        IPiece roi = IPiece.getPiece('r', creationCoordCoup('b','7'),"blanc");
+
+        Assert.assertEquals( 8, roi.getCoupsPossibles().size());
     }
 
-    @Test
-    public void barreRoute() {
-    }
 }

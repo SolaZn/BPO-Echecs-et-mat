@@ -14,18 +14,38 @@ public class Jeu {
     enum etatTour{NORMAL, NULLE, ABANDON, YES, NO}
 
     /**
-     * Empeche le developpeur d'instancier la classe jeu
+     * Empêche le développeur d'instancier la classe jeu
      */
     private Jeu(){
         throw new UnsupportedOperationException("Cette classe n'est pas instantiable");
     }
 
     /**
-     * Retourne une coordonnée initialisé a une ligne et une colonne donnée
+     * Spécifie le mode de jeu de la partie
+     * @return le mode de jeu choisi par l'utilisateur
+     */
+    public static String getModeJeu() {
+        Appli.affichage("Veuillez choisir un mode de jeu :");
+        Appli.affichage("Tapez 1 pour une partie entre Humains");
+        Appli.affichage("Tapez 2 pour une partie entre IA");
+        Appli.affichage("Tapez 3 pour une partie mixte Humains/IA");
+        String modeJeu;
+
+        do{
+            modeJeu = saisie();
+
+        }while(!(modeJeu.equals("1") || modeJeu.equals("2") || modeJeu.equals("3")));
+
+        return modeJeu;
+    }
+
+
+    /**
+     * Détermine une coordonnée en fonction d'une ligne et d'une colonne
      * @param c la colonne
      * @param l la ligne
-     * @return la coordonnée
-     * @throws FormatCoupIncorrectException
+     * @return la coordonnée (Coordonnée) obtenue
+     * @throws FormatCoupIncorrectException si le format est incorrect
      */
     public static Coordonnee creationCoordCoup(char c, char l) throws FormatCoupIncorrectException {
         if(Character.isLetter(c) && Character.isDigit(l))
@@ -44,18 +64,18 @@ public class Jeu {
     }
 
     /**
-     * Retourne vrai si le coup d'un joueur respecte les règles du jeu et reste dans les limites du plateau sinon faux
+     * Détermine si le coup du joueur respecte les règles du jeu d'échecs
      * @param J le joueur qui joue le coup
      * @param J2 le joueur adverse
      * @param Echiquier le plateau de jeu
      * @param coordInit la coordonnée de départ du coup
      * @param coordArr la coordonnée d'arrivée du coup
      * @return vrai si le coup d'un joueur respecte les règles du jeu et reste dans les limites du plateau sinon faux
-     * @throws CoordInexistanteException
-     * @throws PieceNonMangeableException
-     * @throws PieceNonDetenueException
-     * @throws CoupHorsZoneDepException
-     * @throws RoiEnSituationEchecException
+     * @throws CoordInexistanteException si la coordonnée est inexistante
+     * @throws PieceNonMangeableException si la pièce d'arrivée n'est pas mangeable
+     * @throws PieceNonDetenueException si la pièce de départ n'est pas détenue ou que la pièce d'arrivée l'est
+     * @throws CoupHorsZoneDepException si le coup ne respecte pas les règles de déplacement de la pièce
+     * @throws RoiEnSituationEchecException si le roi serait ou se maintiendrait en situation d'échec par ce coup
      */
     private static boolean coupValide(IJoueur J, IJoueur J2, Échiquier Echiquier, Coordonnee coordInit, Coordonnee coordArr)
             throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException,
@@ -101,19 +121,19 @@ public class Jeu {
     }
 
     /**
-     * Retourne vrai si le coup d'un joueur respecte les règles du jeu et reste dans les limites du plateau sinon faux
-     * et rend le coup exploitable par l'algorithme (String to Coordonnée)
+     * Rend le coup exploitable par l'algorithme
+     * et détermine si le coup joué par le joueur respecte les règles du jeu  (String to Coordonnée)
      * @param Echiquier Le plateau de jeu
      * @param coup le coup joué
      * @param J le joueur qui joue le coup
      * @param J2 le joueur adverse
      * @return vrai si le coup d'un joueur respecte les règles du jeu et reste dans les limites du plateau sinon faux
-     * @throws CoordInexistanteException
-     * @throws PieceNonMangeableException
-     * @throws PieceNonDetenueException
-     * @throws CoupHorsZoneDepException
-     * @throws FormatCoupIncorrectException
-     * @throws RoiEnSituationEchecException
+     * @throws CoordInexistanteException si la coordonnée est inexistante
+     * @throws PieceNonMangeableException si la pièce d'arrivée n'est pas mangeable
+     * @throws PieceNonDetenueException si la pièce de départ n'est pas détenue ou que la pièce d'arrivée l'est
+     * @throws CoupHorsZoneDepException si le coup ne respecte pas les règles de déplacement de la pièce
+     * @throws FormatCoupIncorrectException si le format est incorrect
+     * @throws RoiEnSituationEchecException si le roi serait ou se maintiendrait en situation d'échec par ce coup
      */
     public static boolean coupJoué(Échiquier Echiquier, String coup, IJoueur J, IJoueur J2)
             throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException,
@@ -128,18 +148,6 @@ public class Jeu {
 
         return coupValide(J, J2, Echiquier, coordInit, coordArr);
     }
-
-    /* 1. on crée le coup en terme de coordonnees de depart, d'arrivée => Fait
-        2. on verifie si le coup part de l'échiquier et reste dans l'échiquier (avec Coord) => Fait
-        3. on verifie si il y a une pièce au depart, si il y a une piece à la fin (avec Coord et Echiquier) => Fait
-        4. on verifie si on peut manger la pièce tout court (pour le Roi) (avec Echiquier) => Fait
-        -> on transmet l'ordre de déplacement au joueur pour qu'il verifie selon ses règles de déplacement (on transmet Coord, Echiquier...)
-            5. il regarde la liste des coups possibles pour son pion et le coup doit y être => TROP DUR pr l'instant -> voir juste deplacement possible => FAIT
-            6. il verifie si il peut manger le pion d'arrivée le cas échéant => FAIT
-            7. "il vérifie si la partie est finie par son coup" => A VOIR
-        <- il retourne vrai ou faux si le coup est fait ou pas => FAIT
-        <- coupJoue retourne le resultat et fait rejouer/arrête le jeu/continue le jeu selon les cas. => A VOIR, séparer en deux
-     */
 
     /**
      * Lance une partie en mode Nulle, propose au joueur adverse si il souhaite rester sur un match nul
@@ -159,7 +167,7 @@ public class Jeu {
     }
 
     /**
-     * Retourne vrai si le joueur met le joueur adverse en situation d'echec et mat sinon faux
+     * Vérifie si le joueur est en situation d'échec et mat
      * @param J1 le joueur
      * @param J2 le joueur adverse
      * @param positionRoiAdverse la pasition du roi adverse
@@ -217,6 +225,10 @@ public class Jeu {
             Appli.affichage("Match nul. \n"+ nombreCoupsNonHostile + " coups sans prise ont été joués");
             return true;
         }
+
+        // il faut que si le roi ne puisse QUE rester dans sa propre position, sinon
+        // -> si parmi toutes les positions possibles, il n'en reste qu'une et que c'est la pos actuelle du roi
+        // alors il y a pat
         return false;
     }
 

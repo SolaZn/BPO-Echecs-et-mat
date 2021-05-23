@@ -25,6 +25,7 @@ public class Échiquier {
     }
 
     /**
+     * Retourne le plateau de jeu
      * @return le plateau de jeu
      */
     public char[][] getPlateau() {
@@ -32,7 +33,7 @@ public class Échiquier {
     }
 
     /**
-     * Retourne vrai si la coordonnée existe dans le plateau sinon faux
+     * Vérifie si la coordonnée fait partie de l'échiquier
      * @param coord la coordonnée
      * @return vrai si la coordonnée existe dans le plateau sinon faux
      * @throws CoordInexistanteException
@@ -45,7 +46,7 @@ public class Échiquier {
     }
 
     /**
-     * Retoourne le type de la pièce qui occupe la coordonnée
+     * Donne le caractère définissant la pièce à la coordonnée spécifiée
      * @param coord la coordonnée
      * @return le type de la pièce qui occupe la coordonnée
      */
@@ -54,9 +55,9 @@ public class Échiquier {
     }
 
     /**
-     * Vide la tableau
+     * Vide le tableau de l'échiquier
      */
-    public void effacer(){
+    void effacer(){
         for(int l = 0; l < Plateau.length; ++l) {
             for (int c = 0; c < Plateau[0].length; ++c) {
                 this.Plateau[l][c] = ' ';
@@ -76,7 +77,7 @@ public class Échiquier {
     }
 
     /**
-     * Retourne la manière d'afficher le plateau dans le bon sens
+     * Définit la manière d'afficher le plateau dans le bon sens
      * @return la manière d'afficher le plateau dans le bon sens
      */
     private String affBonSens(){
@@ -100,7 +101,7 @@ public class Échiquier {
     }
 
     /**
-     * Retourne la manière d'afficher le plateau dans le sens inverse
+     * Définit la manière d'afficher le plateau dans le sens inverse
      * @return la manière d'afficher le plateau dans le sens inverse
      */
     private String affReverse(){
@@ -124,7 +125,7 @@ public class Échiquier {
     }
 
     /**
-     * Retourne la manière d'afficher le plateau de jeu selon le mode d'affichage
+     * Affiche le plateau de jeu selon le mode d'affichage
      * @param modeAffichage le mode d'affichage
      * @return la manière d'afficher le plateau de jeu selon le mode d'affichage
      */

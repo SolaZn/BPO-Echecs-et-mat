@@ -1,20 +1,19 @@
 package Joueurs.tests;
 
 import Exceptions.Coordonnees.CoupHorsZoneDepException;
+import Exceptions.Coordonnees.FormatCoupIncorrectException;
+import Jeu.Interfaces.IJoueur;
 import Jeu.Échiquier;
-import Joueurs.Joueur;
 import Pièces.Coordonnee;
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class JoueurTest {
 
     @Test
     public void dessinerPositions() {
         // Sachant qu'on a un joueur et un échiquier sur lequel il joue
-        Joueur J1 = new Joueur("blanc","blanc");
+        IJoueur J1 = IJoueur.getJoueur('h',"blanc","blanc");
         Échiquier Echiquier = new Échiquier();
 
         // Si le joueur n'a pas dessiné ses positions, l'échiquier est vide aux cases
@@ -32,9 +31,9 @@ public class JoueurTest {
     }
 
     @Test
-    public void deplacerPiece() {
+    public void deplacerPiece() throws CoupHorsZoneDepException {
         // Sachant qu'on a un joueur et un échiquier sur lequel il joue
-        Joueur J1 = new Joueur("blanc","blanc");
+        IJoueur J1 = IJoueur.getJoueur('h',"blanc","blanc");
         Échiquier Echiquier = new Échiquier();
         Echiquier.rafraichir(J1, J1);
 
@@ -45,11 +44,7 @@ public class JoueurTest {
 
         // Alors, le joueur peut déplacer son pion de 2,4 vers 3,4 en tenant compte des règles
         // de déplacement
-        try {
-            J1.deplacerPiece(new Coordonnee(2,4), new Coordonnee(3,4));
-        } catch (CoupHorsZoneDepException e) {
-            System.out.println("Cet affichage n'arrivera pas");
-        }
+        J1.deplacerPiece(new Coordonnee(2,4), new Coordonnee(3,4));
 
         // En remettant donc à jour l'affichage de l'échiquier...
         Echiquier.rafraichir(J1, J1);
@@ -63,7 +58,7 @@ public class JoueurTest {
     @Test
     public void detientPiece() {
         // Sachant qu'on a un joueur et un échiquier sur lequel il joue
-        Joueur J1 = new Joueur("blanc","blanc");
+        IJoueur J1 = IJoueur.getJoueur('h',"blanc","blanc");
         Échiquier Echiquier = new Échiquier();
         Echiquier.rafraichir(J1, J1);
 
@@ -79,15 +74,57 @@ public class JoueurTest {
     }
 
     @Test
-    public void essaiCoupHostile() {
+    public void essaiCoupHostile() throws FormatCoupIncorrectException {
+        // Sachant qu'on a deux joueurs et un échiquier sur lequel ils jouent
+        IJoueur J1 = IJoueur.getJoueur('h',"blanc","blanc");
+        IJoueur J2 = IJoueur.getJoueur('h',"noir","noir");
+        Échiquier Echiquier = new Échiquier();
+        Echiquier.rafraichir(J1, J1);
+
+        // Si le joueur NOIR et le joueur BLANC viennent d'être initialisés,
+        // leurs rois ne peuvent s'attendre mutuellement
+        Assert.assertFalse(J1.essaiCoupHostile(J2.positionRoi()));
+        Assert.assertFalse(J2.essaiCoupHostile(J1.positionRoi()));
+
+        // Cependant, supposons que le roi BLANC souhaite se déplacer en e7,
+        // il se mettrait en position d'échec et DONC l'adverse pourrait l'y attaquer
+        // essaiCoupHostile serait donc vrai
+        Assert.assertTrue(J2.essaiCoupHostile(Jeu.Jeu.creationCoordCoup('e','7')));
     }
 
     @Test
-    public void perdrePiece() {
+    public void perdrePiece() throws FormatCoupIncorrectException, CoupHorsZoneDepException {
+        IJoueur J1 = IJoueur.getJoueur('h',"blanc","blanc");
+        IJoueur J2 = IJoueur.getJoueur('h',"noir","noir");
+        Échiquier echiquier = new Échiquier();
+
+        Coordonnee coordInit =  Jeu.Jeu.creationCoordCoup('b', '7');
+        Coordonnee coordArr = Jeu.Jeu.creationCoordCoup('c', '7');
+        J1.deplacerPiece(coordInit, coordArr);
+
+        echiquier.rafraichir(J1,J2);
+
+        coordInit =  Jeu.Jeu.creationCoordCoup('c', '5');
+        coordArr = Jeu.Jeu.creationCoordCoup('c', '7');
+        J1.perdrePiece(coordArr);
+        Assert.assertEquals( -1, J1.detientPiece(coordArr));
+        Assert.assertEquals(1, J1.nombrePieces());
     }
 
     @Test
-    public void barreRoute() {
-    }
+    public void routeBarree() throws CoupHorsZoneDepException, FormatCoupIncorrectException {
+        IJoueur J1 = IJoueur.getJoueur('h',"blanc","blanc");
+        IJoueur J2 = IJoueur.getJoueur('h',"noir","noir");
+        Échiquier echiquier = new Échiquier();
 
+        Coordonnee coordInit =  Jeu.Jeu.creationCoordCoup('b', '7');
+        Coordonnee coordArr = Jeu.Jeu.creationCoordCoup('c', '7');
+        J1.deplacerPiece(coordInit, coordArr);
+
+        echiquier.rafraichir(J1,J2);
+
+        coordInit =  Jeu.Jeu.creationCoordCoup('c', '5');
+        coordArr = Jeu.Jeu.creationCoordCoup('c', '8');
+        Assert.assertTrue(J2.barreRoute(coordInit, coordArr, echiquier));
+    }
 }

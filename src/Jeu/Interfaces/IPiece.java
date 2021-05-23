@@ -24,14 +24,14 @@ public interface IPiece {
     }
 
     /**
-     * Retourne la liste contenant les coups possibles compte-tenu des règles de
+     * Édite la liste contenant les coups possibles compte-tenu des règles de
      * déplacement concernant le type de la pièce concernée
      * @return la liste (LinkedList) des coordonnées où la pièce peut se déplacer
      */
     LinkedList<Coordonnee> getCoupsPossibles();
 
     /**
-     * Retourne l'état de "mangeabilité" de la pièce demandée
+     * Donne l'état de "mangeabilité" de la pièce demandée
      * @param typePiece le type de la pièce
      * @return vrai si elle est mangeable, faux si elle ne l'est pas
      */
@@ -40,13 +40,13 @@ public interface IPiece {
     }
 
     /**
-     * Retourne la couleur de la pièce concernée
+     * Donne la couleur de la pièce concernée
      * @return la couleur (String) de la pièce
      */
     String getCouleur();
 
     /**
-     * Retourne le "caractère" de dessin de la pièce sur l'échiquier
+     * Donne le "caractère" de dessin de la pièce sur l'échiquier
      * @return le caractère (char) correspondant à la pièce
      */
     char dessiner();
@@ -57,12 +57,12 @@ public interface IPiece {
      * @param coordArr la coordonnée d'arrivée de la pièce
      * @param etat le mode de déplacement (pour jouer ou juste pour tester)
      * @return vrai si le déplacement est possible/a été effectué, faux si il ne l'est pas/n'a pas été effectué
-     * @throws CoupHorsZoneDepException
+     * @throws CoupHorsZoneDepException si le coup ne respecte pas les règles de déplacement de la pièce
      */
     boolean move(Coordonnee coordArr, etatPiece etat) throws CoupHorsZoneDepException;
 
     /**
-     * Retourne les coordonnées actuelle de la pièce
+     * Donne les coordonnées actuelle de la pièce
      * @return les coordonnées de la pièce
      */
     Coordonnee getCoord();
@@ -73,6 +73,6 @@ public interface IPiece {
      * @param coordArr
      * @return
      */
-    boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr, Échiquier echiquier);
+    boolean routeBarree(Coordonnee coordDepart, Coordonnee coordArr, Échiquier echiquier);
 
 }

@@ -2,6 +2,7 @@ package Jeu.Interfaces;
 
 import Exceptions.Coordonnees.CoupHorsZoneDepException;
 import Jeu.Échiquier;
+import Joueurs.Joueur;
 import Pièces.Coordonnee;
 
 /**
@@ -9,12 +10,16 @@ import Pièces.Coordonnee;
  * par des classes correspondant à des joueurs du programme.
  */
 public interface IJoueur {
-    /**
-     * Demande à l'utilisateur de renseigner le coup qu'il souhaite jouer
-     * @param Echiquier l'échiquier sur lequel le coup sera joué
-     * @param j2 le joueur adverse
-     * @return la chaîne de caractères (String) correspondant au coup joué
-     */
+    static IJoueur getJoueur(char typeJoueur, String couleur, String nomJoueur) {
+        return Joueur.getJoueur(typeJoueur, couleur, nomJoueur);
+    }
+
+        /**
+         * Demande à l'utilisateur de renseigner le coup qu'il souhaite jouer
+         * @param Echiquier l'échiquier sur lequel le coup sera joué
+         * @param j2 le joueur adverse
+         * @return la chaîne de caractères (String) correspondant au coup joué
+         */
     String joueCoup(Échiquier Echiquier, IJoueur j2);
 
     /**
@@ -28,19 +33,19 @@ public interface IJoueur {
      * @param coordInit la coordonnée de départ du déplacement
      * @param coordArr la coordonnée d'arrivée du déplacement
      * @return vrai si le déplacement est effectué, faux si il n'a pu l'être
-     * @throws CoupHorsZoneDepException
+     * @throws CoupHorsZoneDepException si le coup ne respecte pas les règles de déplacement de la pièce
      */
     boolean deplacerPiece(Coordonnee coordInit, Coordonnee coordArr) throws CoupHorsZoneDepException;
 
     /**
-     * Retourne le rang de la pièce du joueur correspondant aux coordonnées renseignées
+     * Donne le rang de la pièce du joueur correspondant aux coordonnées renseignées
      * @param coord la coordonnée où doit se situer la pièce recherchée
      * @return le rang (int) si la pièce est trouvée, -1 si aucune pièce ne correspond à la recherche
      */
     int detientPiece(Coordonnee coord);
 
     /**
-     * Retourne la position du Roi du joueur concerné
+     * Donne la position du Roi du joueur concerné
      * @return la coordonnée (Coordonnee) du Roi du joueur
      */
     Coordonnee positionRoi();
@@ -59,7 +64,7 @@ public interface IJoueur {
     void perdrePiece(Coordonnee coordArr);
 
     /**
-     * Retourne le nombre de pièces détenues par le joueur
+     * Donne le nombre de pièces détenues par le joueur
      * @return le nombre (int) de pièces
      */
     int nombrePieces();

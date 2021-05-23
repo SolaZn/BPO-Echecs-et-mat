@@ -80,10 +80,10 @@ class Roi extends Piece {
     }
 
     /**
-     * @see IPiece#barreRoute(Coordonnee, Coordonnee)
+     * @see IPiece#routeBarree(Coordonnee, Coordonnee, Échiquier) 
      */
     @Override
-    public boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArr, Échiquier echiquier) {
+    public boolean routeBarree(Coordonnee coordDepart, Coordonnee coordArr, Échiquier echiquier) {
         return false;
     }
 }

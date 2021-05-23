@@ -17,7 +17,6 @@ public abstract class Piece implements IPiece {
         this.couleur = colrInit;
     }
 
-
     /**
      * @see IPiece#getPiece(char, Coordonnee, String)
      */

@@ -16,7 +16,7 @@ import java.util.Random;
  *
  * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
  */
-public class IA extends Joueur implements IJoueur{
+class IA extends Joueur implements IJoueur{
 
     /**
      * Construit une IA comme sous-type d'un joueur
@@ -51,6 +51,8 @@ public class IA extends Joueur implements IJoueur{
             int idy = r.nextInt(listeCoups.size());
             Coordonnee coordAJouer = listeCoups.get(idy);
 
+
+            // ajouter le barreRoute aux requirements du coup valide
             if ((!J2.essaiCoupHostile(coordAJouer) && Character.toUpperCase(Echiquier.coordOccupé(coordDeDepart)) == 'R') ||
                     Character.toUpperCase(Echiquier.coordOccupé(coordDeDepart)) != 'R') {
                 char colonneDep = Character.forDigit(coordDeDepart.getColonne() + 10, 36);

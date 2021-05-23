@@ -3,7 +3,7 @@ package Joueurs.tests;
 import Exceptions.Coordonnees.CoordInexistanteException;
 import Exceptions.Coordonnees.FormatCoupIncorrectException;
 import Jeu.*;
-import Joueurs.IA;
+import Jeu.Interfaces.IJoueur;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,9 +13,12 @@ public class IATest {
 
     @Test
     public void joueCoup() {
+        //Note : nous ne pouvons tester joueCoup pour un humain, cette implémentation
+        // étant trop triviale.
+
         // Sachant qu'on a une IA et un échiquier sur lequel elle joue
-        IA IA1 = new IA("blanc","blanc");
-        IA IA2 = new IA("noir", "noir");
+        IJoueur IA1 = IJoueur.getJoueur('i',"blanc","blanc");
+        IJoueur IA2 = IJoueur.getJoueur('i',"noir","noir");
         Échiquier Echiquier = new Échiquier();
 
         // Cette IA peut donner un coup à jouer en fonction de sa situation
@@ -36,9 +39,5 @@ public class IATest {
             throw new RuntimeException("Cela ne devrait pas arriver.");
         }
 
-    }
-
-    @Test
-    public void barreRoute() {
     }
 }
