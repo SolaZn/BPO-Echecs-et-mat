@@ -1,6 +1,6 @@
-package Jeu;
+package Joueurs;
 
-import Jeu.IPiece;
+import Joueurs.IPiece;
 import Pièces.Coordonnee;
 import Pièces.Roi;
 import Pièces.Tour;
@@ -12,14 +12,14 @@ import Pièces.Tour;
  *
  * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
  */
-class DefinirPiece {
+public class DefinirPiece {
     /**
      * Construit une IPièce du type auquel correspond le char et
      * l'initialise avec une coordonnée et une couleur donnée
      * @param typePiece Le type de de la pièce
      * @param coord La coordonnée
      * @param couleur La couleur
-     * @return une IPièce du type spécifié
+     * @return la pièce (IPiece) ainsi définie
      */
     public static IPiece fabriquerPiece(char typePiece, Coordonnee coord, String couleur) {
         if(Character.toLowerCase(typePiece) == 'r'){
@@ -34,7 +34,7 @@ class DefinirPiece {
     /**
      * @see IPiece#isMangeable(char) 
      */
-    public static boolean isMangeable(char typePiece) {
+    static boolean isMangeable(char typePiece) {
         return Character.toUpperCase(typePiece) != 'R'; // => Point d'évolutivité citable dans le rapport : si on veut jouer avec des
         // => règles différentes, on peut changer. Cependant, réfléchir à la position dans le code
     }

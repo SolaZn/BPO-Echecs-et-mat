@@ -1,6 +1,7 @@
-package Jeu;
+package Joueurs;
 
 import Exceptions.Coordonnees.*;
+import Jeu.Échiquier;
 import Pièces.*;
 
 import java.util.LinkedList;
@@ -12,17 +13,6 @@ import java.util.LinkedList;
  * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony ZAKANI
  */
 public interface IPiece {
-
-    /**
-     * Génère la pièce demandée aux coordonnées demandées pour le joueur demandé
-     * @param typePiece le type de la pièce demandée
-     * @param coord les coordonnées où la placer
-     * @param couleur la couleur d'appartenance de la pièce
-     * @return la pièce (IPiece) ainsi définie
-     */
-    static IPiece getPiece(char typePiece, Coordonnee coord, String couleur){
-        return DefinirPiece.fabriquerPiece(typePiece, coord, couleur);
-    }
 
     /**
      * Édite la liste contenant les coups possibles compte-tenu des règles de

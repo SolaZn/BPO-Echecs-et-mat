@@ -40,7 +40,7 @@ public class Appli {
     public static void main(String[] args) {
         final String blanc = "blanc";
         final String noir = "noir";
-        String modeJeu = Jeu.getModeJeu();
+        String modeJeu = "2";
 
         IJoueur Blanc = null;
         IJoueur Noir = null;

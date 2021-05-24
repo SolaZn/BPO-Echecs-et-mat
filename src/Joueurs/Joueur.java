@@ -3,7 +3,6 @@ package Joueurs;
 import Application.Appli;
 import Application.IJoueur;
 import Exceptions.Coordonnees.*;
-import Jeu.IPiece;
 import Jeu.Échiquier;
 import Pièces.Coordonnee;
 import Pièces.etatPiece;
@@ -31,11 +30,11 @@ public abstract class Joueur implements IJoueur {
         listePieces = new LinkedList<>();
         this.nomJoueur = nomJoueur;
         if(couleur.equals("blanc")){
-            listePieces.add(IPiece.getPiece('r', new Coordonnee(2,4), couleur));
-            listePieces.add(IPiece.getPiece('t', new Coordonnee(1,1), couleur));
+            listePieces.add(DefinirPiece.fabriquerPiece('r', new Coordonnee(2,4), couleur));
+            listePieces.add(DefinirPiece.fabriquerPiece('t', new Coordonnee(1,1), couleur));
         }
         else if (couleur.equals("noir")){
-             listePieces.add(IPiece.getPiece('r', new Coordonnee(0,4), couleur));
+             listePieces.add(DefinirPiece.fabriquerPiece('r', new Coordonnee(0,4), couleur));
              // listePieces.add(IPiece.getPiece('t', new Coordonnee(3,2), couleur));
         }
     }

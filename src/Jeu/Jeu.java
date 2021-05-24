@@ -4,6 +4,7 @@ import Application.Appli;
 import Exceptions.Coordonnees.*;
 import Exceptions.Pieces.*;
 import Application.IJoueur;
+import Joueurs.IPiece;
 import Pièces.Coordonnee;
 
 import static Application.Appli.saisie;

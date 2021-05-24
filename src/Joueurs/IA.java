@@ -1,7 +1,6 @@
 package Joueurs;
 
 import Application.IJoueur;
-import Jeu.IPiece;
 
 import Jeu.Échiquier;
 import Pièces.*;

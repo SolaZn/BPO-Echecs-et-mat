@@ -1,6 +1,6 @@
 package Pièces;
 
-import Jeu.IPiece;
+import Joueurs.IPiece;
 
 /**
  * Cette classe représente une pièce dans le programme de finales d'échecs.

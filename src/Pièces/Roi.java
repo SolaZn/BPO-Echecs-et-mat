@@ -1,7 +1,7 @@
 package Pièces;
 
 import Exceptions.Coordonnees.*;
-import Jeu.IPiece;
+import Joueurs.IPiece;
 import Jeu.Échiquier;
 
 import java.util.LinkedList;

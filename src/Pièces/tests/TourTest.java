@@ -3,7 +3,7 @@ package Pièces.tests;
 import Exceptions.Coordonnees.CoupHorsZoneDepException;
 import Exceptions.Coordonnees.FormatCoupIncorrectException;
 import Application.IJoueur;
-import Jeu.IPiece;
+import Joueurs.IPiece;
 import Jeu.Échiquier;
 import Pièces.Coordonnee;
 import Pièces.etatPiece;
@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static Jeu.Jeu.creationCoordCoup;
+import static Joueurs.DefinirPiece.fabriquerPiece;
 
 public class TourTest {
 
@@ -19,7 +20,7 @@ public class TourTest {
         Échiquier echiquier = new Échiquier();
         Coordonnee coord = null;
 
-        IPiece tour = IPiece.getPiece('t', creationCoordCoup('b','7'),"blanc");
+        IPiece tour = fabriquerPiece('t', creationCoordCoup('b','7'),"blanc");
         coord = Jeu.Jeu.creationCoordCoup('b','7');
         Assert.assertTrue(tour.getCoord().equals(coord));
         coord = Jeu.Jeu.creationCoordCoup('f','7');
@@ -30,7 +31,7 @@ public class TourTest {
     @Test
     public void getCoupsPossibles() throws FormatCoupIncorrectException{
         Échiquier echiquier = new Échiquier();
-        IPiece tour = IPiece.getPiece('t', creationCoordCoup('b','7'),"blanc");
+        IPiece tour = fabriquerPiece('t', creationCoordCoup('b','7'),"blanc");
 
         Assert.assertEquals( 15, tour.getCoupsPossibles().size());
     }
