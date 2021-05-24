@@ -1,14 +1,25 @@
-package Pièces;
+package Jeu;
 
-import Jeu.Interfaces.IPiece;
+import Jeu.IPiece;
+import Pièces.Coordonnee;
+import Pièces.Roi;
+import Pièces.Tour;
 
+/**
+ * Cette classe est une fabrique d'IPièce. Elle sert à construire
+ * tout objet de ce type à l'aide des caractéristiques renseignées par
+ * l'utilisateur.
+ *
+ * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
+ */
 class DefinirPiece {
     /**
-     * Retourne une IPiècce du type auquel correspond le char et initialisé à une coordonnée et une couleur données
+     * Construit une IPièce du type auquel correspond le char et
+     * l'initialise avec une coordonnée et une couleur donnée
      * @param typePiece Le type de de la pièce
      * @param coord La coordonnée
      * @param couleur La couleur
-     * @return une IPièce
+     * @return une IPièce du type spécifié
      */
     public static IPiece fabriquerPiece(char typePiece, Coordonnee coord, String couleur) {
         if(Character.toLowerCase(typePiece) == 'r'){
@@ -21,12 +32,10 @@ class DefinirPiece {
     }
 
     /**
-     * Retourne vrai si la pièce visée est mangeable sinon faux
-     * @param typePiece Le type de la pièce visée
-     * @return vrai si la pièce visée est mangeable sinon faux
+     * @see IPiece#isMangeable(char) 
      */
     public static boolean isMangeable(char typePiece) {
         return Character.toUpperCase(typePiece) != 'R'; // => Point d'évolutivité citable dans le rapport : si on veut jouer avec des
-                                                        // => règles différentes, on peut changer. Cependant, réfléchir à la position dans le code
+        // => règles différentes, on peut changer. Cependant, réfléchir à la position dans le code
     }
 }

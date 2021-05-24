@@ -7,13 +7,11 @@ import Exceptions.Coordonnees.RouteBarréeException;
 import Exceptions.Pieces.PieceNonDetenueException;
 import Exceptions.Pieces.PieceNonMangeableException;
 import Exceptions.Pieces.RoiEnSituationEchecException;
-import Jeu.Interfaces.IJoueur;
+import Application.IJoueur;
 import Jeu.Échiquier;
 import Pièces.Coordonnee;
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class JeuTest {
 

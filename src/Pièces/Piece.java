@@ -1,7 +1,14 @@
 package Pièces;
 
-import Jeu.Interfaces.IPiece;
+import Jeu.IPiece;
 
+/**
+ * Cette classe représente une pièce dans le programme de finales d'échecs.
+ * Cette pièce a une coordonnée ainsi que sa couleur d'affichage;
+ * Couleur qui lui servira lors de son affichage.
+ *
+ * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
+ */
 public abstract class Piece implements IPiece {
     private Coordonnee coord;
     private String couleur;
@@ -15,20 +22,6 @@ public abstract class Piece implements IPiece {
     Piece(int ligneInit, int colInit, String colrInit){
         this.coord = new Coordonnee(ligneInit, colInit);
         this.couleur = colrInit;
-    }
-
-    /**
-     * @see IPiece#getPiece(char, Coordonnee, String)
-     */
-    public static IPiece getPiece(char typePiece, Coordonnee coord, String couleur){
-        return DefinirPiece.fabriquerPiece(typePiece, coord, couleur);
-    }
-
-    /**
-     * @see IPiece#isMangeable(char)
-     */
-    public static boolean isMangeable(char typePiece){
-        return DefinirPiece.isMangeable(typePiece);
     }
 
     /**

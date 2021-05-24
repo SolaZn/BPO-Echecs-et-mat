@@ -3,7 +3,7 @@ package Joueurs.tests;
 import Exceptions.Coordonnees.CoordInexistanteException;
 import Exceptions.Coordonnees.FormatCoupIncorrectException;
 import Jeu.*;
-import Jeu.Interfaces.IJoueur;
+import Application.IJoueur;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -3,12 +3,18 @@ package Jeu;
 import Application.Appli;
 import Exceptions.Coordonnees.*;
 import Exceptions.Pieces.*;
-import Jeu.Interfaces.IJoueur;
-import Jeu.Interfaces.IPiece;
+import Application.IJoueur;
 import Pièces.Coordonnee;
 
 import static Application.Appli.saisie;
 
+/**
+ * Cette classe représente la logique du jeu d'échecs, elle comporte
+ * plusieurs méthodes permettant à une partie de se dérouler dans les
+ * meilleures conditions possibles.
+ *
+ * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony ZAKANI
+ */
 public class Jeu {
     private static int nombreCoupsNonHostile = 0;
     enum etatTour{NORMAL, NULLE, ABANDON, YES, NO}
@@ -81,17 +87,15 @@ public class Jeu {
             throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException,
             RoiEnSituationEchecException, RouteBarréeException {
         if(Échiquier.coordExiste(coordInit) && Échiquier.coordExiste(coordArr)) {
-            //Les coordonnées initiale et d'arrivé existe bien dans l'échiquier
             int idDepart = J.detientPiece(coordInit); //
             if (idDepart != -1) {
                 char typePieceArr = Echiquier.coordOccupé(coordArr);
                 if (IPiece.isMangeable(typePieceArr)) {
-                    // TODO: 01/05/2021 (UPDATE 02/05) => SEULE LA TOUR REGARDE LE RESULTAT DE CE CHECK, LES AUTRES NON - Un check pour si et seulement si une pièce est sur le chemin, vérifier si le coup ne passe pas par le chemin sans manger/s'arrêter avant
                     int idArrivee = J.detientPiece(coordArr);
                     if (idArrivee == -1) {
                         if(!J.barreRoute(coordInit, coordArr, Echiquier)) {
                             if (J.positionRoi().equals(coordInit)) {
-                                if (!J2.essaiCoupHostile(coordArr)) {
+                                if (!J2.essaiCoupHostile(coordArr, Echiquier)) {
                                     if (J.deplacerPiece(coordInit, coordArr)) {
                                         J2.perdrePiece(coordArr);
                                         return true;
@@ -99,7 +103,7 @@ public class Jeu {
                                 } else
                                     throw new RoiEnSituationEchecException();
                             } else {
-                                if (!J2.essaiCoupHostile(J.positionRoi())) {
+                                if (!J2.essaiCoupHostile(J.positionRoi(), Echiquier)) {
                                     if (J.deplacerPiece(coordInit, coordArr)) {
                                         J2.perdrePiece(coordArr);
                                         return true;
@@ -178,25 +182,33 @@ public class Jeu {
         int positionsPossibles = 9;
         int nbSituationsEchec = 0;
         for(int variationCol = - 1; variationCol < 2; variationCol++){
-           for(int variationLigne = - 1; variationLigne < 2; variationLigne++) {
-               try {
-                   Coordonnee posPossRoiAdv = new Coordonnee(positionRoiAdverse.getLigne() + variationLigne,
-                           positionRoiAdverse.getColonne() + variationCol);
-                   if(Échiquier.coordExiste(posPossRoiAdv)) {
-                       if(J1.essaiCoupHostile(posPossRoiAdv)){
-                           /*if(variationCol == 0 && variationLigne == 0){
-                               ->
-                               J2.essaiCoupHostile(posPieceQuiPeutMangerLeRoi);
-                           }
-                           else (contreEchec > nbpionsmettantenechec)*/
-
-                           nbSituationsEchec++;
-                       }
-                   }
-               } catch (CoordInexistanteException ci) {
-                   positionsPossibles -= 1;
-               }
-           }
+            try {
+                Coordonnee posPossRoiAdv = new Coordonnee(positionRoiAdverse.getLigne() + -1,
+                        positionRoiAdverse.getColonne() + variationCol);
+                if (Échiquier.coordExiste(posPossRoiAdv) && J1.essaiCoupHostile(posPossRoiAdv, Echiquier)) {
+                    nbSituationsEchec++;
+                }
+            } catch (CoordInexistanteException ci) {
+                positionsPossibles -= 1;
+            }
+            try {
+                Coordonnee posPossRoiAdv = new Coordonnee(positionRoiAdverse.getLigne() + 0,
+                        positionRoiAdverse.getColonne() + variationCol);
+                if (Échiquier.coordExiste(posPossRoiAdv) && J1.essaiCoupHostile(posPossRoiAdv, Echiquier)) {
+                    nbSituationsEchec++;
+                }
+            } catch (CoordInexistanteException ci) {
+                positionsPossibles -= 1;
+            }
+            try {
+                Coordonnee posPossRoiAdv = new Coordonnee(positionRoiAdverse.getLigne() + 1,
+                        positionRoiAdverse.getColonne() + variationCol);
+                if (Échiquier.coordExiste(posPossRoiAdv) && J1.essaiCoupHostile(posPossRoiAdv, Echiquier)) {
+                    nbSituationsEchec++;
+                }
+            } catch (CoordInexistanteException ci) {
+                positionsPossibles -= 1;
+            }
         }
 
         if(nbSituationsEchec == positionsPossibles){ // si toutes les échappatoires du roi sont épuisées
@@ -220,15 +232,59 @@ public class Jeu {
             Appli.affichage("Match nul. \nAucun joueur ne peut gagner dans cette situation");
             Appli.affichage(Echiquier.getNbAffichage() - 2 + " coups joués");
             return true;
-        }
-        if(nombreCoupsNonHostile >= 50){
+        }else if(situationPatEgal(J1, J2, J2.positionRoi(), Echiquier)){
+            Appli.affichage("Match nul. \nSituation de pat");
+            Appli.affichage(Echiquier.getNbAffichage() - 2 + " coups joués");
+            return true;
+        } else if(nombreCoupsNonHostile >= 50){
             Appli.affichage("Match nul. \n"+ nombreCoupsNonHostile + " coups sans prise ont été joués");
             return true;
         }
 
+
+
         // il faut que si le roi ne puisse QUE rester dans sa propre position, sinon
         // -> si parmi toutes les positions possibles, il n'en reste qu'une et que c'est la pos actuelle du roi
         // alors il y a pat
+        return false;
+    }
+
+    private static boolean situationPatEgal(IJoueur J1, IJoueur J2, Coordonnee positionRoiAdverse, Échiquier Echiquier){
+        int positionsPossibles = 9;
+        int nbSituationsEchec = 0;
+        for(int variationCol = - 1; variationCol < 2; variationCol++){
+            try {
+                Coordonnee posPossRoiAdv = new Coordonnee(positionRoiAdverse.getLigne() + -1,
+                        positionRoiAdverse.getColonne() + variationCol);
+                if (Échiquier.coordExiste(posPossRoiAdv) && J1.essaiCoupHostile(posPossRoiAdv, Echiquier)) {
+                    nbSituationsEchec++;
+                }
+            } catch (CoordInexistanteException ci) {
+                positionsPossibles -= 1;
+            }
+            try {
+                Coordonnee posPossRoiAdv = new Coordonnee(positionRoiAdverse.getLigne() + 0,
+                        positionRoiAdverse.getColonne() + variationCol);
+                if (Échiquier.coordExiste(posPossRoiAdv) && J1.essaiCoupHostile(posPossRoiAdv, Echiquier)) {
+                    nbSituationsEchec++;
+                }
+            } catch (CoordInexistanteException ci) {
+                positionsPossibles -= 1;
+            }
+            try {
+                Coordonnee posPossRoiAdv = new Coordonnee(positionRoiAdverse.getLigne() + 1,
+                        positionRoiAdverse.getColonne() + variationCol);
+                if (Échiquier.coordExiste(posPossRoiAdv) && J1.essaiCoupHostile(posPossRoiAdv, Echiquier)) {
+                    nbSituationsEchec++;
+                }
+            } catch (CoordInexistanteException ci) {
+                positionsPossibles -= 1;
+            }
+        }
+
+        if(nbSituationsEchec == positionsPossibles - 1 && !J1.essaiCoupHostile(J2.positionRoi(), Echiquier)){ // si la seule échappatoire est sa propre position
+            return true;
+        }
         return false;
     }
 
@@ -261,26 +317,21 @@ public class Jeu {
                 }catch(CoordInexistanteException cd){
                     Appli.affichage("Coup illégal\nCoordonnées inexistantes");
                     etatCoup = false;
-                    // cd.printStackTrace(); // à enlever
                 }catch(PieceNonMangeableException pm){
                     Appli.affichage("Coup illégal\nPièce non mangeable");
                     etatCoup = false;
-                    // pm.printStackTrace(); // à enlever
                 }catch(PieceNonDetenueException pn){
                     Appli.affichage("Coup illégal\nPièce de départ non détenue\net/ou Pièce d'arrivée détenue");
                     etatCoup = false;
-                    // pn.printStackTrace(); // à enlever
                 }catch(CoupHorsZoneDepException cz){
                     Appli.affichage("Coup illégal\nCoup hors de la zone de déplacement de la pièce\nou coup sans bouger");
                     etatCoup = false;
-                    // cz.printStackTrace(); // à enlever
                 }catch(FormatCoupIncorrectException fci){
                     Appli.affichage("Coup illégal\nLe format du coup est incorrect");
                     etatCoup = false;
                 }catch(RoiEnSituationEchecException rse) {
                     Appli.affichage("Le Roi " + J1.toString() + " serait\nen situation d'échec");
                     etatCoup = false;
-                    // rse.printStackTrace();
                 }catch (RouteBarréeException rb){
                     Appli.affichage("Coup invalide\nUne pièce adverse/alliée se trouve entre la coordonnée de départ et la coordonnée d'arrivée");
                     etatCoup = false;
@@ -316,6 +367,7 @@ public class Jeu {
             }
             if(situationEchecMat(Blanc, Noir, Noir.positionRoi(), Echiquier) || situationPat(Blanc, Noir, Echiquier)){
                 Appli.affichage(Echiquier.toString('b'));
+                Jeu.setNbCoupsNonHostile();
                 break;
             }
 
@@ -327,9 +379,9 @@ public class Jeu {
             }
             if(situationEchecMat(Noir, Blanc, Blanc.positionRoi(), Echiquier) || situationPat(Noir, Blanc, Echiquier)){
                 Appli.affichage(Echiquier.toString('a'));
+                Jeu.setNbCoupsNonHostile();
                 break;
             }
-            // vérifier les conditions de fin de partie avant la fin de chaque tour
         }
     }
 

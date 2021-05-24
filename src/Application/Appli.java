@@ -1,10 +1,17 @@
 package Application;
 
-import Jeu.Interfaces.IJoueur;
 import Jeu.Jeu;
 import Jeu.Échiquier;
+
+import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * Cette classe contient les méthodes nécessaires aux entrées-sorties
+ * et au lancement du jeu de finale d'échecs
+ *
+ * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
+ */
 public class Appli {
 
     /**
@@ -27,30 +34,34 @@ public class Appli {
     }
 
 
-
+    /**
+     * Mets en place les éléments nécessaires à la finale d'échecs
+     */
     public static void main(String[] args) {
+        final String blanc = "blanc";
+        final String noir = "noir";
         String modeJeu = Jeu.getModeJeu();
 
         IJoueur Blanc = null;
         IJoueur Noir = null;
         switch (modeJeu) {
             case "1":
-                Blanc = IJoueur.getJoueur('h',"blanc","blanc");
-                Noir = IJoueur.getJoueur('h',"noir","noir");
+                Blanc = IJoueur.getJoueur('h',blanc,blanc);
+                Noir = IJoueur.getJoueur('h',noir,noir);
                 break;
             case "2":
-                Blanc = IJoueur.getJoueur('i',"blanc","blanc");
-                Noir = IJoueur.getJoueur('i',"noir","noir");
+                Blanc = IJoueur.getJoueur('i',blanc,blanc);
+                Noir = IJoueur.getJoueur('i',noir,noir);
                 break;
             case "3":
-                Blanc = IJoueur.getJoueur('h',"blanc","blanc");
-                Noir = IJoueur.getJoueur('i',"noir","noir");
+                Blanc = IJoueur.getJoueur('h',blanc,blanc);
+                Noir = IJoueur.getJoueur('i',noir,noir);
                 break;
             default:
                 Jeu.getModeJeu();
         }
 
         Échiquier Echiquier = new Échiquier();
-        Jeu.Partie(Blanc, Noir, Echiquier);
+        Jeu.Partie(Objects.requireNonNull(Blanc), Objects.requireNonNull(Noir), Echiquier);
     }
 }

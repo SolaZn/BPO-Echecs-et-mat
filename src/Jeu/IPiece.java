@@ -1,7 +1,6 @@
-package Jeu.Interfaces;
+package Jeu;
 
 import Exceptions.Coordonnees.*;
-import Jeu.Échiquier;
 import Pièces.*;
 
 import java.util.LinkedList;
@@ -9,6 +8,8 @@ import java.util.LinkedList;
 /**
  * Cette interface représente l'ensemble des méthodes devant être implémentées
  * par des classes correspondant à des pièces du jeu d'échecs du programme.
+ *
+ * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony ZAKANI
  */
 public interface IPiece {
 
@@ -20,7 +21,7 @@ public interface IPiece {
      * @return la pièce (IPiece) ainsi définie
      */
     static IPiece getPiece(char typePiece, Coordonnee coord, String couleur){
-        return Piece.getPiece(typePiece, coord, couleur);
+        return DefinirPiece.fabriquerPiece(typePiece, coord, couleur);
     }
 
     /**
@@ -36,7 +37,7 @@ public interface IPiece {
      * @return vrai si elle est mangeable, faux si elle ne l'est pas
      */
     static boolean isMangeable(char typePiece){
-        return Piece.isMangeable(typePiece);
+        return DefinirPiece.isMangeable(typePiece);
     }
 
     /**

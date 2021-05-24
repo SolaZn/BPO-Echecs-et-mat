@@ -2,7 +2,7 @@ package Pièces.tests;
 
 import Exceptions.Coordonnees.CoupHorsZoneDepException;
 import Exceptions.Coordonnees.FormatCoupIncorrectException;
-import Jeu.Interfaces.IPiece;
+import Jeu.IPiece;
 import Jeu.Échiquier;
 import Pièces.Coordonnee;
 import Pièces.etatPiece;
@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static Jeu.Jeu.creationCoordCoup;
-import static org.junit.Assert.*;
 
 public class RoiTest {
 

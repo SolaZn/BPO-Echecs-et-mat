@@ -1,11 +1,18 @@
 package Pièces;
 
 import Exceptions.Coordonnees.*;
-import Jeu.Interfaces.IPiece;
+import Jeu.IPiece;
 import Jeu.Échiquier;
 import java.util.LinkedList;
 
-class Tour extends Piece {
+/**
+ * Cette classe représente une Tour dans le programme de finales d'échecs.
+ * Cette pièce a une coordonnée ainsi que sa couleur d'affichage;
+ * Couleur qui lui servira lors de son affichage.
+ *
+ * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
+ */
+public class Tour extends Piece {
     private static final int MTAILLE = 8;
 
     /**
@@ -86,10 +93,11 @@ class Tour extends Piece {
     }
 
     /**
-     * @see IPiece#routeBarree(Coordonnee, Coordonnee, Échiquier) )
+     * @see IPiece#routeBarree(Coordonnee, Coordonnee, Échiquier)
      */
     public boolean routeBarree(Coordonnee coordDepart, Coordonnee coordArr, Échiquier echiquier){
         boolean barre = false;
+        // TODO: 24/05/2021 : ne pas juger routeBarrée si la route à une case est barrée par la pièce qui est visée par le coup
         if (coordDepart.getLigne() != coordArr.getLigne()){
             int pos = coordArr.getLigne() - coordDepart.getLigne();
             if(pos < 0){

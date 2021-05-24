@@ -1,13 +1,20 @@
 package Pièces;
 
+/**
+ * Cette classe représente une coordonnée dans l'échiquier,
+ * une coordonnée consiste en une structure comportant à la fois
+ * une ligne et une colonne
+ *
+ * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
+ */
 public class Coordonnee {
     private int ligne;
     private int colonne;
 
     /**
-     * Retourne une coordonnée initialisé a une ligne et une colonne donnée
-     * @param ligne la ligne a laquelle initialiser la coordonnée
-     * @param colonne la colonne a laquelle initialiser la coordonnée
+     * Construit une coordonnée initialisée à une ligne et une colonne spécifiés
+     * @param ligne la ligne avec laquelle initialiser la coordonnée
+     * @param colonne la colonne avec laquelle initialiser la coordonnée
      */
     public Coordonnee(int ligne, int colonne){
         this.ligne = ligne;
@@ -15,6 +22,7 @@ public class Coordonnee {
     }
 
     /**
+     * Donne la ligne de la coordonnée
      * @return la ligne de la coordonnée
      */
     public int getLigne() {
@@ -22,6 +30,7 @@ public class Coordonnee {
     }
 
     /**
+     * Donne la colonne de la coordonnée
      * @return la colonne de la coordonnée
      */
     public int getColonne() {
@@ -45,9 +54,9 @@ public class Coordonnee {
     }
 
     /**
-     * Retourne vrai si une coordonnée est égale à une autre
-     * @param o la coordonnée a laquel comparé
-     * @return vrai si les deux coordonnée sont égaux sinon faux
+     * Étudie l'égalité entre deux coordonnées
+     * @param o la coordonnée avec laquelle il faut comparer
+     * @return vrai si les deux coordonnée sont égales sinon faux
      */
     @Override
     public boolean equals(Object o) {

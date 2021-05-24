@@ -2,7 +2,7 @@ package Jeu.tests;
 
 import Exceptions.Coordonnees.CoupHorsZoneDepException;
 import Exceptions.Coordonnees.FormatCoupIncorrectException;
-import Jeu.Interfaces.IJoueur;
+import Application.IJoueur;
 import Jeu.Échiquier;
 import Pièces.Coordonnee;
 import org.junit.Test;

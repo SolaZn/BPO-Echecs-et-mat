@@ -1,8 +1,9 @@
 package Joueurs;
 
 import Application.Appli;
+import Application.IJoueur;
 import Exceptions.Coordonnees.*;
-import Jeu.Interfaces.*;
+import Jeu.IPiece;
 import Jeu.Échiquier;
 import Pièces.Coordonnee;
 import Pièces.etatPiece;
@@ -15,7 +16,7 @@ import java.util.Locale;
  * Ce joueur a un nom et a à sa disposition la liste de ses pièces;
  * Pièces qu'il manipulera au cours de sa partie.
  *
- * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
+ * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony ZAKANI
  */
 public abstract class Joueur implements IJoueur {
     private final String nomJoueur;
@@ -35,12 +36,8 @@ public abstract class Joueur implements IJoueur {
         }
         else if (couleur.equals("noir")){
              listePieces.add(IPiece.getPiece('r', new Coordonnee(0,4), couleur));
-             listePieces.add(IPiece.getPiece('t', new Coordonnee(3,2), couleur));
+             // listePieces.add(IPiece.getPiece('t', new Coordonnee(3,2), couleur));
         }
-    }
-
-    public static IJoueur getJoueur(char typeJoueur, String couleur, String nomJoueur){
-        return DefinirJoueur.fabriquerJoueur(typeJoueur, couleur, nomJoueur);
     }
 
     /**
@@ -82,14 +79,16 @@ public abstract class Joueur implements IJoueur {
     }
 
     /**
-     * @see IJoueur#essaiCoupHostile(Coordonnee)
+     * @see IJoueur#essaiCoupHostile(Coordonnee, Échiquier)
      */
     @Override
-    public boolean essaiCoupHostile(Coordonnee coordRoi){
+    public boolean essaiCoupHostile(Coordonnee coordRoi, Échiquier Echiquier){
         for(IPiece p : listePieces) {
                 try {
-                    if(p.move(coordRoi, etatPiece.Essai)){
-                        return true;
+                    if(!p.routeBarree(p.getCoord(), coordRoi, Echiquier)) {
+                        if (p.move(coordRoi, etatPiece.Essai)) {
+                            return true;
+                        }
                     }
                 } catch (CoupHorsZoneDepException chz){
                     continue;
@@ -135,7 +134,7 @@ public abstract class Joueur implements IJoueur {
     }
 
     /**
-     * Retourne la liste des pièces
+     * Donne la liste des pièces
      * @return la liste des pièces
      */
     LinkedList<IPiece> getListePieces(){
@@ -143,7 +142,7 @@ public abstract class Joueur implements IJoueur {
     }
 
     /**
-     * Retourne la manière d'afficher un joueur
+     * Donne la manière d'afficher un joueur
      * @return la manière d'afficher un joueur
      */
     @Override

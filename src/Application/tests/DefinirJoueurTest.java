@@ -1,10 +1,8 @@
-package Joueurs.tests;
+package Application.tests;
 
-import Jeu.Interfaces.IJoueur;
+import Application.IJoueur;
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class DefinirJoueurTest {
 

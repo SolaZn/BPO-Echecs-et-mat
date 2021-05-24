@@ -1,25 +1,26 @@
-package Jeu.Interfaces;
+package Application;
 
 import Exceptions.Coordonnees.CoupHorsZoneDepException;
 import Jeu.Échiquier;
-import Joueurs.Joueur;
 import Pièces.Coordonnee;
 
 /**
  * Cette interface représente l'ensemble des méthodes devant être implémentées
  * par des classes correspondant à des joueurs du programme.
+ *
+ * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony ZAKANI
  */
 public interface IJoueur {
     static IJoueur getJoueur(char typeJoueur, String couleur, String nomJoueur) {
-        return Joueur.getJoueur(typeJoueur, couleur, nomJoueur);
+        return DefinirJoueur.fabriquerJoueur(typeJoueur, couleur, nomJoueur);
     }
 
-        /**
-         * Demande à l'utilisateur de renseigner le coup qu'il souhaite jouer
-         * @param Echiquier l'échiquier sur lequel le coup sera joué
-         * @param j2 le joueur adverse
-         * @return la chaîne de caractères (String) correspondant au coup joué
-         */
+    /**
+     * Demande à l'utilisateur de renseigner le coup qu'il souhaite jouer
+     * @param Echiquier l'échiquier sur lequel le coup sera joué
+     * @param j2 le joueur adverse
+     * @return la chaîne de caractères (String) correspondant au coup joué
+     */
     String joueCoup(Échiquier Echiquier, IJoueur j2);
 
     /**
@@ -55,7 +56,7 @@ public interface IJoueur {
      * @param coordRoi la coordonnée potentielle du Roi pouvant être attaqué par le joueur
      * @return vrai si la coordonnée est atteignable, faux si elle peut l'être
      */
-    boolean essaiCoupHostile(Coordonnee coordRoi);
+    boolean essaiCoupHostile(Coordonnee coordRoi, Échiquier Echiquier);
 
     /**
      * Vérifie pour le joueur mentionné si le coup précédent doit provoquer la perte d'un pion

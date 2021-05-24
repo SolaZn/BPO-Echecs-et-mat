@@ -2,7 +2,7 @@ package Joueurs.tests;
 
 import Exceptions.Coordonnees.CoupHorsZoneDepException;
 import Exceptions.Coordonnees.FormatCoupIncorrectException;
-import Jeu.Interfaces.IJoueur;
+import Application.IJoueur;
 import Jeu.Échiquier;
 import Pièces.Coordonnee;
 import org.junit.Assert;
@@ -83,13 +83,13 @@ public class JoueurTest {
 
         // Si le joueur NOIR et le joueur BLANC viennent d'être initialisés,
         // leurs rois ne peuvent s'attendre mutuellement
-        Assert.assertFalse(J1.essaiCoupHostile(J2.positionRoi()));
-        Assert.assertFalse(J2.essaiCoupHostile(J1.positionRoi()));
+        Assert.assertFalse(J1.essaiCoupHostile(J2.positionRoi(), Echiquier));
+        Assert.assertFalse(J2.essaiCoupHostile(J1.positionRoi(), Echiquier));
 
         // Cependant, supposons que le roi BLANC souhaite se déplacer en e7,
         // il se mettrait en position d'échec et DONC l'adverse pourrait l'y attaquer
         // essaiCoupHostile serait donc vrai
-        Assert.assertTrue(J2.essaiCoupHostile(Jeu.Jeu.creationCoordCoup('e','7')));
+        Assert.assertTrue(J2.essaiCoupHostile(Jeu.Jeu.creationCoordCoup('e','7'), Echiquier));
     }
 
     @Test

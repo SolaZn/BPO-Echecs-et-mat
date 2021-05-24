@@ -1,9 +1,16 @@
 package Jeu;
 
 import Exceptions.Coordonnees.*;
-import Jeu.Interfaces.IJoueur;
+import Application.IJoueur;
 import Pièces.Coordonnee;
 
+/**
+ * Cette classe représente un échiquier dans un jeu d'échec,
+ * elle comporte une série d'attributs et de méthodes permettant
+ * de définir et de manipuler l'échiquier du jeu.
+ *
+ * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony ZAKANI
+ */
 public class Échiquier {
     private char[][] Plateau;
     private static final int MTAILLE = 8;
@@ -13,7 +20,7 @@ public class Échiquier {
     private int nbAffichage = 0;
 
     /**
-     * Renvoie le plateau de jeu initialisé avec des cases vide
+     * Construit un échiquier d'échecs prêt à être utilisé
      */
     public Échiquier(){
         Plateau = new char[MTAILLE][MTAILLE];
@@ -25,7 +32,7 @@ public class Échiquier {
     }
 
     /**
-     * Retourne le plateau de jeu
+     * Donne le plateau de jeu
      * @return le plateau de jeu
      */
     public char[][] getPlateau() {
@@ -36,7 +43,7 @@ public class Échiquier {
      * Vérifie si la coordonnée fait partie de l'échiquier
      * @param coord la coordonnée
      * @return vrai si la coordonnée existe dans le plateau sinon faux
-     * @throws CoordInexistanteException
+     * @throws CoordInexistanteException si la coordonnée est inexistante
      */
     public static boolean coordExiste(Coordonnee coord) throws CoordInexistanteException {
         // verifier si les coordonnes sont dans l'echiquier

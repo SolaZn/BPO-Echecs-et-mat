@@ -1,12 +1,19 @@
 package Pièces;
 
 import Exceptions.Coordonnees.*;
-import Jeu.Interfaces.IPiece;
+import Jeu.IPiece;
 import Jeu.Échiquier;
 
 import java.util.LinkedList;
 
-class Roi extends Piece {
+/**
+ * Cette classe représente un roi dans le programme de finales d'échecs.
+ * Cette pièce a une coordonnée ainsi que sa couleur d'affichage;
+ * Couleur qui lui servira lors de son affichage.
+ *
+ * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
+ */
+public class Roi extends Piece {
 
     /**
      * Renvoie le roi initialisé a une ligne, une colonne et une couleur données

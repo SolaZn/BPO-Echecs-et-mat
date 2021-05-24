@@ -1,7 +1,7 @@
-package Pièces.tests;
+package Jeu.tests;
 
 import Exceptions.Coordonnees.FormatCoupIncorrectException;
-import Jeu.Interfaces.IPiece;
+import Jeu.IPiece;
 import org.junit.Assert;
 import org.junit.Test;
 

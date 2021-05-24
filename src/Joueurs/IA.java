@@ -1,7 +1,7 @@
 package Joueurs;
 
-import Jeu.Interfaces.IJoueur;
-import Jeu.Interfaces.IPiece;
+import Application.IJoueur;
+import Jeu.IPiece;
 
 import Jeu.Échiquier;
 import Pièces.*;
@@ -14,9 +14,9 @@ import java.util.Random;
  * Cette IA a un nom et a à sa disposition la liste de ses pièces;
  * Pièces qu'elle manipulera au cours de sa partie.
  *
- * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
+ * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony ZAKANI
  */
-class IA extends Joueur implements IJoueur{
+public class IA extends Joueur implements IJoueur{
 
     /**
      * Construit une IA comme sous-type d'un joueur
@@ -51,20 +51,21 @@ class IA extends Joueur implements IJoueur{
             int idy = r.nextInt(listeCoups.size());
             Coordonnee coordAJouer = listeCoups.get(idy);
 
+            if (!this.barreRoute(coordDeDepart, coordAJouer, Echiquier) && !coordDeDepart.equals(coordAJouer)) {
+                if ((!J2.essaiCoupHostile(coordAJouer, Echiquier) && Character.toUpperCase(Echiquier.coordOccupé(coordDeDepart)) == 'R') ||
+                        Character.toUpperCase(Echiquier.coordOccupé(coordDeDepart)) != 'R') {
+                    char colonneDep = Character.forDigit(coordDeDepart.getColonne() + 10, 36);
+                    int ligneDep = 8 - coordDeDepart.getLigne();
 
-            // ajouter le barreRoute aux requirements du coup valide
-            if ((!J2.essaiCoupHostile(coordAJouer) && Character.toUpperCase(Echiquier.coordOccupé(coordDeDepart)) == 'R') ||
-                    Character.toUpperCase(Echiquier.coordOccupé(coordDeDepart)) != 'R') {
-                char colonneDep = Character.forDigit(coordDeDepart.getColonne() + 10, 36);
-                int ligneDep = 8 - coordDeDepart.getLigne();
+                    char colonneArr = Character.forDigit(coordAJouer.getColonne() + 10, 36);
+                    int ligneArr = 8 - coordAJouer.getLigne();
 
-                char colonneArr = Character.forDigit(coordAJouer.getColonne() + 10, 36);
-                int ligneArr = 8 - coordAJouer.getLigne();
-
-                coordonneeJouee.append(colonneDep).append(ligneDep).append(colonneArr).append(ligneArr);
-                break;
-            }
-            else{
+                    coordonneeJouee.append(colonneDep).append(ligneDep).append(colonneArr).append(ligneArr);
+                    break;
+                } else {
+                    listeCoups.remove(idy);
+                }
+            } else {
                 listeCoups.remove(idy);
             }
         }
