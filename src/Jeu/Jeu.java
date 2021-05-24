@@ -82,6 +82,7 @@ public class Jeu {
      * @throws PieceNonDetenueException si la pièce de départ n'est pas détenue ou que la pièce d'arrivée l'est
      * @throws CoupHorsZoneDepException si le coup ne respecte pas les règles de déplacement de la pièce
      * @throws RoiEnSituationEchecException si le roi serait ou se maintiendrait en situation d'échec par ce coup
+     * @throws RouteBarréeException si la route est barrée
      */
     private static boolean coupValide(IJoueur J, IJoueur J2, Échiquier Echiquier, Coordonnee coordInit, Coordonnee coordArr)
             throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException,
@@ -138,6 +139,7 @@ public class Jeu {
      * @throws CoupHorsZoneDepException si le coup ne respecte pas les règles de déplacement de la pièce
      * @throws FormatCoupIncorrectException si le format est incorrect
      * @throws RoiEnSituationEchecException si le roi serait ou se maintiendrait en situation d'échec par ce coup
+     * @throws RouteBarréeException si la route est barrée
      */
     public static boolean coupJoué(Échiquier Echiquier, String coup, IJoueur J, IJoueur J2)
             throws CoordInexistanteException, PieceNonMangeableException, PieceNonDetenueException, CoupHorsZoneDepException,

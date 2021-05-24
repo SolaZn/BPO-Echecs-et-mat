@@ -70,9 +70,10 @@ public interface IPiece {
 
     /**
      * Détermine si la pièce peut ou non barrer la route
-     * @param coordDepart
-     * @param coordArr
-     * @return
+     * @param coordDepart la coordonnée d'où l'on commence à regarder
+     * @param coordArr la coordonnée où l'on arrive
+     * @param echiquier l'échiquier où se situe la pièce
+     * @return vrai si la route est barrée, faux si elle ne l'est pas
      */
     boolean routeBarree(Coordonnee coordDepart, Coordonnee coordArr, Échiquier echiquier);
 

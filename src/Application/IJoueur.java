@@ -54,6 +54,7 @@ public interface IJoueur {
     /**
      * Teste pour une coordonnée donnée la possibilité pour le joueur d'atteindre cette position
      * @param coordRoi la coordonnée potentielle du Roi pouvant être attaqué par le joueur
+     * @param Echiquier l'échiquier où se situe la pièce
      * @return vrai si la coordonnée est atteignable, faux si elle peut l'être
      */
     boolean essaiCoupHostile(Coordonnee coordRoi, Échiquier Echiquier);
@@ -72,9 +73,10 @@ public interface IJoueur {
 
     /**
      * Teste le barrage de "route"
-     * @param coordDepart
-     * @param coordArrivée
-     * @return
+     * @param coordDepart la coordonnée d'où l'on commence à regarder
+     * @param coordArrivée la coordonnée où l'on arrive
+     * @param echiquier l'échiquier où se situe la pièce
+     * @return vrai si la route est barrée, faux si elle ne l'est pas
      */
     boolean barreRoute(Coordonnee coordDepart, Coordonnee coordArrivée, Échiquier echiquier);
 }
