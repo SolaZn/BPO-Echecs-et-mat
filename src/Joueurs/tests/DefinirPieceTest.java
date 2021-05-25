@@ -1,7 +1,6 @@
 package Joueurs.tests;
 
 import Exceptions.Coordonnees.FormatCoupIncorrectException;
-import Joueurs.DefinirPiece;
 import Joueurs.IPiece;
 import org.junit.Assert;
 import org.junit.Test;

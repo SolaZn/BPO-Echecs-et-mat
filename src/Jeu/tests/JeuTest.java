@@ -33,9 +33,4 @@ public class JeuTest {
 
         Jeu.Jeu.coupJoué(Echiquier, "e6f6", J1, J2);
     }
-
-    @Test
-    public void partie() {
-        // tester que l'échiquier change à chaque tour de l'ia
-    }
 }

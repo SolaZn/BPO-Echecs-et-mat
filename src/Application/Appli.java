@@ -1,3 +1,11 @@
+/*
+  BPO Projet période D : Finale de jeu d'échecs
+  Auteurs : Slim BEN DAALI, Yacine BETTAYEB et Anthony ZAKANI
+   dans le cadre d'un DUT Informatique au sein de l'Université de Paris
+  Dernière mise à jour : mardi 25 mai à 18h
+ */
+
+
 package Application;
 
 import Jeu.Jeu;
@@ -40,7 +48,7 @@ public class Appli {
     public static void main(String[] args) {
         final String blanc = "blanc";
         final String noir = "noir";
-        String modeJeu = "2";
+        String modeJeu = Jeu.getModeJeu();
 
         IJoueur Blanc = null;
         IJoueur Noir = null;

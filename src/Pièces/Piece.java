@@ -9,7 +9,7 @@ import Joueurs.IPiece;
  *
  * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
  */
-public abstract class Piece implements IPiece {
+abstract class Piece implements IPiece {
     private Coordonnee coord;
     private String couleur;
 

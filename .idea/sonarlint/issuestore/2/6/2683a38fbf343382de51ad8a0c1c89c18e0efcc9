@@ -1,0 +1,14 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ó·À…þÿÿÿÿ
+M
+java:S1135."2Complete the task associated to this TODO comment.(•Æíšøÿÿÿÿ
+1
+java:S3626M"Remove this redundant jump.(ÉŠ©ƒ
+1
+java:S3626X"Remove this redundant jump.(ÉŠ©ƒ
+m
+java:S3776b"RRefactor this method to reduce its Cognitive Complexity from 36 to the 15 allowed.(ò«ÙÉùÿÿÿÿ
+H
+java:S1135d"2Complete the task associated to this TODO comment.(àð¾Ÿ
+@
+java:S1481c"*Remove this unused "barre" local variable.(ÅõáÇ

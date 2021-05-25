@@ -10,7 +10,7 @@ import Joueurs.IA;
  *
  * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony Zakani
  */
-class DefinirJoueur {
+public class DefinirJoueur {
     /**
      * Construit une IPièce du type auquel correspond le char et
      * l'initialise avec une coordonnée et une couleur donnée

@@ -1,0 +1,39 @@
+
+o	java:S135ì"YReduce the total number of break and continue statements in this loop to use at most one.(´ÿÕ™
+f	java:S117X"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿÙ‡”
+f	java:S117X"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿÙ‡”
+f	java:S117X"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿÙ‡”
+l	java:S117‘"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İ»Š­üÿÿÿÿ
+l	java:S117‘"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İ»Š­üÿÿÿÿ
+l	java:S117‘"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İ»Š­üÿÿÿÿ
+l	java:S117¤"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ò‘Åˆùÿÿÿÿ
+l	java:S117¸"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·äËºüÿÿÿÿ
+l	java:S117¸"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·äËºüÿÿÿÿ
+l	java:S117¸"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·äËºüÿÿÿÿ
+g	java:S117è"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„×¯
+g	java:S117è"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„×¯
+g	java:S117è"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„×¯
+g	java:S117ÿ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïø¼÷
+g	java:S117ÿ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïø¼÷
+g	java:S117ÿ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïø¼÷
+f	java:S117®"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆÈ
+f	java:S117®"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆÈ
+f	java:S117®"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆÈ
+g	java:S117å"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”¬‰š
+g	java:S117å"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”¬‰š
+g	java:S117å"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”¬‰š
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(íÄ£Íüÿÿÿÿ
+h
+java:S3776X"RRefactor this method to reduce its Cognitive Complexity from 60 to the 15 allowed.(ÿÙ‡”
+i	java:S100‘"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İ»Š­üÿÿÿÿ
+N
+java:S1135¥"2Complete the task associated to this TODO comment.(­®óëûÿÿÿÿ
+n
+java:S3776¸"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(·äËºüÿÿÿÿ
+i
+java:S3776ÿ"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(ïø¼÷
+]
+java:S1126 "AReplace this if-then-else statement by a single return statement.(Ô¶·¨øÿÿÿÿ
+h
+java:S3776®"RRefactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed.(ˆÈ
+d	java:S100å"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”¬‰š

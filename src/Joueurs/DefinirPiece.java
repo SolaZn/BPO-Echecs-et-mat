@@ -1,6 +1,5 @@
 package Joueurs;
 
-import Joueurs.IPiece;
 import Pièces.Coordonnee;
 import Pièces.Roi;
 import Pièces.Tour;

@@ -37,4 +37,32 @@ public class ÉchiquierTest {
         Assert.assertEquals( 'T', echiquier.coordOccupé(coordArr));
     }
 
+    @Test
+    public void toStringTest(){
+        Échiquier Echiquier = new Échiquier();
+        StringBuilder sb = new StringBuilder();
+        sb.append("    a   b   c   d   e   f   g   h    \n")
+                .append("   --- --- --- --- --- --- --- ---   \n")
+                .append("8 |   |   |   |   |   |   |   |   | 8\n")
+                .append("   --- --- --- --- --- --- --- ---   \n")
+                .append("7 |   |   |   |   |   |   |   |   | 7\n")
+                .append("   --- --- --- --- --- --- --- ---   \n")
+                .append("6 |   |   |   |   |   |   |   |   | 6\n")
+                .append("   --- --- --- --- --- --- --- ---   \n")
+                .append("5 |   |   |   |   |   |   |   |   | 5\n")
+                .append("   --- --- --- --- --- --- --- ---   \n")
+                .append("4 |   |   |   |   |   |   |   |   | 4\n")
+                .append("   --- --- --- --- --- --- --- ---   \n")
+                .append("3 |   |   |   |   |   |   |   |   | 3\n")
+                .append("   --- --- --- --- --- --- --- ---   \n")
+                .append("2 |   |   |   |   |   |   |   |   | 2\n")
+                .append("   --- --- --- --- --- --- --- ---   \n")
+                .append("1 |   |   |   |   |   |   |   |   | 1\n")
+                .append("   --- --- --- --- --- --- --- ---   \n")
+                .append("    a   b   c   d   e   f   g   h    \n");
+        Assert.assertTrue(Echiquier.toString('a').equals(sb.toString()));
+    }
+
+
+
 }

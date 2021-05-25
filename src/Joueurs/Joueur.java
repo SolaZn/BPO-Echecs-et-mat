@@ -17,7 +17,7 @@ import java.util.Locale;
  *
  * @author Slim BEN DAALI, Yacine BETTAYEB et Anthony ZAKANI
  */
-public abstract class Joueur implements IJoueur {
+abstract class Joueur implements IJoueur {
     private final String nomJoueur;
     private final LinkedList<IPiece> listePieces;
 

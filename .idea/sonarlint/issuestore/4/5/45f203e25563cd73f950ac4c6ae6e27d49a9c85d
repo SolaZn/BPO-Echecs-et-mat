@@ -1,0 +1,12 @@
+
+E
+java:S1066X"/Merge this if statement with the enclosing one.(Ø¼Ï
+k	java:S117."QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğÆ’µıÿÿÿÿ
+k	java:S117T"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ƒ÷°èúÿÿÿÿ
+f	java:S117~"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ªÿŒ¾
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÛàõÖşÿÿÿÿ
+N
+java:S5993"9Change the visibility of this constructor to "protected".(×Ÿ 
+V	java:S125&"<This block of commented-out lines of code should be removed.(¿¯’öıÿÿÿÿ
+1
+java:S3626]"Remove this redundant jump.(ÉŠ©ƒ
